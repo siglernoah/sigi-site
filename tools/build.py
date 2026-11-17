@@ -7,6 +7,12 @@ def mark(lg=False, cls=''):
     return f'<span class="{c}" aria-hidden="true"></span>'
 MARK = mark()
 
+import hashlib
+def _v(rel):
+    """Short content hash so browsers fetch a fresh copy whenever the file changes."""
+    with open(os.path.join(OUT, rel), 'rb') as fh:
+        return hashlib.sha1(fh.read()).hexdigest()[:8]
+
 
 ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 EXT = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.5 8.5l5-5M4.5 3.5h4v4"/></svg>'
@@ -41,7 +47,7 @@ try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttr
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
 try{{if(!rm&&!sessionStorage.getItem('sw-intro'))c.add('intro')}}catch(e){{}}}})(document);
 </script>
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
 <body data-page="{page}">
 <a class="skip" href="#main">Skip to content</a>
@@ -105,7 +111,7 @@ def footer():
   </div>
 </footer>
 <script src="js/lenis.min.js"></script>
-<script src="js/site.js"></script>
+<script src="js/site.js?v={_v('js/site.js')}"></script>
 </body>
 </html>
 '''
