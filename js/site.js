@@ -402,12 +402,15 @@
     // start the call animation when the card scrolls into view
     if ('IntersectionObserver' in window && !RM){
       // the phone flies in (3s), then the call starts on its screen
-      var cio = new IntersectionObserver(function(es){
-        if (!es[0].isIntersecting) return;
-        cio.disconnect(); stage.classList.add('enter');
+      var started = false;
+      var startPhone = function(){
+        if (started) return; started = true; if (cio) cio.disconnect();
+        stage.classList.add('enter');
         setTimeout(function(){ call.classList.add('play'); setTimeout(nudge, 3200); }, 3000);
-      }, { threshold: .3 });
+      };
+      var cio = new IntersectionObserver(function(es){ if (es[0].isIntersecting) startPhone(); }, { threshold: .6 });
       cio.observe(stage);
+      on(stage.closest('section'), 'pointerenter', startPhone);
     } else { stage.classList.add('enter'); call.classList.add('play'); }
     var measureTrack = function(){ maxX = track.clientWidth - knob.offsetWidth - 2 * knob.offsetLeft; };
     measureTrack(); window.addEventListener('resize', measureTrack);
