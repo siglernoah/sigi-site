@@ -2,7 +2,6 @@
    Loaded on demand (first visit only). Builds a polished metal signet ring with an
    orange command-key seal, spins it for `spin` seconds, then rests in the logo's 3/4 pose. */
 import * as THREE from './vendor/three.module.min.js';
-import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 
 const TAU = Math.PI * 2;
 
@@ -58,10 +57,32 @@ function octagon(w, d, cut) {
   return s;
 }
 
+function studioScene() {
+  const sc = new THREE.Scene();
+  const g = new THREE.SphereGeometry(40, 64, 32), col = [], p = g.attributes.position, c = new THREE.Color();
+  for (let i = 0; i < p.count; i++) {
+    const y = p.getY(i) / 40;                                   // -1 (floor) .. 1 (ceiling)
+    const v = y > 0 ? 0.42 + 0.5 * y : 0.42 + 0.38 * y;        // bright ceiling, mid-grey walls, dark floor
+    c.setRGB(v, v, v * 1.02); col.push(c.r, c.g, c.b);
+  }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+  sc.add(new THREE.Mesh(g, new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors: true })));
+  const light = new THREE.MeshBasicMaterial({ color: new THREE.Color(5, 5, 5) });
+  const dark = new THREE.MeshBasicMaterial({ color: 0x0b0b0c });
+  const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.lookAt(0, 0, 0); sc.add(m); };
+  add(new THREE.PlaneGeometry(14, 3), light, 0, 14, 4);         // overhead softbox
+  add(new THREE.PlaneGeometry(3, 12), light, -14, 2, 6);        // left strip light
+  add(new THREE.PlaneGeometry(2.5, 10), light, 13, 3, -4);      // right kicker
+  add(new THREE.PlaneGeometry(5, 18), dark, 10, 0, 10);         // dark flags for edge contrast
+  add(new THREE.PlaneGeometry(4, 16), dark, -8, 0, -12);
+  add(new THREE.PlaneGeometry(18, 3), dark, 0, -6, 14);         // dark horizon line
+  return sc;
+}
+
 export function buildRing() {
   const R = 1;
-  const metal = new THREE.MeshStandardMaterial({ color: 0xe9e7e2, metalness: 1, roughness: 0.2 });
-  const satin = new THREE.MeshStandardMaterial({ color: 0xd6d3cc, metalness: 1, roughness: 0.38 });
+  const metal = new THREE.MeshStandardMaterial({ color: 0xf6f7f9, metalness: 1, roughness: 0.09, envMapIntensity: 1.15 });   // polished silver
+  const satin = new THREE.MeshStandardMaterial({ color: 0xeceef1, metalness: 1, roughness: 0.28, envMapIntensity: 1.1 });   // brushed silver panel
   const enamel = new THREE.MeshStandardMaterial({ color: 0xff5a1f, metalness: 0.2, roughness: 0.26, emissive: 0x3a0e00 });
 
   const ring = new THREE.Group();
@@ -137,9 +158,11 @@ export function mountRing(host, opts = {}) {
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
-  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-3, 4, 6); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xffe2d2, 1.1); rim.position.set(5, -2, -3); scene.add(rim);
+  // Bright photo-studio reflections (white above, light grey around, dark strips for contrast),
+  // which is what makes polished silver read as silver rather than grey steel.
+  scene.environment = pmrem.fromScene(studioScene(), 0.015).texture;
+  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-3, 4, 6); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xf2f5ff, 1.4); rim.position.set(5, -2, -3); scene.add(rim);
 
   const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
   camera.position.set(0, 0, 9.2);
