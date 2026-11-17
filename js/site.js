@@ -391,6 +391,83 @@
     $$('input[type=checkbox]', quiz).forEach(function(c){ c.addEventListener('change', function(){ $('.q-err', steps[0]).textContent = ''; }); });
   }
 
+
+  /* ---------- start a project: incoming call ---------- */
+  var call = $('#call');
+  if (call){
+    var track = $('#answer'), knob = $('#answerKnob'), body = document.body;
+    var fill = document.createElement('span'); fill.className = 'answer-fill'; track.insertBefore(fill, track.firstChild);
+    var maxX = 0, x = 0, dragging = false, startX = 0, answered = false;
+    if (lenis) lenis.stop();
+    var measureTrack = function(){ maxX = track.clientWidth - knob.offsetWidth - 14; };
+    measureTrack(); window.addEventListener('resize', measureTrack);
+    var setX = function(v){
+      x = clamp(v, 0, maxX);
+      var p = maxX ? x / maxX : 0;
+      knob.style.setProperty('--x', x + 'px');
+      track.style.setProperty('--fill', (x + knob.offsetWidth) + 'px');
+      track.style.setProperty('--fo', p.toFixed(3));
+      track.style.setProperty('--to', (1 - p * 1.6).toFixed(3));
+      knob.setAttribute('aria-valuenow', Math.round(p * 100));
+    };
+    var answer = function(){
+      if (answered) return; answered = true;
+      setX(maxX); track.classList.add('done');
+      knob.setAttribute('aria-valuetext', 'Answered');
+      setTimeout(function(){
+        body.classList.add('call-done');
+        if (lenis) lenis.start();
+        window.scrollTo(0, 0);
+        $$('.page-head, .page-head .fade').forEach(function(h){ h.classList.remove('go'); });
+        setTimeout(function(){ $$('.page-head').forEach(function(h){ h.classList.add('go'); }); $$('.page-head [data-hero]').forEach(function(el){ el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); }); }, 350);
+        setTimeout(function(){ var t = $('.q-step.on .q-title'); if (t) t.focus({ preventScroll: true }); cache(); }, 1000);
+      }, RM ? 0 : 420);
+    };
+    knob.addEventListener('pointerdown', function(e){
+      if (answered) return;
+      dragging = true; startX = e.clientX - x; knob.classList.remove('springback'); knob.classList.add('dragging');
+      knob.setPointerCapture(e.pointerId);
+    });
+    knob.addEventListener('pointermove', function(e){ if (dragging) setX(e.clientX - startX); });
+    var release = function(){
+      if (!dragging) return; dragging = false; knob.classList.remove('dragging');
+      if (x >= maxX * 0.86) answer();
+      else { knob.classList.add('springback'); setX(0); }
+    };
+    knob.addEventListener('pointerup', release);
+    knob.addEventListener('pointercancel', release);
+    knob.addEventListener('keydown', function(e){
+      if (answered) return;
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'End'){ e.preventDefault(); answer(); }
+      else if (e.key === 'ArrowRight'){ e.preventDefault(); knob.classList.add('springback'); setX(x + maxX / 4); if (x >= maxX) answer(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'Home'){ e.preventDefault(); knob.classList.add('springback'); setX(e.key === 'Home' ? 0 : x - maxX / 4); }
+    });
+    on($('#callSkip'), 'click', answer);
+    // invite: nudge the knob once if nobody has touched it
+    if (!RM) setTimeout(function(){
+      if (answered || dragging || x) return;
+      knob.classList.add('springback'); setX(Math.min(46, maxX));
+      setTimeout(function(){ if (!dragging && !answered) setX(0); }, 420);
+    }, 3400);
+    // Remind Me: a calendar reminder for tomorrow at 10:00
+    var toast = document.createElement('div'); toast.className = 'toast'; toast.setAttribute('role', 'status'); call.appendChild(toast);
+    var say = function(t){ toast.textContent = t; toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 2600); };
+    on($('#remindMe'), 'click', function(){
+      var d = new Date(); d.setDate(d.getDate() + 1); d.setHours(10, 0, 0, 0);
+      var pad = function(n){ return (n < 10 ? '0' : '') + n; };
+      var fmt = function(t){ return t.getUTCFullYear() + pad(t.getUTCMonth() + 1) + pad(t.getUTCDate()) + 'T' + pad(t.getUTCHours()) + pad(t.getUTCMinutes()) + '00Z'; };
+      var end = new Date(d.getTime() + 15 * 60000);
+      var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Signet Works//Start a project//EN', 'BEGIN:VEVENT',
+        'UID:' + Date.now() + '@signetworks', 'DTSTAMP:' + fmt(new Date()), 'DTSTART:' + fmt(d), 'DTEND:' + fmt(end),
+        'SUMMARY:Start your website project with Signet Works', 'URL:' + location.href.split('#')[0],
+        'DESCRIPTION:Answer four quick questions: ' + location.href.split('#')[0], 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      a.download = 'signet-works-reminder.ics'; document.body.appendChild(a); a.click(); a.remove();
+      this.classList.add('sent'); say('Reminder added for tomorrow at 10:00');
+    });
+  }
+
   /* ---------- layout cache ---------- */
   var vh = innerHeight, docMax = 0, scrubTop = 0, scrubH = 0, dirty = true;
   function cache(){
