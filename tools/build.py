@@ -44,19 +44,19 @@ def head(title, desc, page):
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;family=Outfit:wght@500..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;family=Playfair+Display:wght@500..700&amp;display=swap" rel="stylesheet">
 <script>
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro');window.__swT0=performance.now()}}}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=6'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
 <body data-page="{page}">
 <a class="skip" href="#main">Skip to content</a>
 {RING_SYMBOL}
-<div id="intro"><div class="lock" aria-hidden="true"><span class="word w-l">Signet</span><span class="spin">{mark(lg=True)}</span><span class="word w-r">Works</span></div><div class="bar" aria-hidden="true"></div><button class="skip-intro" type="button">Skip intro</button></div>
+<div id="intro"><div class="intro-bg"></div><div class="aurora" aria-hidden="true"><span class="al a"><i></i></span><span class="al b"><i></i></span><span class="al c"><i></i></span></div><div class="lock" aria-hidden="true"><span class="word w-l">Signet</span><span class="spin">{mark(lg=True)}</span><span class="word w-r">Works</span></div><button class="skip-intro" type="button">Skip intro</button></div>
 <div id="progress" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><b>View</b></div>
 '''
@@ -73,6 +73,7 @@ def nav():
       <span class="pill-ind"></span>
       <a class="l" href="services.html" data-nav="services">Services</a>
       <a class="l" href="work.html" data-nav="work">Work</a>
+      <a class="l" href="rates.html" data-nav="rates">Rates</a>
       <a class="l" href="about.html" data-nav="about">About</a>
     </nav>
     <div class="nav-r">
@@ -87,8 +88,9 @@ def nav():
     <a href="index.html" data-nav="home">Home <small>01</small></a>
     <a href="services.html" data-nav="services">Services <small>02</small></a>
     <a href="work.html" data-nav="work">Work <small>03</small></a>
-    <a href="about.html" data-nav="about">About <small>04</small></a>
-    <a href="start.html" data-nav="start">Start a project <small>05</small></a>
+    <a href="rates.html" data-nav="rates">Rates <small>04</small></a>
+    <a href="about.html" data-nav="about">About <small>05</small></a>
+    <a href="start.html" data-nav="start">Start a project <small>06</small></a>
   </nav>
   <div class="menu-foot"><a href="mailto:hello@sigi.com">hello@sigi.com</a><span>© <span class="year">2026</span> Signet Works</span></div>
 </div>
@@ -110,7 +112,8 @@ def footer():
     <a class="big" href="index.html" aria-label="Signet Works home"><span class="word">Signet</span>{mark(lg=True)}<span class="word">Works</span></a>
     <div class="foot">
       <span>© <span class="year">2026</span> Signet Works</span>
-      <nav aria-label="Footer"><a href="services.html">Services</a><a href="work.html">Work</a><a href="about.html">About</a><a href="start.html">Start a project</a></nav>
+      <nav aria-label="Footer"><a href="services.html">Services</a><a href="work.html">Work</a><a href="rates.html">Rates</a><a href="about.html">About</a><a href="start.html">Start a project</a></nav>
+      <nav class="legal-links" aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="cookies.html">Cookie policy</a></nav>
       <button class="top" type="button">Back to top <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 10V2M2.5 5.5L6 2l3.5 3.5"/></svg></button>
     </div>
   </div>
@@ -121,8 +124,8 @@ def footer():
 </html>
 '''
 
-def page_head(kicker_no, kicker, title, lede, orb=True):
-    return f'''<header class="page-head">
+def page_head(kicker_no, kicker, title, lede, orb=True, cls=''):
+    return f'''<header class="page-head {cls}">
   {'<div class="orb a" aria-hidden="true"></div>' if orb else ''}
   <div class="wrap">
     <p class="kicker fade d0"><b>{kicker_no}</b>{kicker}</p>
@@ -372,8 +375,26 @@ def work():
 
 def about():
     return head('About', 'Signet Works builds professional websites for businesses — one person, plain language, a clear quote up front.', 'about') + nav() + '<main id="main">' + page_head(
-        '04', 'About', 'Good websites, <em>made honestly.</em>',
-        'Signet Works is a small studio for businesses that need a professional website without the agency runaround.') + f'''
+        '04', 'About', 'What Signet Works is all about',
+        'A small studio from Tilburg, building premium websites that businesses and people can actually afford.', cls='plain') + f'''
+<section class="philosophy">
+  <div class="wrap">
+    <p class="kicker reveal"><b>05</b>The philosophy behind it all</p>
+    <p class="manifesto" data-scrub>Professional websites shouldn’t be crazy expensive, or out of reach, in a digital age.</p>
+    <div class="phil-grid">
+      <div class="prose reveal">
+        <p>Signet Works was founded on a simple idea: a professional website is no longer a luxury, so it shouldn’t be priced like one. Least of all for startups and small businesses, who often need a good website the most and can afford an expensive one the least.</p>
+        <p>With the help of AI, the slow and repetitive parts of building a website take a fraction of the time. That time goes back into what matters: the design, the details, and getting your business across clearly. The result is high-quality websites with premium design, at a price that makes sense, for businesses and for personal use.</p>
+      </div>
+      <ul class="pillars reveal" style="--d:120ms">
+        <li><b>Accessible</b><span>Clear, fair prices that work for startups, small businesses and individuals.</span></li>
+        <li><b>Premium</b><span>Design and detail that hold their own next to sites that cost many times more.</span></li>
+        <li><b>AI-assisted, personally made</b><span>AI speeds up the build. The design decisions, and the care, stay personal.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap about">
     <blockquote class="quote" data-scrub>{QUOTE}</blockquote>
@@ -384,7 +405,7 @@ def about():
 <section class="origin">
   <div class="wrap">
     <div class="head">
-      <p class="kicker reveal"><b>05</b>Origin</p>
+      <p class="kicker reveal"><b>06</b>Origin</p>
       <h2 data-split>Headquartered in Tilburg, <em>operating around the globe.</em></h2>
     </div>
     <div class="origin-grid">
@@ -400,7 +421,7 @@ def about():
 <section class="alt">
   <div class="wrap split2">
     <div>
-      <p class="kicker reveal" style="margin-bottom:24px"><b>06</b>The name</p>
+      <p class="kicker reveal" style="margin-bottom:24px"><b>07</b>The name</p>
       <h2 class="h2" data-split>Why a <em>signet?</em></h2>
     </div>
     <div class="prose reveal">
@@ -409,6 +430,7 @@ def about():
     </div>
   </div>
 </section>
+<p class="fineprint wrap"><a href="privacy.html">Privacy policy</a><span aria-hidden="true">·</span><a href="cookies.html">Cookie policy</a></p>
 </main>
 ''' + band() + footer()
 
@@ -537,7 +559,116 @@ def start():
 </main>
 ''' + footer()
 
-for name, fn in [('index', home), ('services', services), ('work', work), ('about', about), ('start', start)]:
+def rates():
+    tiers = [
+        ('One-page landing', '<small>from about</small> €300', 'A single, clean landing page. No animations or transitions, just a sharp, professional first impression.',
+         ['Works on every screen', 'Two revision rounds included', 'Done in 7–10 business days'], ''),
+        ('2–5 page website', '€500–750', 'Room for your services, your story and a way to get in touch, with the polish of a premium site.',
+         ['Works on every screen', 'Two revision rounds included', 'Done in 7–10 business days', 'Open to coordinating around your needs'], ' hot'),
+        ('Something bigger?', 'Let’s talk', 'Animations, more pages, an online store or something custom. Priced around what you actually need.',
+         ['Fixed quote before work begins', 'Two revision rounds included', 'Timeline agreed up front'], ''),
+    ]
+    cards = ''.join(f"""<article class="tier reveal{hot}" style="--d:{i*110}ms"><p class="tier-name">{n}</p><p class="tier-price">{p}</p><p class="tier-desc">{d}</p>
+        <ul>{''.join(f'<li>{x}</li>' for x in li)}</ul></article>""" for i, (n, p, d, li, hot) in enumerate(tiers))
+    terms = [
+        ('7–10', 'business days', 'From the go-ahead to a completed project.'),
+        ('2', 'revision rounds included', 'Two full rounds of changes are part of the price.'),
+        ('+20%', 'per extra round', 'Each additional round adds 20% of the original price. It never compounds: on a €500 site, every extra round is €100.'),
+        ('0', 'surprises', 'You get a fixed quote, with scope and price agreed before any work begins.'),
+    ]
+    tl = ''.join(f'<div class="term reveal" style="--d:{i*90}ms"><p class="term-big">{a}</p><p class="term-lbl">{l}</p><p class="term-txt">{t}</p></div>' for i, (a, l, t) in enumerate(terms))
+    return head('Rates', 'Signet Works rates: one-page landing pages from about €300, 2–5 page websites from €500–750, done in 7–10 business days with two revision rounds included.', 'rates') + nav() + '<main id="main">' + page_head(
+        '05', 'Rates', 'Premium websites, <em>fair prices.</em>',
+        'Every business needs something different, so rates depend heavily on what yours needs. This is where most projects land.') + f"""
+<section>
+  <div class="wrap">
+    <div class="tiers">{cards}</div>
+    <p class="tier-note reveal">Prices are a starting point, not a fixed menu. Tell us what you need and you’ll get a quote that fits.</p>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="wrap compare-grid">
+    <div class="cmp reveal"><p class="cmp-big"><s>€1,000–2,000</s></p><p class="cmp-lbl">What most freelancers charge per site</p></div>
+    <div class="cmp us reveal" style="--d:140ms"><p class="cmp-big">from €300</p><p class="cmp-lbl">Signet Works</p></div>
+    <div class="cmp-text reveal" style="--d:260ms">
+      <h2 class="h2">A website is part of <em>the business.</em></h2>
+      <p>We believe a website isn’t an add-on. It’s part of the business itself, an extension of it. And in this day and age, a premium website shouldn’t cost a fortune.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker reveal"><b>—</b>How we do business</p>
+      <h2 data-split>Simple terms, <em>in writing.</em></h2>
+    </div>
+    <div class="terms">{tl}</div>
+  </div>
+</section>
+</main>
+""" + band('Ready for a website that <em>fits your budget?</em>') + footer()
+
+def legal_page(slug, title, desc, updated, body):
+    return head(title, desc, slug) + nav() + '<main id="main">' + page_head(
+        '—', 'Legal', title, f'Last updated {updated}.', orb=False, cls='plain legal-head') + f"""
+<section>
+  <div class="wrap legal">{body}</div>
+</section>
+</main>
+""" + footer()
+
+UPDATED = '17 November 2026'
+
+def privacy():
+    body = """
+<h2>The short version</h2>
+<p>This website has no accounts, no analytics and no tracking. We only receive personal information if you choose to email us, and we use it only to reply to you and work on your project.</p>
+<h2>Who we are</h2>
+<p>Signet Works is a web design studio based in Tilburg, the Netherlands. For anything about your data, email <a href="mailto:hello@sigi.com">hello@sigi.com</a>.</p>
+<h2>What we collect, and why</h2>
+<p><b>When you contact us.</b> The project questionnaire and the “Message” button don’t send anything through this website. They open your own email app with a message ready to go. Nothing reaches us unless you press send. If you do, we receive what you wrote: usually your name, email address, business name and project details. We use this only to reply, prepare a quote and carry out the work you ask for.</p>
+<p><b>Legal basis.</b> We process this information to take steps at your request before entering into an agreement, and to carry out that agreement (Article 6(1)(b) GDPR).</p>
+<p><b>When you browse.</b> We don’t collect anything about your visit ourselves. The only things stored are two small preferences on your own device, explained in our <a href="cookies.html">cookie policy</a>.</p>
+<h2>Services that help run this site</h2>
+<p><b>Hosting.</b> This website is hosted on GitHub Pages. Like any web host, GitHub processes technical data such as your IP address to deliver the pages and keep the service secure.</p>
+<p><b>Fonts.</b> Some fonts are loaded from Google Fonts. To deliver them, Google receives your IP address and basic browser information.</p>
+<p><b>Email.</b> Messages you send us are handled by our email provider.</p>
+<h2>How long we keep it</h2>
+<p>We keep emails and project details for as long as needed to answer you and complete your project, and afterwards only as long as required for our records and legal obligations. You can ask us to delete them at any time.</p>
+<h2>Your rights</h2>
+<p>Under the GDPR you can ask to see, correct or delete the personal data we hold about you, object to its use, or ask for a copy. Email us and we’ll respond within one month. You also have the right to complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
+<h2>We don’t sell your data</h2>
+<p>We never sell, rent or share your information for advertising.</p>
+<h2>Changes</h2>
+<p>If this policy changes, we’ll update this page and the date at the top.</p>
+"""
+    return legal_page('privacy', 'Privacy policy', 'How Signet Works handles personal data: no tracking, no analytics, and contact details used only to reply.', UPDATED, body)
+
+def cookies():
+    body = """
+<h2>We don’t use cookies</h2>
+<p>This website doesn’t place any cookies on your device. There are no analytics, advertising or tracking cookies, and no third-party cookies from social media or embedded content. That’s also why you don’t see a cookie banner.</p>
+<h2>What we do store on your device</h2>
+<p>Two small settings are saved in your browser’s own storage so the site behaves the way you expect. They never leave your device and we can’t see them.</p>
+<table>
+  <thead><tr><th>Name</th><th>Where</th><th>Purpose</th><th>How long</th></tr></thead>
+  <tbody>
+    <tr><td><code>sw-theme</code></td><td>Local storage</td><td>Remembers whether you chose the dark or light look.</td><td>Until you clear it</td></tr>
+    <tr><td><code>sw-intro</code></td><td>Session storage</td><td>Makes sure the opening animation plays only once per visit.</td><td>Until you close the tab</td></tr>
+  </tbody>
+</table>
+<h2>Third parties</h2>
+<p>Our host (GitHub Pages) and our font provider (Google Fonts) don’t set cookies on this website. They do receive your IP address when delivering pages and fonts, as explained in our <a href="privacy.html">privacy policy</a>.</p>
+<h2>Removing stored settings</h2>
+<p>You can clear these settings at any time through your browser’s settings, usually under “site data”. The site will simply go back to its default look.</p>
+<h2>Changes</h2>
+<p>If we ever start using cookies, we’ll update this page first and ask for your consent where the law requires it.</p>
+"""
+    return legal_page('cookies', 'Cookie policy', 'Signet Works doesn’t use cookies. Here is what is stored on your device, and why.', UPDATED, body)
+
+for name, fn in [('index', home), ('services', services), ('work', work), ('rates', rates), ('about', about), ('start', start), ('privacy', privacy), ('cookies', cookies)]:
     with open(os.path.join(OUT, name + '.html'), 'w') as f:
         f.write(fn())
 print('ok')

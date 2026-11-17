@@ -86,20 +86,46 @@
     $$('.hero, .page-head').forEach(function(h){ h.classList.add('go'); });
     $$('[data-hero]').forEach(function(el){ el.classList.add('in'); });
   }
-  var ring3d = null;
-  function endIntro(){ if (ring3d) ring3d.stop(); var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
+  var ring3d = null, introEl = $('#intro');
+  function endIntro(){ if (ring3d) ring3d.stop(); if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl); root.classList.remove('intro', 'skip'); }
+  // the dancing lights glide to where the page's own glows sit, then hand over to them
+  function leaveIntro(fast){
+    if (!introEl || introEl.classList.contains('leaving')) return;
+    introEl.classList.add('leaving'); if (fast) introEl.classList.add('fast');
+    showHero();
+    var orbs = $$('.hero .orb, .page-head .orb').filter(function(o){ return o.offsetWidth > 0; });
+    $$('.al', introEl).forEach(function(al, i){
+      var inner = $('i', al), cur = getComputedStyle(inner).transform;
+      inner.style.transform = cur === 'none' ? '' : cur; inner.style.animation = 'none';
+      void inner.offsetWidth;
+      inner.style.transition = 'transform ' + (fast ? '.5s' : '1.1s') + ' cubic-bezier(.76,0,.24,1)'; inner.style.transform = 'none';
+      if (fast){ al.style.transitionDuration = '.5s'; }
+      var o = orbs[i];
+      if (!o){ al.style.opacity = 0; return; }
+      var r = o.getBoundingClientRect(), op = getComputedStyle(root).getPropertyValue('--orb') || '.4';
+      al.style.left = r.left + 'px'; al.style.top = r.top + 'px'; al.style.width = r.width + 'px'; al.style.height = r.height + 'px';
+      al.style.opacity = op.trim();
+    });
+    // crossfade: the real glows fade in as the travelling lights fade out
+    introTimers.push(setTimeout(function(){
+      root.classList.remove('intro');
+      $$('.al', introEl).forEach(function(al){ al.style.transitionDuration = '.7s'; al.style.opacity = 0; });
+    }, fast ? 520 : 1150));
+    introTimers.push(setTimeout(endIntro, fast ? 1300 : 1950));
+  }
   if (hasIntro){
-    // Real 3D ring (loaded only for the intro). If WebGL or the module is unavailable, the flat SVG spin stays.
+    // Real 3D ring (loaded only for the intro; preloaded from the page head). The flat ring is only a fallback.
+    var fallback = setTimeout(function(){ if (introEl && !introEl.classList.contains('has3d')) introEl.classList.add('no3d'); }, 1600);
     import('./ring3d.js?v=6').then(function(m){
-      if (!root.classList.contains('intro')) return;
+      if (!root.classList.contains('intro') || introEl.classList.contains('no3d')) return;
       ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
-      $('#intro').classList.add('has3d');
-    }).catch(function(){});
-    introTimers.push(setTimeout(showHero, 4900), setTimeout(endIntro, 5500));
+      clearTimeout(fallback); introEl.classList.add('has3d');
+    }).catch(function(){ clearTimeout(fallback); if (introEl) introEl.classList.add('no3d'); });
+    introTimers.push(setTimeout(function(){ leaveIntro(false); }, 4500));
     var skipIntro = function(){
-      if (!root.classList.contains('intro') || root.classList.contains('skip')) return;
-      introTimers.forEach(clearTimeout);
-      root.classList.add('skip'); showHero(); setTimeout(endIntro, 500);
+      if (!root.classList.contains('intro') || introEl.classList.contains('leaving')) return;
+      introTimers.forEach(clearTimeout); introTimers = [];
+      leaveIntro(true);
       document.removeEventListener('keydown', skipIntro);
     };
     on($('.skip-intro'), 'click', skipIntro);
