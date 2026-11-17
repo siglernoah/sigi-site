@@ -11,11 +11,11 @@ def mark(lg=False, cls=''):
             '<g class="cmdg"><path class="cmd" pathLength="1" d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" transform="translate(16 9.25) scale(.46) translate(-12 -12)"/></g></svg>')
 MARK = mark()
 
-FAV = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='#13213C'/>"
+FAV = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='#0A0A0A'/>"
        "<g transform='translate(4.8 3.1) scale(1.7)'>"
-       "<path fill='#F3EDE2' fill-rule='evenodd' d='M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z'/>"
-       "<rect x='5.5' y='1.5' width='21' height='15.5' rx='4.6' fill='#F3EDE2' stroke='#13213C' stroke-width='2.2' paint-order='stroke'/>"
-       "<path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' transform='translate(16 9.25) scale(.5) translate(-12 -12)' fill='none' stroke='#FF6F61' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></g></svg>")
+       "<path fill='#F5F5F3' fill-rule='evenodd' d='M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z'/>"
+       "<rect x='5.5' y='1.5' width='21' height='15.5' rx='4.6' fill='#F5F5F3' stroke='#0A0A0A' stroke-width='2.2' paint-order='stroke'/>"
+       "<path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' transform='translate(16 9.25) scale(.5) translate(-12 -12)' fill='none' stroke='#FF5A1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></g></svg>")
 FAV_URI = 'data:image/svg+xml,' + urllib.parse.quote(FAV, safe="/:=' ")
 
 ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
@@ -39,7 +39,7 @@ def head(title, desc, page):
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#13213C">
+<meta name="theme-color" content="#0A0A0A">
 <link rel="icon" href="{FAV_URI}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -381,7 +381,7 @@ def start():
         <label class="field"><input name="site" type="url" inputmode="url" placeholder=" "><span>Current website (if any)</span></label>
         <fieldset class="choices"><legend>What do you need?</legend><div class="chips">{chips}</div></fieldset>
         <label class="field full"><textarea name="message" placeholder=" " required></textarea><span>About the project</span></label>
-        {btn('Send enquiry', '#', 'lg').replace('<a ', '<button type="submit" ').replace(' href="#"', '').replace('</a>', '</button>')}
+        {btn('Send enquiry', '#', 'orange lg').replace('<a ', '<button type="submit" ').replace(' href="#"', '').replace('</a>', '</button>')}
         <p class="note">Sending opens your email app with the message ready to go.</p>
         <p class="sent" role="status" aria-live="polite"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="8.5"/><path d="M6 10.5l2.8 2.8L14.5 7"/></svg><span>Your email app should open with the message ready. If it doesn’t, write to hello@sigi.com.</span></p>
       </form>
