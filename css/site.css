@@ -490,23 +490,34 @@ form .btn{justify-self:start}
 .js .phone-stage{position:relative;display:grid;place-items:center;z-index:2;perspective:1700px;--pw:min(300px,74vw);min-height:calc(var(--pw) * 2.082 + 60px)}
 .phone{position:relative;width:var(--pw);aspect-ratio:281/585;transform-style:preserve-3d;visibility:hidden}
 .phone-stage.enter .phone{visibility:visible}
-.phone-stage.enter .phone{animation:ph-in 3s cubic-bezier(.22,.68,.18,1) forwards,ph-float 5.5s ease-in-out 3s infinite}
+.phone-stage.enter .phone{animation:ph-in 3s cubic-bezier(.22,.68,.18,1) forwards,ph-float 7s ease-in-out 3s infinite}
+.phone-stage:hover .phone,.phone-stage:focus-within .phone{animation-play-state:running,paused}
 @keyframes ph-in{
-  0%{transform:translate3d(70vw,-40px,0) rotateY(-540deg) rotateZ(-12deg) rotateX(10deg)}
-  65%{transform:translate3d(0,-16px,0) rotateY(-70deg) rotateZ(4deg) rotateX(5deg)}
+  0%{transform:translate3d(70vw,-40px,0) rotateY(-540deg) rotateZ(-12deg) rotateX(14deg)}
+  40%{transform:translate3d(18vw,-30px,0) rotateY(-250deg) rotateZ(-6deg) rotateX(12deg)}
+  70%{transform:translate3d(0,-14px,0) rotateY(-55deg) rotateZ(3deg) rotateX(8deg)}
   100%{transform:none}}
-@keyframes ph-float{50%{translate:0 -10px}}
-.ph-face{position:absolute;inset:0;border-radius:16.4%/7.9%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.ph-back{background:url(../img/phone-back.webp) center/100% 100% no-repeat;transform:rotateY(180deg) translateZ(5px)}
-.ph-front{transform:translateZ(5px);padding:2.3%;
+@keyframes ph-float{0%,100%{translate:0 0;rotate:y 0deg}25%{rotate:y -9deg}50%{translate:0 -10px}75%{rotate:y 9deg}}
+.phone{--ph:calc(var(--pw) * 2.0819);--t:calc(var(--pw) * .12);--r:16.4%/7.9%}
+.ph-face{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.ph-front{transform:translateZ(calc(var(--t) / 2));padding:2.3%;
   background:linear-gradient(150deg,#f7a165 0%,#e57b3d 30%,#cf6428 70%,#b4511c 100%);
   box-shadow:inset 0 0 0 1px #ffffff40,inset 0 2px 3px #ffffff59,inset 0 -2px 4px #00000040}
 .ph-screen{position:relative;width:100%;height:100%;border-radius:14.6%/7.1%;background:#000;overflow:hidden;border:6px solid #050505;
   box-shadow:0 0 0 1px #00000099}
 .ph-island{position:absolute;top:1.6%;left:50%;width:31%;height:4.2%;transform:translateX(-50%);background:#000;border-radius:999px;z-index:10;box-shadow:0 0 0 1px #ffffff0d}
-.ph-edge{position:absolute;top:5%;bottom:5%;width:10px;border-radius:5px;background:linear-gradient(90deg,#8f3c14,#e9844a 45%,#f6a46a 55%,#9a4217)}
-.ph-edge-l{left:-5px;transform:rotateY(-90deg)}
-.ph-edge-r{right:-5px;transform:rotateY(90deg)}
+/* solid body: thin layers through the thickness, shaded so the sides read as rounded metal */
+.ph-body,.ph-btns,.ph-backside{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
+.ph-body i{position:absolute;inset:0;border-radius:var(--r);background:var(--c);transform:translateZ(calc(var(--t) * var(--f)))}
+.ph-btns b{position:absolute;width:4px;border-radius:3px;background:linear-gradient(90deg,#b4501c,#f09a5f,#b4501c);transform:translateZ(calc(var(--t) * var(--f)))}
+.ph-btns b.l{left:-3px}.ph-btns b.r{right:-3px}
+.ph-backside{transform:rotateY(180deg) translateZ(calc(var(--t) / 2))}
+.ph-back{position:absolute;inset:0;border-radius:var(--r);background:url(../img/phone-back.webp) 0 0/100% 100% no-repeat;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.ph-backside i{position:absolute;background-image:url(../img/phone-back.webp);background-size:var(--pw) var(--ph);background-repeat:no-repeat;transform:translateZ(calc(var(--z) * var(--pw) * .0045))}
+.pl-side,.pl-top{border-radius:13.2%/25%}
+.pl-side{background-image:none!important;background:#c95f25}
+.ln-side,.ln-top{border-radius:50%}
+.ln-side{background-image:none!important;background:#d06a2e;box-shadow:inset 0 0 0 2px #e58a4f}
 .ph-shadow{position:absolute;bottom:8px;width:calc(var(--pw) * .72);height:28px;border-radius:50%;background:radial-gradient(closest-side,#000000b3,#0000);filter:blur(6px);opacity:0}
 .phone-stage.enter .ph-shadow{animation:fadein 1.2s ease 1.8s forwards,sh-float 5.5s ease-in-out 3s infinite}
 @keyframes sh-float{50%{transform:scale(.88);opacity:.7}}
