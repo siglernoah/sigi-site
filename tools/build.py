@@ -203,6 +203,46 @@ FAQ = [('How much does a website cost?', 'It depends on the size of the site and
 def faq():
     return '<div class="faq reveal">' + ''.join(f'<details><summary>{q}<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>{a}</p></div></details>' for q, a in FAQ) + '</div>'
 
+
+import math
+def _closed_path(pts):
+    n = len(pts); d = f'M{pts[0][0]:.1f} {pts[0][1]:.1f}'
+    for i in range(n):
+        p0, p1, p2, p3 = pts[(i-1) % n], pts[i], pts[(i+1) % n], pts[(i+2) % n]
+        c1 = (p1[0] + (p2[0]-p0[0])/6, p1[1] + (p2[1]-p0[1])/6)
+        c2 = (p2[0] - (p3[0]-p1[0])/6, p2[1] - (p3[1]-p1[1])/6)
+        d += f'C{c1[0]:.1f} {c1[1]:.1f} {c2[0]:.1f} {c2[1]:.1f} {p2[0]:.1f} {p2[1]:.1f}'
+    return d + 'Z'
+
+def _rings(cx, cy, count, step, start, harm, cls):
+    out = []
+    for i in range(count):
+        r0 = start + i * step
+        pts = []
+        for k in range(72):
+            t = 2 * math.pi * k / 72
+            w = sum(a * math.sin(m * t + ph + i * 0.045) for m, a, ph in harm)
+            r = r0 * (1 + w)
+            pts.append((cx + r * math.cos(t) * 1.12, cy + r * math.sin(t)))
+        major = ' major' if i % 4 == 3 else ''
+        out.append(f'<path class="{cls}{major}" style="--n:{i}" pathLength="1" d="{_closed_path(pts)}"/>')
+    return out
+
+def topo_svg():
+    harm = [(2, .055, .4), (3, .045, 1.9), (5, .022, .7), (7, .010, 2.6)]
+    main = _rings(330, 270, 17, 17, 12, harm, 'c')
+    side = _rings(735, 470, 7, 15, 10, [(2, .07, 2.2), (3, .05, .3), (4, .03, 1.1)], 'c s')
+    grid = ''.join(f'<line x1="{x}" y1="0" x2="{x}" y2="560"/>' for x in range(0, 841, 70)) + \
+           ''.join(f'<line x1="0" y1="{y}" x2="840" y2="{y}"/>' for y in range(0, 561, 70))
+    return ('<figure class="topo reveal" aria-label="Stylised topographic map with contour rings centred on Tilburg">'
+            '<svg viewBox="0 0 840 560" aria-hidden="true">'
+            f'<g class="grid">{grid}</g><g class="contours">{"".join(main)}{"".join(side)}</g>'
+            '<g class="pulse"><circle cx="330" cy="270" r="10"/><circle cx="330" cy="270" r="10"/><circle cx="330" cy="270" r="10"/></g>'
+            '<g class="pin"><circle class="halo" cx="330" cy="270" r="14"/><circle class="dot" cx="330" cy="270" r="6"/></g></svg>'
+            '<figcaption><span class="lbl"><b>Tilburg</b> North Brabant, NL</span><span class="coord">51.5555° N · 5.0913° E</span></figcaption>'
+            '<span class="corner tl">N ↑</span><span class="corner br">Stylised contours</span></figure>')
+
+
 TRADES = ['Restaurants', 'Clinics', 'Contractors', 'Law firms', 'Shops', 'Studios', 'Churches &amp; nonprofits', 'Consultants']
 
 def arrow_link(label, href):
@@ -339,10 +379,26 @@ def about():
   </div>
 </section>
 
+<section class="origin">
+  <div class="wrap">
+    <div class="head">
+      <p class="kicker reveal"><b>05</b>Origin</p>
+      <h2 data-split>Headquartered in Tilburg, <em>operating around the globe.</em></h2>
+    </div>
+    <div class="origin-grid">
+      {topo_svg()}
+      <div class="prose reveal" style="--d:150ms">
+        <p>Signet Works started in Tilburg, in the south of the Netherlands, and that is still home base.</p>
+        <p>From there, the work travels: websites are planned, designed and launched remotely, for businesses wherever they are. Like the rings on this map, it starts from one point and keeps reaching further out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="alt">
   <div class="wrap split2">
     <div>
-      <p class="kicker reveal" style="margin-bottom:24px"><b>05</b>The name</p>
+      <p class="kicker reveal" style="margin-bottom:24px"><b>06</b>The name</p>
       <h2 class="h2" data-split>Why a <em>signet?</em></h2>
     </div>
     <div class="prose reveal">
