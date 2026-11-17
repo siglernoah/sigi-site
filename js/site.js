@@ -90,7 +90,7 @@
   function endIntro(){ if (ring3d) ring3d.stop(); var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
   if (hasIntro){
     // Real 3D ring (loaded only for the intro). If WebGL or the module is unavailable, the flat SVG spin stays.
-    import('./ring3d.js').then(function(m){
+    import('./ring3d.js?v=2').then(function(m){
       if (!root.classList.contains('intro')) return;
       ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
       $('#intro').classList.add('has3d');
