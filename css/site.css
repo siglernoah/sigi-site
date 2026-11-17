@@ -25,6 +25,7 @@
   color-scheme:light;
 }
 :root{
+  --logo:"Rubik","Inter",system-ui,sans-serif; --logo-rough:"Rubik Dirt","Rubik","Inter",system-ui,sans-serif;
   --serif:"Newsreader","Iowan Old Style",Georgia,serif;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Helvetica Neue",system-ui,sans-serif;
   --brand:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",system-ui,sans-serif;
@@ -64,13 +65,8 @@ body::after{content:"";position:fixed;inset:0;z-index:400;pointer-events:none;op
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ---------- signet mark ---------- */
-.mark{width:1em;height:1.0625em;flex:none;overflow:visible}
-.mark .band{fill:currentColor}
-.mark .face{fill:currentColor;stroke:var(--mark-gap,var(--bg));stroke-width:2.2;paint-order:stroke}
-.mark .bevel{display:none;fill:none;stroke:var(--mark-gap,var(--bg));stroke-width:.7;opacity:.45}
-.mark.lg .bevel{display:block}
-.mark .cmd{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.mark .cmdg{transform-origin:16px 9.25px;transition:transform .8s var(--ease)}
+.mark{display:inline-block;flex:none;height:1em;aspect-ratio:1230/743;background:currentColor;
+  -webkit-mask:url(../img/signet.png) center/contain no-repeat;mask:url(../img/signet.png) center/contain no-repeat;transition:transform .7s var(--ease)}
 
 /* serif + sans headline blend: serif carries the line, sans lands the punchline */
 h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-style:normal;font-weight:700;letter-spacing:-.055em;font-size:.9em;color:var(--accent)}
@@ -79,11 +75,9 @@ h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-styl
 #intro{display:none}
 .intro #intro{display:grid;place-items:center;position:fixed;inset:0;z-index:450;background:#0A0A0A;color:#F5F5F3;--mark-gap:#0A0A0A;clip-path:inset(0 0 0 0);
   animation:curtain 1s var(--ease-io) 1.15s forwards}
-#intro .lock{display:flex;align-items:center;gap:.16em;font:650 clamp(2.4rem,7vw,5.2rem)/1.05 var(--brand);letter-spacing:-.045em}
-#intro .mark{width:1.1em;height:1.17em}
-#intro .mark .band{transform-origin:16px 21px;transform:scale(.6);opacity:0;animation:drop .8s var(--ease) .15s forwards}
-#intro .mark .face,#intro .mark .bevel{transform:translateY(-6px);opacity:0;animation:drop .7s var(--ease) .4s forwards}
-#intro .mark .cmd{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s var(--ease) .65s forwards}
+#intro .lock{display:flex;align-items:center;gap:.22em;font:400 clamp(2.4rem,7vw,5.2rem)/1 var(--logo-rough);text-transform:uppercase;letter-spacing:.01em}
+#intro .mark{height:1.25em;transform:scale(1.6) rotate(-14deg);opacity:0;animation:stamp .55s cubic-bezier(.5,0,.2,1.3) .2s forwards}
+@keyframes stamp{60%{opacity:1}100%{transform:none;opacity:1}}
 #intro .word{overflow:hidden;padding:.05em .05em .14em}
 #intro .word span{display:inline-block;transform:translateY(115%);animation:rise .9s var(--ease) .25s forwards}
 #intro .word+.mark+.word span{animation-delay:.4s}
@@ -115,9 +109,9 @@ h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-styl
 .nav.scrolled{background:color-mix(in srgb,var(--bg) 94%,transparent);border-color:var(--line)}
 .nav.hide{transform:translateY(-101%)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
-.logo{display:flex;align-items:center;gap:.24em;font:650 21px/1 var(--brand);text-decoration:none;letter-spacing:-.03em;white-space:nowrap}
-.logo .mark{width:1.32em;height:1.4em;margin-top:-.12em}
-.logo:hover .cmdg,.big:hover .cmdg{transform:rotate(90deg)}
+.logo{display:flex;align-items:center;gap:.32em;font:800 19px/1 var(--logo);text-transform:uppercase;text-decoration:none;letter-spacing:.02em;white-space:nowrap}
+.logo .mark{height:1.55em}
+.logo:hover .mark,.big:hover .mark{transform:rotate(-8deg) scale(1.06)}
 .links{display:flex;align-items:center;gap:4px;font-size:15px;position:relative}
 .links a.l{text-decoration:none;padding:8px 15px;border-radius:999px;position:relative;z-index:1;transition:color .3s}
 .links a.l:hover{color:var(--accent-ink)}
@@ -397,9 +391,7 @@ details .ans p{padding:0 50px 26px 0;color:var(--fg-2)}
 .band-cta .btn{background:#0A0A0A;border-color:#0A0A0A;color:#F5F5F3}
 .band-cta .btn::before{background:#F5F5F3}
 .band-cta .btn:hover{color:#0A0A0A;border-color:#F5F5F3}
-.band-cta .ghost-mark{position:absolute;right:-60px;bottom:-110px;width:420px;height:446px;color:#0A0A0A;opacity:.08;pointer-events:none;--mark-gap:transparent}
-.band-cta .ghost-mark .cmd{stroke:#0A0A0A}
-.band-cta .ghost-mark .bevel{display:none}
+.band-cta .ghost-mark{position:absolute;right:-90px;bottom:-60px;height:340px;color:#0A0A0A;opacity:.1;pointer-events:none;transform:rotate(-10deg)}
 
 /* ---------- start-a-project page ---------- */
 .contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:start}
@@ -441,8 +433,8 @@ form .btn{justify-self:start}
 /* ---------- footer ---------- */
 footer{background:var(--foot-bg);color:var(--foot-fg);font-size:14px;overflow:hidden;--mark-gap:var(--foot-bg);border-top:1px solid var(--line)}
 :root[data-theme="light"] footer{border-top:0}
-.big{display:flex;justify-content:center;align-items:center;gap:.14em;font:700 min(12.4vw,148px)/.9 var(--brand);letter-spacing:-.055em;color:#F5F5F3;text-decoration:none;white-space:nowrap;padding:56px 0 30px;overflow:hidden}
-.big .mark{width:.92em;height:.98em;margin-top:-.04em}
+.big{display:flex;justify-content:center;align-items:center;gap:.16em;font:400 min(7.4vw,96px)/.9 var(--logo-rough);text-transform:uppercase;letter-spacing:0;color:#F5F5F3;text-decoration:none;white-space:nowrap;padding:56px 0 30px;overflow:hidden}
+.big .mark{height:1.05em}
 .big .ch{display:inline-block}
 .js .big .ch,.js .big .mark{transform:translateY(100%);opacity:0;transition:transform 1.2s var(--ease),opacity 1.2s var(--ease);transition-delay:calc(var(--i)*40ms)}
 .js .big.in .ch,.js .big.in .mark{transform:none;opacity:1}
@@ -484,7 +476,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 @media (max-width:560px){
   body{font-size:16px}
   .wrap{padding:0 18px}
-  .logo{font-size:19px}
+  .logo{font-size:16px}
   .nav .wrap{height:64px}
   .theme{width:56px;height:32px}
   .theme .knob{width:24px;height:24px}

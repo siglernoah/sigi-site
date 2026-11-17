@@ -4,19 +4,9 @@ OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repo root
 
 def mark(lg=False, cls=''):
     c = ('mark lg ' + cls).strip() if lg else ('mark ' + cls).strip()
-    return (f'<svg class="{c}" viewBox="0 0 32 34" aria-hidden="true">'
-            '<path class="band" fill-rule="evenodd" d="M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z"/>'
-            '<rect class="face" x="5.5" y="1.5" width="21" height="15.5" rx="4.6"/>'
-            '<rect class="bevel" x="7.6" y="3.6" width="16.8" height="11.3" rx="3"/>'
-            '<g class="cmdg"><path class="cmd" pathLength="1" d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" transform="translate(16 9.25) scale(.46) translate(-12 -12)"/></g></svg>')
+    return f'<span class="{c}" aria-hidden="true"></span>'
 MARK = mark()
 
-FAV = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='#0A0A0A'/>"
-       "<g transform='translate(4.8 3.1) scale(1.7)'>"
-       "<path fill='#F5F5F3' fill-rule='evenodd' d='M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z'/>"
-       "<rect x='5.5' y='1.5' width='21' height='15.5' rx='4.6' fill='#F5F5F3' stroke='#0A0A0A' stroke-width='2.2' paint-order='stroke'/>"
-       "<path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' transform='translate(16 9.25) scale(.5) translate(-12 -12)' fill='none' stroke='#FF5A1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></g></svg>")
-FAV_URI = 'data:image/svg+xml,' + urllib.parse.quote(FAV, safe="/:=' ")
 
 ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 EXT = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.5 8.5l5-5M4.5 3.5h4v4"/></svg>'
@@ -40,10 +30,11 @@ def head(title, desc, page):
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0A0A0A">
-<link rel="icon" href="{FAV_URI}">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;family=Rubik:wght@700..900&amp;family=Rubik+Dirt&amp;display=swap" rel="stylesheet">
 <script>
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
