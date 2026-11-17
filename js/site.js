@@ -80,11 +80,26 @@
   /* ---------- intro + first screen ---------- */
   var hasIntro = root.classList.contains('intro');
   try { sessionStorage.setItem('sw-intro', '1'); } catch(e){}
-  setTimeout(function(){
+  var heroShown = false, introTimers = [];
+  function showHero(){
+    if (heroShown) return; heroShown = true;
     $$('.hero, .page-head').forEach(function(h){ h.classList.add('go'); });
     $$('[data-hero]').forEach(function(el){ el.classList.add('in'); });
-  }, hasIntro ? 1450 : 60);
-  if (hasIntro) setTimeout(function(){ var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro'); }, 2300);
+  }
+  function endIntro(){ var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
+  if (hasIntro){
+    introTimers.push(setTimeout(showHero, 4900), setTimeout(endIntro, 5500));
+    var skipIntro = function(){
+      if (!root.classList.contains('intro') || root.classList.contains('skip')) return;
+      introTimers.forEach(clearTimeout);
+      root.classList.add('skip'); showHero(); setTimeout(endIntro, 500);
+      document.removeEventListener('keydown', skipIntro);
+    };
+    on($('.skip-intro'), 'click', skipIntro);
+    document.addEventListener('keydown', skipIntro);
+  } else {
+    setTimeout(showHero, 60);
+  }
 
   /* ---------- reveal on scroll ---------- */
   var revealables = $$('.reveal, [data-split]:not([data-hero]), .big');
