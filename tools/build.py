@@ -402,8 +402,6 @@ def about():
 ''' + band() + footer()
 
 def start():
-    needs = ['A new website', 'A redesign', 'An online store', 'Updates to a site', 'Not sure yet']
-    chips = ''.join(f'<label><input type="radio" name="need" value="{n}"{" checked" if i == 0 else ""}><span>{n}</span></label>' for i, n in enumerate(needs))
     return head('Start a project', 'Tell Signet Works about your business and the website you need. You will get a reply with next steps and a time to talk.', 'start') + nav() + '<main id="main">' + page_head(
         '05', 'Start a project', 'Let’s build your <em>website.</em>',
         'Tell me a little about your business and what you need. I’ll reply with next steps and a time to talk.') + f'''
@@ -412,25 +410,76 @@ def start():
     <div>
       <p class="kicker reveal"><b>—</b>What happens next</p>
       <ol class="next reveal">
-        <li><div><b>You send the details</b><span>A few lines about your business and what you need is plenty.</span></div></li>
+        <li><div><b>You answer four quick questions</b><span>About a minute. No phone number needed.</span></div></li>
         <li><div><b>We talk</b><span>A short call to understand your customers and goals.</span></div></li>
         <li><div><b>You get a fixed quote</b><span>Clear scope and price before any work begins.</span></div></li>
       </ol>
       <p class="reveal" style="margin-top:34px;color:var(--muted)">Prefer email?</p>
       <a class="mail reveal" href="mailto:hello@sigi.com">hello@sigi.com</a>
     </div>
-    <div class="formcard reveal" style="--d:120ms">
-      <h2>Project details</h2>
-      <form id="form" novalidate>
-        <label class="field"><input name="name" autocomplete="name" placeholder=" " required><span>Your name</span></label>
-        <label class="field"><input name="email" type="email" autocomplete="email" placeholder=" " required><span>Email</span></label>
-        <label class="field"><input name="business" autocomplete="organization" placeholder=" "><span>Business name</span></label>
-        <label class="field"><input name="site" type="url" inputmode="url" placeholder=" "><span>Current website (if any)</span></label>
-        <fieldset class="choices"><legend>What do you need?</legend><div class="chips">{chips}</div></fieldset>
-        <label class="field full"><textarea name="message" placeholder=" " required></textarea><span>About the project</span></label>
-        {btn('Send enquiry', '#', 'orange lg').replace('<a ', '<button type="submit" ').replace(' href="#"', '').replace('</a>', '</button>')}
-        <p class="note">Sending opens your email app with the message ready to go.</p>
-        <p class="sent" role="status" aria-live="polite"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="8.5"/><path d="M6 10.5l2.8 2.8L14.5 7"/></svg><span>Your email app should open with the message ready. If it doesn’t, write to hello@sigi.com.</span></p>
+    <div class="formcard quiz reveal" style="--d:120ms" id="quiz">
+      <div class="q-top">
+        <span class="q-count" aria-live="polite"><b id="qNow">01</b> / 04</span>
+        <span class="q-bar" aria-hidden="true"><i id="qBar"></i></span>
+      </div>
+      <form id="qform" action="mailto:hello@sigi.com" method="post" enctype="text/plain" novalidate>
+
+        <fieldset class="q-step on" data-step="1">
+          <legend class="q-title" tabindex="-1">What do you need help with?</legend>
+          <p class="q-hint">Pick as many as you like.</p>
+          <div class="chips lg">
+            <label><input type="checkbox" name="need" value="A new website"><span>A new website</span></label>
+            <label><input type="checkbox" name="need" value="A redesign"><span>A redesign</span></label>
+            <label><input type="checkbox" name="need" value="An online store"><span>An online store</span></label>
+            <label><input type="checkbox" name="need" value="Updates &amp; care"><span>Updates &amp; care</span></label>
+            <label><input type="checkbox" name="need" value="Not sure yet"><span>Not sure yet</span></label>
+          </div>
+          <p class="q-err" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="2">
+          <legend class="q-title" tabindex="-1">Tell me about your business.</legend>
+          <p class="q-hint">A few lines is plenty: what you do, and who your customers are.</p>
+          <div class="q-fields">
+            <label class="field"><input name="business" autocomplete="organization" placeholder=" "><span>Business name (optional)</span></label>
+            <label class="field"><textarea name="about" placeholder=" " required></textarea><span>What does your business do?</span></label>
+          </div>
+          <p class="q-err" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="3">
+          <legend class="q-title" tabindex="-1">When would you like it live?</legend>
+          <p class="q-hint">No pressure, it just helps with planning.</p>
+          <div class="chips lg" data-auto>
+            <label><input type="radio" name="when" value="As soon as possible"><span>As soon as possible</span></label>
+            <label><input type="radio" name="when" value="Within 1–2 months"><span>Within 1–2 months</span></label>
+            <label><input type="radio" name="when" value="In 3+ months"><span>In 3+ months</span></label>
+            <label><input type="radio" name="when" value="Just exploring"><span>Just exploring</span></label>
+          </div>
+          <p class="q-err" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="4">
+          <legend class="q-title" tabindex="-1">Where can we reach you?</legend>
+          <p class="q-hint">Email only. You’ll get a personal reply, never a newsletter.</p>
+          <div class="q-fields">
+            <label class="field"><input name="name" autocomplete="name" placeholder=" " required><span>Your name</span></label>
+            <label class="field"><input name="email" type="email" autocomplete="email" placeholder=" " required><span>Email address</span></label>
+          </div>
+          <p class="q-err" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="q-step" data-step="5">
+          <legend class="q-title" tabindex="-1">All set. Look right?</legend>
+          <dl class="q-sum" id="qSum"></dl>
+          <p class="sent" role="status" aria-live="polite"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="8.5"/><path d="M6 10.5l2.8 2.8L14.5 7"/></svg><span>Your email app should open with everything filled in. If it doesn’t, write to hello@sigi.com.</span></p>
+        </fieldset>
+
+        <div class="q-nav">
+          <button type="button" class="q-back" id="qBack" hidden>← Back</button>
+          <button type="button" class="btn orange lg" id="qNext" data-magnetic><span class="tw"><span class="t">Continue</span></span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          <span class="q-enter" aria-hidden="true">or press <kbd>Enter ↵</kbd></span>
+        </div>
       </form>
     </div>
   </div>

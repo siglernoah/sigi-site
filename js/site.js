@@ -283,6 +283,92 @@
     window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   });
 
+
+  /* ---------- project questionnaire ---------- */
+  var quiz = $('#quiz');
+  if (quiz){
+    var qf = $('#qform'), steps = $$('.q-step', quiz), qi = 0, total = 4;
+    var qNow = $('#qNow'), qBar = $('#qBar'), qBack = $('#qBack'), qNext = $('#qNext'), qNextT = $('.t', qNext), qSum = $('#qSum');
+    var LABELS = { need: 'Help with', business: 'Business', about: 'About', when: 'Timing', name: 'Name', email: 'Email' };
+    var STEP_OF = { need: 0, business: 1, about: 1, when: 2, name: 3, email: 3 };
+    var vals = function(){
+      var f = new FormData(qf);
+      return { need: f.getAll('need').join(', '), business: (f.get('business') || '').trim(), about: (f.get('about') || '').trim(),
+               when: f.get('when') || '', name: (f.get('name') || '').trim(), email: (f.get('email') || '').trim() };
+    };
+    var check = function(n){
+      var st = steps[n], err = $('.q-err', st), msg = '';
+      if (n === 0 && !$$('input:checked', st).length) msg = 'Pick at least one option.';
+      if (n === 1 && !vals().about) msg = 'Tell me a little about what your business does.';
+      if (n === 2 && !$$('input:checked', st).length) msg = 'Choose whichever fits best.';
+      if (n === 3){
+        var v = vals(), em = $('input[name="email"]', st);
+        if (!v.name) msg = 'What should I call you?';
+        else if (!v.email || !em.checkValidity()) msg = 'That email address doesn’t look quite right.';
+      }
+      err.textContent = msg;
+      if (msg && !RM && st.animate) st.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 320 });
+      return !msg;
+    };
+    var summary = function(){
+      var v = vals();
+      qSum.innerHTML = '';
+      ['need', 'business', 'about', 'when', 'name', 'email'].forEach(function(k){
+        if (!v[k]) return;
+        var row = document.createElement('div');
+        var dt = document.createElement('dt'); dt.textContent = LABELS[k];
+        var dd = document.createElement('dd'); dd.textContent = v[k];
+        var ed = document.createElement('button'); ed.type = 'button'; ed.textContent = 'Edit';
+        ed.setAttribute('aria-label', 'Edit ' + LABELS[k].toLowerCase());
+        ed.addEventListener('click', function(){ show(STEP_OF[k], true); });
+        row.appendChild(dt); row.appendChild(dd); row.appendChild(ed); qSum.appendChild(row);
+      });
+    };
+    var show = function(n, back){
+      steps[qi].classList.remove('on', 'back');
+      qi = n;
+      var st = steps[qi];
+      st.classList.toggle('back', !!back);
+      st.classList.add('on');
+      var shown = Math.min(qi + 1, total);
+      qNow.textContent = '0' + shown;
+      qBar.style.width = (qi >= total ? 100 : shown / total * 100) + '%';
+      qBack.hidden = qi === 0;
+      qNextT.textContent = qi === total ? 'Send to Signet Works' : (qi === total - 1 ? 'Review' : 'Continue');
+      if (qi === total) summary();
+      var err = $('.q-err', st); if (err) err.textContent = '';
+      var title = $('.q-title', st); if (title) title.focus({ preventScroll: true });
+      var first = $('input:not([type=checkbox]):not([type=radio]), textarea', st);
+      if (first && FINE) setTimeout(function(){ first.focus({ preventScroll: true }); }, 250);
+      cache();
+    };
+    var send = function(){
+      var v = vals();
+      var subject = 'Website enquiry — ' + (v.business || v.name);
+      var body = 'Name: ' + v.name + '\nEmail: ' + v.email + '\nBusiness: ' + (v.business || '-') +
+                 '\nNeeds help with: ' + v.need + '\nTiming: ' + v.when + '\n\nAbout the business:\n' + v.about;
+      $('.sent', quiz).classList.add('show');
+      window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    };
+    qNext.addEventListener('click', function(){
+      if (qi === total){ send(); return; }
+      if (check(qi)) show(qi + 1);
+    });
+    qBack.addEventListener('click', function(){ if (qi > 0) show(qi - 1, true); });
+    qf.addEventListener('submit', function(e){ e.preventDefault(); qNext.click(); });
+    qf.addEventListener('keydown', function(e){
+      var tag = e.target.tagName;
+      if (e.key !== 'Enter') return;
+      if (tag === 'TEXTAREA' && !(e.metaKey || e.ctrlKey)) return;
+      if (tag === 'BUTTON') return;
+      e.preventDefault(); qNext.click();
+    });
+    $$('[data-auto] input', quiz).forEach(function(r){
+      r.addEventListener('change', function(){ setTimeout(function(){ if (steps[qi].contains(r)) qNext.click(); }, RM ? 0 : 380); });
+    });
+    $$('input[type=checkbox]', quiz).forEach(function(c){ c.addEventListener('change', function(){ $('.q-err', steps[0]).textContent = ''; }); });
+  }
+
   /* ---------- layout cache ---------- */
   var vh = innerHeight, docMax = 0, scrubTop = 0, scrubH = 0, dirty = true;
   function cache(){
