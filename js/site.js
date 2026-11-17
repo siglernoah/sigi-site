@@ -18,7 +18,7 @@
   function applyTheme(t){
     root.setAttribute('data-theme', t);
     try { localStorage.setItem('sw-theme', t); } catch(e){}
-    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#F4F1EA' : '#0A0A0A');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#F3EDE2' : '#13213C');
     $$('.theme').forEach(function(b){
       b.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
       b.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
@@ -66,12 +66,14 @@
   if (!RM){
     $$('[data-split],[data-scrub]').forEach(split);
     if (big){
-      var word = big.getAttribute('data-word') || 'Signet Works';
-      var mark = $('.mark', big);
-      if (mark) mark.style.setProperty('--i', 0);
-      big.querySelector('.word').innerHTML = word.split('').map(function(ch, i){
-        return '<span class="ch" style="--i:' + (i + 1) + '">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
-      }).join('');
+      var ci = 0;
+      Array.prototype.slice.call(big.children).forEach(function(part){
+        if (part.classList.contains('word')){
+          part.innerHTML = part.textContent.split('').map(function(ch){
+            return '<span class="ch" style="--i:' + (ci++) + '">' + ch + '</span>';
+          }).join('');
+        } else { part.style.setProperty('--i', ci++); }
+      });
     }
   }
 

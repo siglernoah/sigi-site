@@ -2,15 +2,20 @@
 import os, urllib.parse
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repo root
 
-MARK = ('<svg class="mark" viewBox="0 0 32 32" aria-hidden="true">'
-        '<circle class="band" cx="16" cy="19.5" r="9.4"/>'
-        '<rect class="face" x="7.5" y="2.5" width="17" height="11.5" rx="3.8"/>'
-        '<circle class="seal" cx="16" cy="8.25" r="2.7"/></svg>')
+def mark(lg=False, cls=''):
+    c = ('mark lg ' + cls).strip() if lg else ('mark ' + cls).strip()
+    return (f'<svg class="{c}" viewBox="0 0 32 34" aria-hidden="true">'
+            '<path class="band" fill-rule="evenodd" d="M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z"/>'
+            '<rect class="face" x="5.5" y="1.5" width="21" height="15.5" rx="4.6"/>'
+            '<rect class="bevel" x="7.6" y="3.6" width="16.8" height="11.3" rx="3"/>'
+            '<g class="cmdg"><path class="cmd" pathLength="1" d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" transform="translate(16 9.25) scale(.46) translate(-12 -12)"/></g></svg>')
+MARK = mark()
 
-FAV = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='#0A0A0A'/>"
-       "<circle cx='32' cy='39' r='17.5' fill='none' stroke='#F5F5F3' stroke-width='5.4'/>"
-       "<rect x='16' y='6' width='32' height='22' rx='7.2' fill='#F5F5F3' stroke='#0A0A0A' stroke-width='4.2' paint-order='stroke'/>"
-       "<circle cx='32' cy='17' r='5.2' fill='#FF5A1F'/></svg>")
+FAV = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='#13213C'/>"
+       "<g transform='translate(4.8 3.1) scale(1.7)'>"
+       "<path fill='#F3EDE2' fill-rule='evenodd' d='M16 10.4a10.6 10.6 0 1 1 0 21.2a10.6 10.6 0 1 1 0-21.2zM16 14.2a7.4 7.4 0 1 0 0 14.8a7.4 7.4 0 1 0 0-14.8z'/>"
+       "<rect x='5.5' y='1.5' width='21' height='15.5' rx='4.6' fill='#F3EDE2' stroke='#13213C' stroke-width='2.2' paint-order='stroke'/>"
+       "<path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' transform='translate(16 9.25) scale(.5) translate(-12 -12)' fill='none' stroke='#FF6F61' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></g></svg>")
 FAV_URI = 'data:image/svg+xml,' + urllib.parse.quote(FAV, safe="/:=' ")
 
 ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
@@ -34,11 +39,11 @@ def head(title, desc, page):
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#13213C">
 <link rel="icon" href="{FAV_URI}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=DM+Sans:opsz,wght@9..40,400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;display=swap" rel="stylesheet">
 <script>
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
@@ -49,7 +54,7 @@ try{{if(!rm&&!sessionStorage.getItem('sw-intro'))c.add('intro')}}catch(e){{}}}})
 </head>
 <body data-page="{page}">
 <a class="skip" href="#main">Skip to content</a>
-<div id="intro" aria-hidden="true"><div class="lock">{MARK}<span class="word"><span>Signet Works</span></span></div><div class="bar"></div></div>
+<div id="intro" aria-hidden="true"><div class="lock"><span class="word"><span>Signet</span></span>{mark(lg=True)}<span class="word"><span>Works</span></span></div><div class="bar"></div></div>
 <div id="progress" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><b>View</b></div>
 '''
@@ -61,7 +66,7 @@ THEME_BTN = ('<button class="theme" type="button" aria-pressed="false" aria-labe
 def nav():
     return f'''<header class="nav" id="nav">
   <div class="wrap">
-    <a class="logo" href="index.html" aria-label="Signet Works home">{MARK}<span>Signet Works</span></a>
+    <a class="logo" href="index.html" aria-label="Signet Works home"><span>Signet</span>{MARK}<span>Works</span></a>
     <nav class="links" aria-label="Primary">
       <span class="pill-ind"></span>
       <a class="l" href="services.html" data-nav="services">Services</a>
@@ -89,7 +94,7 @@ def nav():
 
 def band(title='Have a business that <em>needs a website?</em>'):
     return f'''<section class="band-cta">
-  <svg class="ghost-mark mark" viewBox="0 0 32 32" aria-hidden="true"><circle class="band" cx="16" cy="19.5" r="9.4"/><rect class="face" x="7.5" y="2.5" width="17" height="11.5" rx="3.8"/><circle class="seal" cx="16" cy="8.25" r="2.7"/></svg>
+  {mark(lg=True, cls='ghost-mark')}
   <div class="wrap inner">
     <h2 data-split>{title}</h2>
     {btn('Start a project', 'start.html', 'lg')}
@@ -100,7 +105,7 @@ def band(title='Have a business that <em>needs a website?</em>'):
 def footer():
     return f'''<footer>
   <div class="wrap">
-    <a class="big" href="index.html" aria-label="Signet Works home">{MARK}<span class="word">Signet Works</span></a>
+    <a class="big" href="index.html" aria-label="Signet Works home"><span class="word">Signet</span>{mark(lg=True)}<span class="word">Works</span></a>
     <div class="foot">
       <span>© <span class="year">2026</span> Signet Works</span>
       <nav aria-label="Footer"><a href="services.html">Services</a><a href="work.html">Work</a><a href="about.html">About</a><a href="start.html">Start a project</a></nav>
@@ -376,7 +381,7 @@ def start():
         <label class="field"><input name="site" type="url" inputmode="url" placeholder=" "><span>Current website (if any)</span></label>
         <fieldset class="choices"><legend>What do you need?</legend><div class="chips">{chips}</div></fieldset>
         <label class="field full"><textarea name="message" placeholder=" " required></textarea><span>About the project</span></label>
-        {btn('Send enquiry', '#', 'orange lg').replace('<a ', '<button type="submit" ').replace(' href="#"', '').replace('</a>', '</button>')}
+        {btn('Send enquiry', '#', 'lg').replace('<a ', '<button type="submit" ').replace(' href="#"', '').replace('</a>', '</button>')}
         <p class="note">Sending opens your email app with the message ready to go.</p>
         <p class="sent" role="status" aria-live="polite"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="8.5"/><path d="M6 10.5l2.8 2.8L14.5 7"/></svg><span>Your email app should open with the message ready. If it doesn’t, write to hello@sigi.com.</span></p>
       </form>
