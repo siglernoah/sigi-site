@@ -398,13 +398,18 @@
     var track = $('#answer'), knob = $('#answerKnob');
     var fill = document.createElement('span'); fill.className = 'answer-fill'; track.insertBefore(fill, track.firstChild);
     var maxX = 0, x = 0, dragging = false, startX = 0, answered = false;
-    var quizCard = $('#quiz');
+    var quizCard = $('#quiz'), proj = $('#proj'), stage = $('#phoneStage');
     // start the call animation when the card scrolls into view
     if ('IntersectionObserver' in window && !RM){
-      var cio = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ call.classList.add('play'); cio.disconnect(); setTimeout(nudge, 3200); } }, { threshold: .45 });
-      cio.observe(call);
-    } else { call.classList.add('play'); }
-    var measureTrack = function(){ maxX = track.clientWidth - knob.offsetWidth - 14; };
+      // the phone flies in (3s), then the call starts on its screen
+      var cio = new IntersectionObserver(function(es){
+        if (!es[0].isIntersecting) return;
+        cio.disconnect(); stage.classList.add('enter');
+        setTimeout(function(){ call.classList.add('play'); setTimeout(nudge, 3200); }, 3000);
+      }, { threshold: .3 });
+      cio.observe(stage);
+    } else { stage.classList.add('enter'); call.classList.add('play'); }
+    var measureTrack = function(){ maxX = track.clientWidth - knob.offsetWidth - 2 * knob.offsetLeft; };
     measureTrack(); window.addEventListener('resize', measureTrack);
     var setX = function(v){
       x = clamp(v, 0, maxX);
@@ -421,7 +426,8 @@
       setX(maxX); track.classList.add('done');
       knob.setAttribute('aria-valuetext', 'Answered');
       setTimeout(function(){
-        quizCard.classList.add('call-done');
+        proj.classList.add('call-done'); quizCard.classList.add('call-done');
+        setTimeout(function(){ stage.classList.add('gone'); cache(); }, RM ? 0 : 950);
         setTimeout(function(){ var t = $('.q-step.on .q-title'); if (t) t.focus({ preventScroll: true }); cache(); }, 700);
       }, RM ? 0 : 450);
     };
