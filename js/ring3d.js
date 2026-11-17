@@ -58,7 +58,7 @@ function octagon(w, d, cut) {
   return s;
 }
 
-function buildRing() {
+export function buildRing() {
   const R = 1;
   const metal = new THREE.MeshStandardMaterial({ color: 0xe9e7e2, metalness: 1, roughness: 0.2 });
   const satin = new THREE.MeshStandardMaterial({ color: 0xd6d3cc, metalness: 1, roughness: 0.38 });
@@ -108,6 +108,16 @@ function buildRing() {
   return ring;
 }
 
+// Resting pose: the signet face (+Y) looks toward the viewer and to the right, the finger axis (+Z)
+// tips up and away so the band opening shows as an ellipse sweeping left (like the logo).
+export function restPose() {
+  const faceDir = new THREE.Vector3(0.62, 0.2, 0.76).normalize();
+  const fingerDir = new THREE.Vector3(-0.15, 1, -0.45);
+  fingerDir.sub(faceDir.clone().multiplyScalar(fingerDir.dot(faceDir))).normalize();
+  const xDir = new THREE.Vector3().crossVectors(faceDir, fingerDir).normalize();
+  return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(xDir, faceDir, fingerDir));
+}
+
 export function mountRing(host, opts = {}) {
   const t0 = opts.t0 ?? performance.now();
   const spin = opts.spin ?? 3;
@@ -140,11 +150,7 @@ export function mountRing(host, opts = {}) {
   // Resting pose: face to the right and turned toward the viewer, band opening to the left (like the logo).
   // Build the pose from directions: the signet face (+Y) looks toward the viewer and to the right,
   // the finger axis (+Z) tips up and away so the band opening shows as an ellipse sweeping left.
-  const faceDir = new THREE.Vector3(0.62, 0.2, 0.76).normalize();
-  const fingerDir = new THREE.Vector3(-0.15, 1, -0.45);
-  fingerDir.sub(faceDir.clone().multiplyScalar(fingerDir.dot(faceDir))).normalize();
-  const xDir = new THREE.Vector3().crossVectors(faceDir, fingerDir).normalize();
-  const rest = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(xDir, faceDir, fingerDir));
+  const rest = restPose();
   const axis = new THREE.Vector3(-1, 1, 0.35).normalize();   // spin diagonally, to the left
   const q = new THREE.Quaternion();
 
