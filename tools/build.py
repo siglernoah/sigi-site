@@ -162,15 +162,15 @@ FEATURE = f'''<a class="card feature reveal" href="https://medixisgroup.com" tar
       </a>'''
 
 CONCEPTS = [
-  ('Ember &amp; Oak', 'Restaurant · menu &amp; reservations', '#1D1A16', '#F3E9D8', '#E2733A', 'Wood-fired dinners, <em>nightly.</em>', 'Book a table'),
-  ('Northside Dental', 'Clinic · services &amp; appointment requests', '#F2F7F6', '#12302D', '#1E8C7E', 'Gentle care, <em>close to home.</em>', 'Request a visit'),
-  ('Harlow Builders', 'Contractor · project gallery &amp; quotes', '#F6C945', '#1B1B1B', '#1B1B1B', 'Built right, <em>the first time.</em>', 'Get a quote'),
-  ('Lune Studio', 'Boutique · online store', '#EDE6F5', '#2A1F3D', '#7A4FD0', 'Handmade goods, <em>shipped with care.</em>', 'Shop the range'),
+  ('coffee', 'Kettle &amp; Crema', 'Coffee shop · menu, beans &amp; a hand-poured hero', '#24160F', '#F4EBDD', '#C98A4B', 'Slow coffee, <em>poured fresh.</em>', 'See the menu'),
+  ('cleaning', 'Clearwell Cleaning', 'Cleaning company · instant quotes &amp; before/after', '#E8F7F4', '#0D3B40', '#19B5A5', 'A spotless home, <em>zero effort.</em>', 'Get a quote'),
+  ('handyman', 'Plumb &amp; Level', 'Handyman services · jobs &amp; booking', '#FFC72C', '#1C1C1C', '#1C1C1C', 'No job <em>too small.</em>', 'Book a visit'),
+  ('startup', 'Nebulo', 'Tech startup · product, pricing &amp; waitlist', '#170A3A', '#F6F5FB', '#FF77C8', 'Your team’s work, <em>above the clouds.</em>', 'Join the waitlist'),
 ]
 def concepts():
     out = []
-    for i, (name, sub, bg, fg, ac, h, b) in enumerate(CONCEPTS):
-        out.append(f'''<a class="card reveal" href="start.html" data-cursor="Concept" style="--d:{(i%2)*120}ms">
+    for i, (slug, name, sub, bg, fg, ac, h, b) in enumerate(CONCEPTS):
+        out.append(f'''<a class="card reveal" href="concepts/{slug}.html" data-cursor="View site" style="--d:{(i%2)*120}ms">
         <div class="shot" data-tilt="6" style="--sbg:{bg};--sfg:{fg};--ac:{ac}">
           <div class="bar"><i></i><i></i><i></i></div>
           <div class="body"><div class="snav"><b>{name}</b><span></span><span></span><span></span></div>
@@ -346,7 +346,7 @@ def services():
 def work():
     return head('Work', 'Selected website projects by Signet Works, and the four-step process behind every site.', 'work') + nav() + '<main id="main">' + page_head(
         '02', 'Work &amp; process', 'Built for real businesses, <em>not for awards.</em>',
-        'Recent work, design concepts, and the simple process every project follows.') + f'''
+        'Recent client work, four concept sites you can click through, and the simple process every project follows.') + f'''
 <section>
   <div class="wrap">
     <div class="grid">

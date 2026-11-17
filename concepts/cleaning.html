@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clearwell Cleaning — Concept by Signet Works</title>
+<meta name="description" content="A concept cleaning company website designed by Signet Works.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0D3B40;--aqua:#19B5A5;--aqua-2:#7EDCD1;--mint:#E8F7F4;--white:#FFFFFF;--sun:#FFD45C;--muted:#5E7C7F;--line:#D3ECE8;
+  --sans:"Plus Jakarta Sans",system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--teal);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+svg{display:block}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:800;line-height:1.04;letter-spacing:-.035em}
+:focus-visible{outline:3px solid var(--aqua);outline-offset:3px;border-radius:6px}
+.concept{background:#111;color:#ddd;font:500 13px/1 var(--sans);padding:10px 0}
+.concept .wrap{display:flex;justify-content:space-between;gap:12px}
+.concept a{color:#fff;text-decoration:none}
+
+header.top{position:sticky;top:0;z-index:20;background:#ffffffe8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;text-decoration:none;letter-spacing:-.03em}
+.brand svg{width:30px;height:30px}
+nav.main{display:flex;gap:28px;font-size:15px;font-weight:600}
+nav.main a{text-decoration:none}nav.main a:hover{color:var(--aqua)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 24px;border-radius:14px;background:var(--aqua);color:#fff;text-decoration:none;font:700 15px/1 var(--sans);border:0;cursor:pointer;transition:background .3s,transform .3s var(--ease),box-shadow .3s;box-shadow:0 10px 24px -12px #19b5a5aa}
+.btn:hover{background:var(--teal);transform:translateY(-2px)}
+.btn.soft{background:var(--mint);color:var(--teal);box-shadow:none}
+.btn.soft:hover{background:var(--aqua-2)}
+
+.hero{background:linear-gradient(180deg,var(--mint),#fff);padding:72px 0 90px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:700}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
+.hero h1{font-size:clamp(2.8rem,6.4vw,5.4rem);margin:20px 0 22px}
+.hero h1 span{color:var(--aqua);position:relative;white-space:nowrap}
+.hero h1 span::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.16em;background:var(--sun);z-index:-1;border-radius:4px;transform-origin:left;animation:swipe 1.1s var(--ease) .5s both}
+@keyframes swipe{from{transform:scaleX(0)}}
+.hero p{font-size:19px;color:var(--muted);max-width:42ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;font-size:14px;font-weight:600;color:var(--muted)}
+.trust span{display:flex;align-items:center;gap:7px}
+.trust svg{width:18px;height:18px;color:var(--aqua)}
+.sparkle{position:absolute;color:var(--aqua);animation:twinkle 2.6s ease-in-out infinite}
+.sparkle svg{width:100%;height:100%}
+@keyframes twinkle{0%,100%{transform:scale(.4) rotate(0);opacity:0}50%{transform:scale(1) rotate(45deg);opacity:1}}
+
+/* before/after */
+.ba{position:relative;aspect-ratio:1/1;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px #0d3b4066;user-select:none;touch-action:pan-y;cursor:ew-resize;--p:50%}
+.ba .scene{position:absolute;inset:0}
+.ba .after{clip-path:inset(0 0 0 var(--p))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--p);width:4px;margin-left:-2px;background:#fff;box-shadow:0 0 0 1px #0d3b4022}
+.ba .knob{position:absolute;top:50%;left:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 8px 24px -6px #0d3b4066;color:var(--teal)}
+.ba .knob svg{width:24px;height:24px}
+.ba .tag{position:absolute;top:18px;padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.ba .tag.b{left:18px;background:#0d3b40cc;color:#fff}.ba .tag.a{right:18px;background:#fff;color:var(--teal)}
+.ba input{position:absolute;inset:0;opacity:0;cursor:ew-resize;width:100%;height:100%;margin:0}
+
+section{padding:100px 0}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 54px}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--aqua)}
+.sec-head h2{font-size:clamp(2.2rem,4.8vw,3.6rem);margin:12px 0 14px}
+.sec-head p{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:var(--mint);border-radius:22px;padding:28px 24px;transition:transform .5s var(--ease),background .4s,color .4s}
+.card:hover{transform:translateY(-6px);background:var(--teal);color:#fff}
+.card:hover p{color:#b8dcd8}
+.card .ic{width:48px;height:48px;border-radius:14px;background:#fff;display:grid;place-items:center;color:var(--aqua);margin-bottom:22px}
+.card .ic svg{width:24px;height:24px}
+.card h3{font-size:1.3rem;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15px;transition:color .4s}
+
+.quote{background:var(--teal);color:#fff;border-radius:32px;margin:0 24px;padding:80px 0}
+.quote .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.quote h2{font-size:clamp(2.2rem,4.6vw,3.6rem)}
+.quote p.lede{color:#b8dcd8;margin-top:16px}
+.calc{background:#fff;color:var(--teal);border-radius:24px;padding:30px}
+.calc label{display:block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px}
+.seg button{font:700 14.5px var(--sans);padding:12px 8px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--teal);cursor:pointer;transition:all .25s}
+.seg button[aria-pressed="true"]{background:var(--aqua);border-color:var(--aqua);color:#fff}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--line);border-radius:14px;padding:6px;margin-bottom:22px}
+.stepper button{width:42px;height:42px;border-radius:10px;border:0;background:var(--mint);font:800 20px var(--sans);color:var(--teal);cursor:pointer}
+.stepper output{font-weight:800;font-size:18px}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px dashed var(--line);padding-top:20px;margin-bottom:20px}
+.total b{font-size:2.6rem;letter-spacing:-.04em;transition:transform .3s var(--ease)}
+.total small{color:var(--muted);font-size:13px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
+.steps div{counter-increment:s;padding:30px;border:1.5px solid var(--line);border-radius:22px}
+.steps div::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sun);font-weight:800;margin-bottom:18px}
+.steps h3{font-size:1.3rem;margin-bottom:8px}.steps p{color:var(--muted);font-size:15px}
+footer{border-top:1px solid var(--line);padding:30px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:900px){
+  nav.main{display:none}
+  .hero .wrap,.quote .wrap{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .quote{margin:0 12px;padding:56px 0}
+}
+@media (max-width:520px){.cards{grid-template-columns:1fr}.hero h1 span{white-space:normal}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.sparkle{opacity:.6}}
+</style>
+</head>
+<body>
+<div class="concept"><div class="wrap"><span>Concept site by Signet Works — not a real business</span><a href="../work.html">← Back to Signet Works</a></div></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="9" fill="#19B5A5"/><path d="M15 6l2.2 6.8L24 15l-6.8 2.2L15 24l-2.2-6.8L6 15l6.8-2.2z" fill="#fff"/></svg>Clearwell</a>
+    <nav class="main" aria-label="Main"><a href="#services">Services</a><a href="#quote">Pricing</a><a href="#how">How it works</a></nav>
+    <a class="btn" href="#quote">Get a quote</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <span class="sparkle" style="left:6%;top:18%;width:22px;height:22px"><svg viewBox="0 0 24 24"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z" fill="currentColor"/></svg></span>
+  <span class="sparkle" style="left:44%;top:12%;width:14px;height:14px;animation-delay:.8s;color:#FFD45C"><svg viewBox="0 0 24 24"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z" fill="currentColor"/></svg></span>
+  <span class="sparkle" style="left:40%;bottom:14%;width:18px;height:18px;animation-delay:1.5s"><svg viewBox="0 0 24 24"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z" fill="currentColor"/></svg></span>
+  <div class="wrap">
+    <div>
+      <span class="badge"><i></i>Homes &amp; offices</span>
+      <h1>A spotless home, <span>zero effort.</span></h1>
+      <p>Reliable, thorough cleaners who show up on time and leave every room fresh. Book once, or set up a regular clean in two minutes.</p>
+      <div class="cta"><a class="btn" href="#quote">Get an instant quote</a><a class="btn soft" href="#services">Our services</a></div>
+      <div class="trust">
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>Insured &amp; vetted</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>Eco-friendly products</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>Happiness guarantee</span>
+      </div>
+    </div>
+
+    <div class="ba" id="ba">
+      <!-- before: dull, smudged tiles -->
+      <svg class="scene" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><pattern id="tilesB" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#B7B19F"/><rect x="2" y="2" width="46" height="46" rx="3" fill="#C9C2AE"/></pattern>
+          <filter id="blur"><feGaussianBlur stdDeviation="14"/></filter></defs>
+        <rect width="400" height="400" fill="url(#tilesB)"/>
+        <g filter="url(#blur)" opacity=".55"><ellipse cx="110" cy="130" rx="70" ry="40" fill="#7B6F55"/><ellipse cx="290" cy="250" rx="90" ry="50" fill="#857a5e"/><ellipse cx="160" cy="320" rx="60" ry="30" fill="#6e6450"/><ellipse cx="320" cy="90" rx="50" ry="30" fill="#7B6F55"/></g>
+        <g fill="#6e6450" opacity=".5"><circle cx="70" cy="240" r="5"/><circle cx="230" cy="150" r="4"/><circle cx="250" cy="340" r="6"/><circle cx="350" cy="320" r="3"/></g>
+      </svg>
+      <!-- after: bright, clean tiles -->
+      <svg class="scene after" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><pattern id="tilesA" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#D3ECE8"/><rect x="2" y="2" width="46" height="46" rx="3" fill="#FFFFFF"/></pattern>
+          <linearGradient id="shine" x1="0" x2="1" y1="0" y2="1"><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+        <rect width="400" height="400" fill="url(#tilesA)"/>
+        <rect width="400" height="400" fill="url(#shine)" opacity=".7"/>
+        <g fill="#19B5A5"><path d="M300 90l4 14 14 4-14 4-4 14-4-14-14-4 14-4z"/><path d="M250 270l3 10 10 3-10 3-3 10-3-10-10-3 10-3z" fill="#FFD45C"/><path d="M340 210l2.5 8 8 2.5-8 2.5-2.5 8-2.5-8-8-2.5 8-2.5z"/></g>
+      </svg>
+      <span class="tag b">Before</span><span class="tag a">After</span>
+      <div class="handle"><span class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+      <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after cleaning">
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Services</p><h2>Every kind of clean, covered.</h2><p>From weekly tidy-ups to full move-out cleans, with the same checklist every time.</p></div>
+    <div class="cards">
+      <div class="card reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><h3>Regular clean</h3><p>Weekly or fortnightly, so your home always feels guest-ready.</p></div>
+      <div class="card reveal" style="transition-delay:.08s"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></span><h3>Deep clean</h3><p>Top to bottom, inside cupboards, behind appliances.</p></div>
+      <div class="card reveal" style="transition-delay:.16s"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7h13v10H3zM16 10h3l2 3v4h-5"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><h3>Move in / out</h3><p>Hand back the keys with confidence, or start fresh.</p></div>
+      <div class="card reveal" style="transition-delay:.24s"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></span><h3>Office clean</h3><p>Before or after hours, so your team walks into a fresh space.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="quote" id="quote">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow" style="color:var(--aqua-2)">Instant estimate</p>
+      <h2>Know the price before you book.</h2>
+      <p class="lede">Pick your home and how many bedrooms. No hidden extras, no surprise fees on the day.</p>
+    </div>
+    <div class="calc reveal">
+      <label>Type of clean</label>
+      <div class="seg" id="type"><button type="button" aria-pressed="true" data-rate="1">Regular</button><button type="button" aria-pressed="false" data-rate="1.6">Deep</button><button type="button" aria-pressed="false" data-rate="1.9">Move-out</button></div>
+      <label>Bedrooms</label>
+      <div class="stepper"><button type="button" id="minus" aria-label="Fewer bedrooms">−</button><output id="beds">2 bedrooms</output><button type="button" id="plus" aria-label="More bedrooms">+</button></div>
+      <div class="total"><span><small>Estimated price</small></span><b id="price">€84</b></div>
+      <a class="btn" href="#how" style="width:100%;justify-content:center">Book this clean</a>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">How it works</p><h2>Booked in two minutes.</h2></div>
+    <div class="steps">
+      <div class="reveal"><h3>Pick a time</h3><p>Choose a date and time that suits you, including evenings.</p></div>
+      <div class="reveal" style="transition-delay:.1s"><h3>We clean</h3><p>A vetted, insured cleaner arrives with everything needed.</p></div>
+      <div class="reveal" style="transition-delay:.2s"><h3>You relax</h3><p>Not happy with something? We come back and fix it, free.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>© Clearwell Cleaning — a concept by Signet Works</span><a href="../work.html">Back to Signet Works</a></div></footer>
+
+<script>
+(function(){
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // before/after slider
+  var ba = document.getElementById('ba'), range = ba.querySelector('input');
+  function setP(v){ ba.style.setProperty('--p', v + '%'); }
+  range.addEventListener('input', function(){ setP(range.value); });
+  ba.addEventListener('pointermove', function(e){
+    if (e.pointerType === 'mouse' && e.buttons === 0) return;
+    var r = ba.getBoundingClientRect(); var v = Math.max(0, Math.min(100, (e.clientX - r.left) / r.width * 100));
+    range.value = v; setP(v);
+  });
+  if (!RM){ // gentle intro sweep
+    var t0 = null;
+    requestAnimationFrame(function step(t){ if (!t0) t0 = t; var k = Math.min(1, (t - t0) / 1800);
+      var v = 50 + Math.sin(k * Math.PI * 2) * 30 * (1 - k); setP(v); range.value = v; if (k < 1) requestAnimationFrame(step); });
+  }
+  // estimator (concept pricing)
+  var beds = 2, rate = 1, base = 48, per = 18;
+  var price = document.getElementById('price'), out = document.getElementById('beds');
+  function calc(){
+    out.textContent = beds + (beds === 1 ? ' bedroom' : ' bedrooms');
+    price.textContent = '€' + Math.round((base + per * beds) * rate);
+    if (!RM && price.animate) price.animate([{ transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'ease-out' });
+  }
+  document.getElementById('minus').onclick = function(){ beds = Math.max(1, beds - 1); calc(); };
+  document.getElementById('plus').onclick = function(){ beds = Math.min(6, beds + 1); calc(); };
+  document.querySelectorAll('#type button').forEach(function(b){ b.onclick = function(){
+    document.querySelectorAll('#type button').forEach(function(x){ x.setAttribute('aria-pressed', x === b); });
+    rate = +b.getAttribute('data-rate'); calc(); }; });
+  // reveals
+  var rv = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !RM){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function(el){ io.observe(el); });
+  } else rv.forEach(function(el){ el.classList.add('in'); });
+})();
+</script>
+</body>
+</html>

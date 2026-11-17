@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kettle &amp; Crema — Concept by Signet Works</title>
+<meta name="description" content="A concept coffee shop website designed by Signet Works.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{--esp:#24160F;--esp-2:#341F15;--crema:#F4EBDD;--milk:#FFF9F0;--caramel:#C98A4B;--cocoa:#7A4A2B;--muted:#8E7A69;--line:#E4D6C1;
+  --serif:"Fraunces",Georgia,serif;--sans:"Inter",system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--crema);color:var(--esp);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.02;letter-spacing:-.02em}
+em{font-style:italic;font-weight:400;color:var(--caramel)}
+:focus-visible{outline:2px solid var(--caramel);outline-offset:3px;border-radius:4px}
+
+.concept{background:#111;color:#ddd;font:500 13px/1 var(--sans);padding:10px 0}
+.concept .wrap{display:flex;justify-content:space-between;gap:12px}
+.concept a{color:#fff;text-decoration:none}
+.concept a:hover{text-decoration:underline}
+
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema) 92%,transparent);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{font:700 22px/1 var(--serif);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{width:26px;height:26px;border-radius:50%;background:var(--esp);display:grid;place-items:center}
+.brand i::after{content:"";width:10px;height:14px;border-radius:50%;background:var(--caramel);transform:rotate(25deg)}
+nav.main{display:flex;gap:28px;font-size:15px;font-weight:500}
+nav.main a{text-decoration:none}
+nav.main a:hover{color:var(--caramel)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;background:var(--esp);color:var(--milk);text-decoration:none;font:600 15px/1 var(--sans);border:0;cursor:pointer;transition:background .3s,transform .3s var(--ease)}
+.btn:hover{background:var(--caramel);transform:translateY(-2px)}
+.btn.line{background:transparent;color:var(--esp);box-shadow:inset 0 0 0 1.5px var(--esp)}
+.btn.line:hover{background:var(--esp);color:var(--milk)}
+
+.hero{padding:70px 0 90px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cocoa)}
+.hero h1{font-size:clamp(3rem,7vw,6rem);margin:18px 0 22px}
+.hero p{font-size:19px;color:#5a4637;max-width:40ch}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hours{margin-top:34px;display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.hours b{display:block;color:var(--esp);font-size:15px}
+
+/* ---- pour animation ---- */
+.pour{position:relative;aspect-ratio:400/470;max-width:500px;justify-self:center;width:100%}
+.pour::before{content:"";position:absolute;inset:8% 4% 2%;border-radius:50%;background:radial-gradient(circle,#E9D8BF 0,#E9D8BF00 70%)}
+.pour svg{position:relative;width:100%;height:100%;overflow:visible}
+.kettle{transform-box:fill-box;transform-origin:45% 70%}
+.stream{stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.flow{stroke-dasharray:.06 .05;stroke-dashoffset:0}
+.fill{transform-box:view-box;transform:translateY(175px)}
+.crema{transform-box:view-box;transform:translateY(175px);opacity:0}
+.steam path{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.splash circle{opacity:0;transform-box:fill-box;transform-origin:center}
+.pour.go .kettle{animation:tilt 5.8s var(--ease) forwards}
+.pour.go .stream{animation:stream 5.8s linear forwards}
+.pour.go .flow{animation:flow .5s linear infinite, flowfade 5.8s linear forwards}
+.pour.go .fill{animation:fill 4.6s cubic-bezier(.3,.1,.3,1) .9s forwards}
+.pour.go .crema{animation:fill 4.6s cubic-bezier(.3,.1,.3,1) .9s forwards, show .4s 1.6s forwards}
+.pour.go .splash circle{animation:splash .7s ease-out 1s 6}
+.pour.go .splash circle:nth-child(2){animation-delay:1.25s}
+.pour.go .splash circle:nth-child(3){animation-delay:1.45s}
+.pour.go .steam path{animation:steam 3.6s ease-in-out 5.6s infinite}
+.pour.go .steam path:nth-child(2){animation-delay:6.4s}
+.pour.go .steam path:nth-child(3){animation-delay:7.1s}
+@keyframes tilt{0%{transform:rotate(0)}12%,82%{transform:rotate(28deg)}100%{transform:rotate(0)}}
+@keyframes stream{0%,10%{stroke-dashoffset:1;opacity:0}11%{opacity:1}20%{stroke-dashoffset:0}80%{stroke-dashoffset:0}91%{opacity:1}92%,100%{stroke-dashoffset:-1;opacity:0}}
+@keyframes flowfade{0%,14%{opacity:0}22%,78%{opacity:.55}88%,100%{opacity:0}}
+@keyframes flow{to{stroke-dashoffset:-.11}}
+@keyframes fill{to{transform:translateY(0)}}
+@keyframes show{to{opacity:1}}
+@keyframes splash{0%{opacity:.9;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),-18px) scale(.4)}}
+@keyframes steam{0%{opacity:0;transform:translateY(10px) scaleY(.8)}30%{opacity:.55}100%{opacity:0;transform:translateY(-46px) scaleY(1.15)}}
+.replay{position:absolute;right:6%;bottom:4%;font:600 13px var(--sans);background:var(--milk);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;color:var(--esp);opacity:0;transition:opacity .4s}
+.pour.done .replay{opacity:1}
+
+section{padding:100px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(2.3rem,5vw,3.8rem)}
+.menu{background:var(--esp);color:var(--crema)}
+.menu .eyebrow{color:var(--caramel)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{font:600 14px var(--sans);padding:10px 18px;border-radius:999px;border:1px solid #ffffff2e;background:none;color:var(--crema);cursor:pointer;transition:background .3s,color .3s}
+.tabs button[aria-selected="true"]{background:var(--caramel);border-color:var(--caramel);color:var(--esp)}
+.items{display:grid;grid-template-columns:repeat(2,1fr);column-gap:56px}
+.item{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:22px 0;border-bottom:1px dashed #ffffff26;animation:in .6s var(--ease) both}
+.item h3{font-size:1.45rem;font-weight:500}
+.item .price{font:600 1.1rem var(--serif);color:var(--caramel)}
+.item p{grid-column:1/-1;color:#bba895;font-size:15px}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+
+.beans .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.origin-card{background:var(--milk);border:1px solid var(--line);border-radius:24px;padding:34px}
+.origin-card dl{display:grid;grid-template-columns:auto 1fr;gap:14px 24px;margin-top:18px}
+.origin-card dt{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.origin-card dd{margin:0;font:500 1.15rem var(--serif)}
+.notes{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.notes span{padding:8px 14px;border-radius:999px;background:var(--crema);font-size:14px;font-weight:500}
+.beans p{color:#5a4637;margin-top:18px}
+
+.visit{background:var(--caramel);color:var(--esp);text-align:center}
+.visit h2{font-size:clamp(2.6rem,6vw,5rem);max-width:14ch;margin:0 auto 26px}
+.visit em{color:var(--milk)}
+footer{background:var(--esp);color:#bba895;font-size:14px;padding:30px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  nav.main{display:none}
+  .hero .wrap,.beans .wrap{grid-template-columns:1fr}
+  .pour{max-width:380px}
+  .items{grid-template-columns:1fr}
+  section{padding:72px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .fill,.crema{transform:none;opacity:1}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="concept"><div class="wrap"><span>Concept site by Signet Works — not a real business</span><a href="../work.html">← Back to Signet Works</a></div></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><i></i>Kettle &amp; Crema</a>
+    <nav class="main" aria-label="Main"><a href="#menu">Menu</a><a href="#beans">Our beans</a><a href="#visit">Visit</a></nav>
+    <a class="btn" href="#menu">Order ahead</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Neighbourhood coffee bar</p>
+      <h1>Slow coffee, <em>poured fresh.</em></h1>
+      <p>Single-origin beans, roasted in small batches and brewed by hand, one cup at a time. Stay for a while, or take it with you.</p>
+      <div class="cta"><a class="btn" href="#menu">See the menu</a><a class="btn line" href="#visit">Find us</a></div>
+      <div class="hours"><span><b>Mon–Fri</b>7:30 – 18:00</span><span><b>Sat–Sun</b>8:30 – 17:00</span></div>
+    </div>
+
+    <div class="pour" id="pour" role="img" aria-label="Animation of coffee being poured from a kettle into a cup">
+      <svg viewBox="0 0 400 470" aria-hidden="true">
+        <defs>
+          <clipPath id="cupIn"><path d="M118 238h164l-14 128a34 34 0 0 1-34 30h-68a34 34 0 0 1-34-30z"/></clipPath>
+          <linearGradient id="cof" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8A532E"/><stop offset="1" stop-color="#3A2114"/></linearGradient>
+          <linearGradient id="cupG" x1="0" x2="1"><stop offset="0" stop-color="#FFFDF8"/><stop offset=".55" stop-color="#F6EEE2"/><stop offset="1" stop-color="#E5D6C1"/></linearGradient>
+        </defs>
+        <!-- saucer -->
+        <ellipse cx="200" cy="404" rx="128" ry="20" fill="#E5D6C1"/>
+        <ellipse cx="200" cy="398" rx="118" ry="16" fill="#FFFDF8"/>
+        <!-- stream (behind the cup rim) -->
+        <path class="stream" pathLength="1" d="M221 141C219 178 211 216 203 252" fill="none" stroke="#5A321C" stroke-width="7" stroke-linecap="round"/>
+        <path class="flow" pathLength="1" d="M221 141C219 178 211 216 203 252" fill="none" stroke="#C98A4B" stroke-width="2" stroke-linecap="round" opacity="0"/>
+        <!-- cup -->
+        <path d="M282 262c38 0 46 22 44 40-3 26-30 38-56 36" fill="none" stroke="#E5D6C1" stroke-width="14" stroke-linecap="round"/>
+        <path d="M282 262c38 0 46 22 44 40-3 26-30 38-56 36" fill="none" stroke="#FFFDF8" stroke-width="8" stroke-linecap="round"/>
+        <path d="M110 232h180l-15 136a40 40 0 0 1-40 34h-70a40 40 0 0 1-40-34z" fill="url(#cupG)"/>
+        <g clip-path="url(#cupIn)">
+          <rect class="fill" x="100" y="246" width="200" height="170" fill="url(#cof)"/>
+          <g class="crema"><ellipse cx="200" cy="248" rx="84" ry="9" fill="#C98A4B"/><ellipse cx="190" cy="247" rx="40" ry="4" fill="#E2B27A" opacity=".8"/></g>
+        </g>
+        <ellipse cx="200" cy="234" rx="90" ry="10" fill="none" stroke="#E5D6C1" stroke-width="3"/>
+        <g class="splash"><circle cx="196" cy="254" r="3" fill="#8A532E" style="--dx:-14px"/><circle cx="206" cy="254" r="2.5" fill="#8A532E" style="--dx:12px"/><circle cx="201" cy="250" r="2" fill="#C98A4B" style="--dx:2px"/></g>
+        <!-- gooseneck kettle -->
+        <g transform="translate(-26 -30)"><g class="kettle">
+          <path d="M64 96h120l14 92a16 16 0 0 1-16 18H66a16 16 0 0 1-16-18z" fill="#24160F"/>
+          <path d="M70 96c4-24 26-38 54-38s50 14 54 38z" fill="#341F15"/>
+          <rect x="114" y="46" width="20" height="14" rx="6" fill="#C98A4B"/>
+          <path id="spout" d="M184 168c26-4 30-40 44-58 6-8 10-6 10 0" fill="none" stroke="#24160F" stroke-width="10" stroke-linecap="round"/>
+          <path d="M60 112c-34 0-42 66 0 74" fill="none" stroke="#24160F" stroke-width="10" stroke-linecap="round"/>
+          <rect x="66" y="150" width="116" height="6" fill="#C98A4B" opacity=".9"/>
+        </g></g>
+        <!-- steam (in front of the kettle) -->
+        <g class="steam" fill="none" stroke="#B9A48E" stroke-width="5" stroke-linecap="round">
+          <path d="M172 214c-12-16 12-26 0-44s10-26 2-40"/>
+          <path d="M202 210c-12-16 12-26 0-44s10-26 2-40"/>
+          <path d="M232 214c-12-16 12-26 0-44s10-26 2-40"/>
+        </g>
+      </svg>
+      <button class="replay" type="button" id="replay">↻ Pour again</button>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">The menu</p><h2>Brewed with <em>care.</em></h2></div>
+      <div class="tabs" role="tablist" aria-label="Menu categories">
+        <button role="tab" aria-selected="true" data-tab="coffee">Coffee</button>
+        <button role="tab" aria-selected="false" data-tab="slow">Slow bar</button>
+        <button role="tab" aria-selected="false" data-tab="bakes">Bakes</button>
+      </div>
+    </div>
+    <div class="items" id="items" role="tabpanel"></div>
+  </div>
+</section>
+
+<section class="beans" id="beans">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">This month's beans</p>
+      <h2 style="font-size:clamp(2.3rem,5vw,3.8rem);margin-top:12px">From the farm, <em>to your cup.</em></h2>
+      <p>Every bean on the bar is chosen for flavour first, roasted in small batches, and rested before it is brewed. The house espresso changes with the seasons.</p>
+    </div>
+    <div class="origin-card reveal">
+      <p class="eyebrow">House espresso</p>
+      <dl><dt>Origin</dt><dd>Huila, Colombia</dd><dt>Process</dt><dd>Washed</dd><dt>Roast</dt><dd>Medium</dd><dt>Altitude</dt><dd>1,700 m</dd></dl>
+      <div class="notes"><span>Milk chocolate</span><span>Red apple</span><span>Caramel</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <div class="wrap">
+    <h2 class="reveal">Pull up a chair, <em>the kettle's on.</em></h2>
+    <a class="btn reveal" href="#top">Plan your visit</a>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© Kettle &amp; Crema — a concept by Signet Works</span><a href="../work.html">Back to Signet Works</a></div></footer>
+
+<script>
+(function(){
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MENU = {
+    coffee:[['Espresso','2.80','Our house espresso: chocolatey, round, with a caramel finish.'],['Flat white','3.90','Double ristretto with silky steamed milk.'],['Cappuccino','3.70','Equal parts espresso, milk and foam.'],['Iced latte','4.20','Espresso over ice with cold milk.']],
+    slow:[['Pour-over V60','4.50','Hand-brewed, bright and clean. Ask for today’s origin.'],['Batch brew','3.20','Our filter of the day, ready to go.'],['Cold brew','4.30','Steeped for 18 hours, smooth and low in acidity.'],['Chemex for two','8.50','A shared pour, brewed at your table.']],
+    bakes:[['Cardamom bun','3.40','Twisted, glazed, and still warm in the morning.'],['Banana bread','3.20','With browned butter and walnuts.'],['Almond croissant','3.80','Twice-baked, filled with frangipane.'],['Brownie','3.10','Dark chocolate and sea salt.']]
+  };
+  var items = document.getElementById('items');
+  function show(tab){
+    items.innerHTML = MENU[tab].map(function(m, i){
+      return '<div class="item" style="animation-delay:' + (i * 60) + 'ms"><h3>' + m[0] + '</h3><span class="price">€' + m[1] + '</span><p>' + m[2] + '</p></div>';
+    }).join('');
+  }
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tabs button').forEach(function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      show(b.getAttribute('data-tab'));
+    });
+  });
+  show('coffee');
+
+  var pour = document.getElementById('pour');
+  function play(){
+    pour.classList.remove('go', 'done'); void pour.offsetWidth; pour.classList.add('go');
+    setTimeout(function(){ pour.classList.add('done'); }, 6200);
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  if (!RM){
+    var started = false;
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting && !started){ started = true; setTimeout(play, 400); } }); }, { threshold: .35 });
+    io.observe(pour);
+  }
+
+  var rv = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !RM){
+    var io2 = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io2.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function(el){ io2.observe(el); });
+  } else rv.forEach(function(el){ el.classList.add('in'); });
+})();
+</script>
+</body>
+</html>

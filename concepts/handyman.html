@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plumb &amp; Level — Concept by Signet Works</title>
+<meta name="description" content="A concept handyman services website designed by Signet Works.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{--char:#1C1C1C;--char-2:#262626;--yel:#FFC72C;--yel-2:#FFD964;--con:#EEECE7;--paper:#F7F6F2;--muted:#6E6A62;--line:#D8D4CB;
+  --sans:"Archivo",system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--char);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}svg{display:block}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:900;font-stretch:72%;line-height:.95;letter-spacing:-.01em;text-transform:uppercase}
+:focus-visible{outline:3px solid var(--yel);outline-offset:3px}
+.concept{background:#000;color:#ddd;font:500 13px/1 var(--sans);padding:10px 0}
+.concept .wrap{display:flex;justify-content:space-between;gap:12px}.concept a{color:#fff;text-decoration:none}
+
+header.top{background:var(--char);color:#fff;position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:10px;font:900 21px/1 var(--sans);font-stretch:80%;text-transform:uppercase;text-decoration:none;letter-spacing:.02em}
+.brand svg{width:32px;height:32px}
+nav.main{display:flex;gap:26px;font-weight:600;font-size:15px}
+nav.main a{text-decoration:none}nav.main a:hover{color:var(--yel)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 22px;background:var(--yel);color:var(--char);font:800 15px/1 var(--sans);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;border:2px solid var(--char);box-shadow:4px 4px 0 var(--char);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--char)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--char)}
+header .btn{border-color:var(--yel);box-shadow:none;padding:12px 18px}
+header .btn:hover{box-shadow:none;transform:none;background:#fff}
+.btn.dark{background:var(--char);color:var(--yel)}
+
+.hero{position:relative;padding:76px 0 0;overflow:hidden;background:var(--yel);
+  background-image:linear-gradient(#1c1c1c14 1px,transparent 1px),linear-gradient(90deg,#1c1c1c14 1px,transparent 1px);background-size:40px 40px}
+.hero .wrap{position:relative}
+.stamp{display:inline-block;border:2px solid var(--char);padding:6px 12px;font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-2deg)}
+.hero h1{font-size:clamp(4rem,13vw,11rem);margin:22px 0 18px}
+.hero h1 span{display:block;color:#fff;-webkit-text-stroke:2px var(--char);paint-order:stroke}
+.hero p{font-size:20px;max-width:42ch;font-weight:500}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 60px}
+.tape{position:relative;height:84px;margin-top:10px}
+.tape .case{position:absolute;left:24px;bottom:12px;width:96px;height:72px;border-radius:14px;background:var(--char);display:grid;place-items:center;z-index:2;box-shadow:inset 0 0 0 4px #333}
+.tape .case::after{content:"";width:28px;height:28px;border-radius:50%;background:var(--yel);box-shadow:inset 0 0 0 6px #e0a800}
+.tape .blade{position:absolute;left:110px;right:0;bottom:22px;height:34px;background:var(--yel-2);border-top:2px solid var(--char);border-bottom:2px solid var(--char);transform-origin:left;transform:scaleX(0);
+  background-image:repeating-linear-gradient(90deg,var(--char) 0 2px,transparent 2px 20px),repeating-linear-gradient(90deg,var(--char) 0 2px,transparent 2px 100px);background-size:100% 10px,100% 20px;background-repeat:no-repeat;background-position:0 0,0 0}
+.tape.go .blade{animation:extend 1.6s cubic-bezier(.2,.9,.2,1) .3s forwards}
+.tape .hook{position:absolute;bottom:16px;width:10px;height:46px;background:var(--char);left:110px;opacity:0}
+.tape.go .hook{animation:hook 1.6s cubic-bezier(.2,.9,.2,1) .3s forwards}
+@keyframes extend{to{transform:scaleX(1)}}
+@keyframes hook{0%{opacity:1;left:110px}100%{opacity:1;left:calc(100% - 10px)}}
+.tape .read{position:absolute;right:20px;top:-6px;font:800 13px var(--sans);letter-spacing:.1em;opacity:0;transition:opacity .5s 1.8s}
+.tape.go .read{opacity:1}
+
+.hazard{height:18px;background:repeating-linear-gradient(-45deg,var(--char) 0 18px,var(--yel) 18px 36px)}
+
+section{padding:96px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.sec-head h2{font-size:clamp(2.8rem,7vw,5.4rem)}
+.eyebrow{font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.jobs{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--char);border-left:2px solid var(--char)}
+.job{border-right:2px solid var(--char);border-bottom:2px solid var(--char);padding:30px;background:var(--paper);transition:background .25s;position:relative}
+.job:hover{background:var(--yel)}
+.job svg{width:44px;height:44px;margin-bottom:26px;transition:transform .5s var(--ease)}
+.job:hover svg{transform:rotate(-12deg) scale(1.08)}
+.job h3{font-size:1.9rem;margin-bottom:8px}
+.job p{color:var(--muted);font-size:15.5px}
+.job:hover p{color:var(--char)}
+.job .no{position:absolute;right:20px;top:18px;font-weight:800;font-size:13px;color:var(--muted)}
+
+.dark-sec{background:var(--char);color:#fff;
+  background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px);background-size:40px 40px}
+.dark-sec .eyebrow{color:var(--yel)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.how div{border:2px solid #ffffff2e;padding:28px;position:relative}
+.how b{display:block;font:900 4rem/1 var(--sans);font-stretch:70%;color:var(--yel);margin-bottom:14px}
+.how h3{font-size:1.7rem;margin-bottom:8px}.how p{color:#bdb9b0;font-size:15.5px}
+
+.book{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+.book p.lede{color:var(--muted);margin-top:16px;max-width:38ch}
+.promise{margin-top:28px;display:grid;gap:10px}
+.promise span{display:flex;gap:10px;align-items:center;font-weight:700}
+.promise span::before{content:"";width:14px;height:14px;background:var(--yel);border:2px solid var(--char)}
+form{background:#fff;border:2px solid var(--char);box-shadow:8px 8px 0 var(--char);padding:30px;display:grid;gap:16px}
+form label{display:grid;gap:6px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+input,select,textarea{font:500 16px var(--sans);padding:14px;border:2px solid var(--char);background:var(--paper);color:var(--char);border-radius:0;width:100%}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;background:#fff;box-shadow:0 0 0 3px var(--yel)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ok{display:none;padding:14px;background:var(--yel);border:2px solid var(--char);font-weight:800}
+.ok.show{display:block;animation:pop .5s var(--ease)}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+footer{background:var(--char);color:#a8a49b;font-size:14px;padding:28px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:900px){nav.main{display:none}.jobs{grid-template-columns:1fr 1fr}.how,.book{grid-template-columns:1fr}section{padding:72px 0}}
+@media (max-width:560px){.jobs{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.tape .case{width:76px;height:60px}.tape .blade,.tape .hook{left:90px}@keyframes hook{0%{opacity:1;left:90px}100%{opacity:1;left:calc(100% - 10px)}}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.tape .blade{transform:none}.tape .hook{opacity:1;left:calc(100% - 10px)}.tape .read{opacity:1}}
+</style>
+</head>
+<body>
+<div class="concept"><div class="wrap"><span>Concept site by Signet Works — not a real business</span><a href="../work.html">← Back to Signet Works</a></div></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#FFC72C"/><path d="M6 22h20M10 22V12h12v10M16 6v6" stroke="#1C1C1C" stroke-width="3" fill="none"/><circle cx="16" cy="17" r="2" fill="#1C1C1C"/></svg>Plumb &amp; Level</a>
+    <nav class="main" aria-label="Main"><a href="#jobs">Jobs</a><a href="#how">How it works</a><a href="#book">Book</a></nav>
+    <a class="btn" href="#book">Book a visit</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" style="padding-bottom:0">
+  <div class="wrap">
+    <span class="stamp">Handyman services</span>
+    <h1>No job <span>too small.</span></h1>
+    <p>Shelves, leaks, doors that stick, flat-packs that won't flat-pack. One call, one fair price, and it's fixed properly.</p>
+    <div class="cta"><a class="btn dark" href="#book">Book a visit →</a><a class="btn" href="#jobs">See what we fix</a></div>
+  </div>
+  <div class="tape" id="tape" aria-hidden="true"><span class="case"></span><span class="blade"></span><span class="hook"></span><span class="read">Measured twice ✓</span></div>
+</section>
+<div class="hazard" aria-hidden="true"></div>
+
+<section id="jobs">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><p class="eyebrow">What we fix</p><h2>Odd jobs,<br>done right.</h2></div><p style="max-width:36ch;color:var(--muted)">No minimum job size. If it's broken, loose, leaking or still in the box, we can help.</p></div>
+    <div class="jobs">
+      <div class="job reveal"><span class="no">01</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M10 38l16-16M22 10l8-4 12 12-4 8-6-6-4 4-6-6 4-4z"/></svg><h3>Repairs</h3><p>Doors, hinges, handles, squeaks and rattles.</p></div>
+      <div class="job reveal"><span class="no">02</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="8" y="6" width="28" height="12"/><path d="M36 12h4v10H24v6M20 28h8v14h-8z"/></svg><h3>Painting</h3><p>Touch-ups, single walls and full rooms.</p></div>
+      <div class="job reveal"><span class="no">03</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M6 40h36M10 40V20l14-10 14 10v20M20 40V28h8v12"/></svg><h3>Assembly</h3><p>Flat-pack furniture, beds, wardrobes and desks.</p></div>
+      <div class="job reveal"><span class="no">04</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M24 6c8 10 12 17 12 23a12 12 0 0 1-24 0c0-6 4-13 12-23z"/></svg><h3>Small plumbing</h3><p>Dripping taps, running toilets, blocked sinks.</p></div>
+      <div class="job reveal"><span class="no">05</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="6" y="10" width="36" height="22"/><path d="M18 40h12M24 32v8"/></svg><h3>Mounting</h3><p>TVs, mirrors, shelves and curtain rails, level every time.</p></div>
+      <div class="job reveal"><span class="no">06</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 5"/></svg><h3>Odd jobs</h3><p>That list you've been meaning to get to. Bring it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark-sec" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><p class="eyebrow">How it works</p><h2>Simple as<br>1, 2, 3.</h2></div></div>
+    <div class="how">
+      <div class="reveal"><b>01</b><h3>Tell us the job</h3><p>A few lines and a photo, if you have one.</p></div>
+      <div class="reveal" style="transition-delay:.1s"><b>02</b><h3>Get a fixed price</h3><p>You know the cost before anyone picks up a tool.</p></div>
+      <div class="reveal" style="transition-delay:.2s"><b>03</b><h3>Consider it fixed</h3><p>On time, tidy, and we take the mess with us.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap book">
+    <div class="reveal">
+      <p class="eyebrow">Book a visit</p><h2 style="font-size:clamp(2.8rem,7vw,5.4rem)">Let's get<br>it sorted.</h2>
+      <p class="lede">Send the details and we'll come back with a fixed price and a time that works for you.</p>
+      <div class="promise"><span>Fixed price, agreed up front</span><span>Tidy, careful and insured</span><span>Work guaranteed</span></div>
+    </div>
+    <form class="reveal" id="jobform" novalidate>
+      <div class="row2"><label>Name<input name="n" required autocomplete="name"></label><label>Phone or email<input name="c" required></label></div>
+      <label>Type of job<select name="t"><option>Repairs</option><option>Painting</option><option>Assembly</option><option>Small plumbing</option><option>Mounting</option><option>Something else</option></select></label>
+      <label>Describe the job<textarea name="d" required placeholder="e.g. Mount a 55&quot; TV on a brick wall"></textarea></label>
+      <button class="btn" type="submit" style="justify-self:start">Send job request →</button>
+      <p class="ok" role="status" aria-live="polite">Got it! This is a concept site, so nothing was sent, but on a real site you'd get a confirmation here.</p>
+    </form>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>© Plumb &amp; Level — a concept by Signet Works</span><a href="../work.html">Back to Signet Works</a></div></footer>
+
+<script>
+(function(){
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tape = document.getElementById('tape');
+  if (!RM) setTimeout(function(){ tape.classList.add('go'); }, 300); else tape.classList.add('go');
+  var f = document.getElementById('jobform');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!f.checkValidity()){ f.reportValidity(); return; }
+    f.querySelector('.ok').classList.add('show'); f.reset();
+  });
+  var rv = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !RM){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function(el){ io.observe(el); });
+  } else rv.forEach(function(el){ el.classList.add('in'); });
+})();
+</script>
+</body>
+</html>
