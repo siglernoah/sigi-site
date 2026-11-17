@@ -100,6 +100,8 @@ export function buildRing() {
   const SEAL = 0.74 / 24;                        // ⌘ is drawn on a 24-unit grid; make it ~0.74 wide on the face
   seal.scale.setScalar(SEAL);
   seal.position.y = top + (0.7 / 2 + 0.35) * SEAL - 0.004;
+  seal.rotation.y = -0.55;                       // square to the face in the resting pose (matches the 2D logo)
+  seal.scale.multiplyScalar(0.86);
   ring.add(seal);
 
   // Centre the model on its visual middle.
@@ -111,8 +113,8 @@ export function buildRing() {
 // Resting pose: the signet face (+Y) looks toward the viewer and to the right, the finger axis (+Z)
 // tips up and away so the band opening shows as an ellipse sweeping left (like the logo).
 export function restPose() {
-  const faceDir = new THREE.Vector3(0.62, 0.2, 0.76).normalize();
-  const fingerDir = new THREE.Vector3(-0.15, 1, -0.45);
+  const faceDir = new THREE.Vector3(0.72, 0, 0.69).normalize();
+  const fingerDir = new THREE.Vector3(-0.05, 1, 0.75);
   fingerDir.sub(faceDir.clone().multiplyScalar(fingerDir.dot(faceDir))).normalize();
   const xDir = new THREE.Vector3().crossVectors(faceDir, fingerDir).normalize();
   return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(xDir, faceDir, fingerDir));
