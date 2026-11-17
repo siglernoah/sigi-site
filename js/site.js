@@ -86,8 +86,15 @@
     $$('.hero, .page-head').forEach(function(h){ h.classList.add('go'); });
     $$('[data-hero]').forEach(function(el){ el.classList.add('in'); });
   }
-  function endIntro(){ var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
+  var ring3d = null;
+  function endIntro(){ if (ring3d) ring3d.stop(); var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
   if (hasIntro){
+    // Real 3D ring (loaded only for the intro). If WebGL or the module is unavailable, the flat SVG spin stays.
+    import('./ring3d.js').then(function(m){
+      if (!root.classList.contains('intro')) return;
+      ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
+      $('#intro').classList.add('has3d');
+    }).catch(function(){});
     introTimers.push(setTimeout(showHero, 4900), setTimeout(endIntro, 5500));
     var skipIntro = function(){
       if (!root.classList.contains('intro') || root.classList.contains('skip')) return;

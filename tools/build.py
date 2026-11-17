@@ -49,7 +49,7 @@ def head(title, desc, page):
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro'))c.add('intro')}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro');window.__swT0=performance.now()}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
