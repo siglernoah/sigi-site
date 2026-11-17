@@ -18,7 +18,7 @@
   function applyTheme(t){
     root.setAttribute('data-theme', t);
     try { localStorage.setItem('sw-theme', t); } catch(e){}
-    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#E7D4BB' : '#101211');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#F4F1EA' : '#0A0A0A');
     $$('.theme').forEach(function(b){
       b.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
       b.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
