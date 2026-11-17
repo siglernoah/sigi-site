@@ -413,32 +413,7 @@ def about():
 ''' + band() + footer()
 
 def start():
-    return head('Start a project', 'Tell Signet Works about your business and the website you need. You will get a reply with next steps and a time to talk.', 'start') + nav() + '<main id="main">' + '''
-<section class="call" id="call" aria-label="New project">
-  <div class="call-glow" aria-hidden="true"></div>
-  <div class="call-id">
-    <p class="call-name">New Project</p>
-    <p class="call-status" aria-hidden="true">is calling…</p>
-  </div>
-  <div class="call-actions">
-    <button class="bubble" type="button" id="remindMe" aria-label="Remind me later (adds a calendar reminder)">
-      <span class="orb-glass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.3 1.6M5 4.5 2.8 6.5M19 4.5l2.2 2"/></svg></span>
-      <span class="bubble-label">Remind Me</span>
-    </button>
-    <a class="bubble" href="mailto:hello@sigi.com?subject=New%20website%20project" aria-label="Send a message by email">
-      <span class="orb-glass"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4C6.8 4 3 7.3 3 11.3c0 2.3 1.3 4.3 3.3 5.6-.2 1.2-.8 2.4-1.8 3.3 1.9-.1 3.6-.8 4.8-1.8.8.2 1.7.3 2.7.3 5.2 0 9-3.3 9-7.4S17.2 4 12 4z"/></svg></span>
-      <span class="bubble-label">Message</span>
-    </a>
-  </div>
-  <div class="answer" id="answer">
-    <span class="answer-text" aria-hidden="true">slide to answer</span>
-    <span class="answer-knob" id="answerKnob" role="slider" tabindex="0" aria-label="Slide to answer and start your project" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not answered">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
-    </span>
-  </div>
-  <button class="call-skip" type="button" id="callSkip">Skip to the questions</button>
-</section>
-'''  + page_head(
+    return head('Start a project', 'Tell Signet Works about your business and the website you need. You will get a reply with next steps and a time to talk.', 'start') + nav() + '<main id="main">'  + page_head(
         '05', 'Start a project', 'Let’s build your <em>website.</em>',
         'Tell me a little about your business and what you need. I’ll reply with next steps and a time to talk.') + f'''
 <section>
@@ -454,6 +429,30 @@ def start():
       <a class="mail reveal" href="mailto:hello@sigi.com">hello@sigi.com</a>
     </div>
     <div class="formcard quiz reveal" style="--d:120ms" id="quiz">
+      <div class="call" id="call" role="group" aria-label="New project">
+        <div class="call-glow" aria-hidden="true"></div>
+        <div class="call-id">
+          <p class="call-name">New Project</p>
+          <p class="call-status" aria-hidden="true">is calling…</p>
+        </div>
+        <div class="call-actions">
+          <button class="bubble" type="button" id="remindMe" aria-label="Remind me later (adds a calendar reminder)">
+            <span class="orb-glass liquid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.3 1.6M5 4.5 2.8 6.5M19 4.5l2.2 2"/></svg></span>
+            <span class="bubble-label">Remind Me</span>
+          </button>
+          <a class="bubble" href="mailto:hello@sigi.com?subject=New%20website%20project" aria-label="Send a message by email">
+            <span class="orb-glass liquid"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4C6.8 4 3 7.3 3 11.3c0 2.3 1.3 4.3 3.3 5.6-.2 1.2-.8 2.4-1.8 3.3 1.9-.1 3.6-.8 4.8-1.8.8.2 1.7.3 2.7.3 5.2 0 9-3.3 9-7.4S17.2 4 12 4z"/></svg></span>
+            <span class="bubble-label">Message</span>
+          </a>
+        </div>
+        <div class="answer liquid" id="answer">
+          <span class="answer-text" aria-hidden="true">slide to answer</span>
+          <span class="answer-knob" id="answerKnob" role="slider" tabindex="0" aria-label="Slide to answer and start your project" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not answered">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
+          </span>
+        </div>
+        <button class="call-skip" type="button" id="callSkip">Skip to the questions</button>
+      </div>
       <div class="q-top">
         <span class="q-count" aria-live="polite"><b id="qNow">01</b> / 04</span>
         <span class="q-bar" aria-hidden="true"><i id="qBar"></i></span>

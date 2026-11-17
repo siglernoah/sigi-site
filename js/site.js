@@ -90,7 +90,7 @@
   function endIntro(){ if (ring3d) ring3d.stop(); var n = $('#intro'); if (n) n.parentNode.removeChild(n); root.classList.remove('intro', 'skip'); }
   if (hasIntro){
     // Real 3D ring (loaded only for the intro). If WebGL or the module is unavailable, the flat SVG spin stays.
-    import('./ring3d.js?v=5').then(function(m){
+    import('./ring3d.js?v=6').then(function(m){
       if (!root.classList.contains('intro')) return;
       ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
       $('#intro').classList.add('has3d');
@@ -395,10 +395,15 @@
   /* ---------- start a project: incoming call ---------- */
   var call = $('#call');
   if (call){
-    var track = $('#answer'), knob = $('#answerKnob'), body = document.body;
+    var track = $('#answer'), knob = $('#answerKnob');
     var fill = document.createElement('span'); fill.className = 'answer-fill'; track.insertBefore(fill, track.firstChild);
     var maxX = 0, x = 0, dragging = false, startX = 0, answered = false;
-    if (lenis) lenis.stop();
+    var quizCard = $('#quiz');
+    // start the call animation when the card scrolls into view
+    if ('IntersectionObserver' in window && !RM){
+      var cio = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ call.classList.add('play'); cio.disconnect(); setTimeout(nudge, 3200); } }, { threshold: .45 });
+      cio.observe(call);
+    } else { call.classList.add('play'); }
     var measureTrack = function(){ maxX = track.clientWidth - knob.offsetWidth - 14; };
     measureTrack(); window.addEventListener('resize', measureTrack);
     var setX = function(v){
@@ -412,26 +417,24 @@
     };
     var answer = function(){
       if (answered) return; answered = true;
+      knob.classList.remove('springback', 'dragging'); knob.classList.add('auto');
       setX(maxX); track.classList.add('done');
       knob.setAttribute('aria-valuetext', 'Answered');
       setTimeout(function(){
-        body.classList.add('call-done');
-        if (lenis) lenis.start();
-        window.scrollTo(0, 0);
-        $$('.page-head, .page-head .fade').forEach(function(h){ h.classList.remove('go'); });
-        setTimeout(function(){ $$('.page-head').forEach(function(h){ h.classList.add('go'); }); $$('.page-head [data-hero]').forEach(function(el){ el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); }); }, 350);
-        setTimeout(function(){ var t = $('.q-step.on .q-title'); if (t) t.focus({ preventScroll: true }); cache(); }, 1000);
-      }, RM ? 0 : 420);
+        quizCard.classList.add('call-done');
+        setTimeout(function(){ var t = $('.q-step.on .q-title'); if (t) t.focus({ preventScroll: true }); cache(); }, 700);
+      }, RM ? 0 : 450);
     };
     knob.addEventListener('pointerdown', function(e){
       if (answered) return;
       dragging = true; startX = e.clientX - x; knob.classList.remove('springback'); knob.classList.add('dragging');
       knob.setPointerCapture(e.pointerId);
     });
-    knob.addEventListener('pointermove', function(e){ if (dragging) setX(e.clientX - startX); });
+    // past 20% of the way, it finishes the slide for you
+    knob.addEventListener('pointermove', function(e){ if (!dragging) return; setX(e.clientX - startX); if (x >= maxX * 0.2){ dragging = false; answer(); } });
     var release = function(){
       if (!dragging) return; dragging = false; knob.classList.remove('dragging');
-      if (x >= maxX * 0.86) answer();
+      if (x >= maxX * 0.2) answer();
       else { knob.classList.add('springback'); setX(0); }
     };
     knob.addEventListener('pointerup', release);
@@ -444,11 +447,11 @@
     });
     on($('#callSkip'), 'click', answer);
     // invite: nudge the knob once if nobody has touched it
-    if (!RM) setTimeout(function(){
+    function nudge(){
       if (answered || dragging || x) return;
-      knob.classList.add('springback'); setX(Math.min(46, maxX));
+      knob.classList.add('springback'); setX(Math.min(maxX * 0.12, 30));
       setTimeout(function(){ if (!dragging && !answered) setX(0); }, 420);
-    }, 3400);
+    }
     // Remind Me: a calendar reminder for tomorrow at 10:00
     var toast = document.createElement('div'); toast.className = 'toast'; toast.setAttribute('role', 'status'); call.appendChild(toast);
     var say = function(t){ toast.textContent = t; toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 2600); };
