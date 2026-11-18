@@ -79,7 +79,9 @@ h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-styl
 #intro .intro-bg{position:absolute;inset:0;background:#000;transition:opacity .9s var(--ease-io)}
 #intro .lock,#intro .skip-intro{transition:opacity .5s ease}
 #intro.leaving{pointer-events:none}
-#intro.leaving .intro-bg,#intro.leaving .lock,#intro.leaving .skip-intro{opacity:0}
+#intro .aurora{transition:opacity .9s var(--ease-io)}
+#intro.fast .aurora{transition-duration:.45s}
+#intro.leaving .intro-bg,#intro.leaving .lock,#intro.leaving .skip-intro,#intro.leaving .aurora{opacity:0}
 #intro.fast .intro-bg{transition-duration:.45s}
 /* northern lights: the page's glows dance behind the ring, then glide back to their places */
 #intro .aurora{position:absolute;inset:0;pointer-events:none;overflow:hidden}

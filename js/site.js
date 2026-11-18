@@ -88,38 +88,13 @@
   }
   var ring3d = null, introEl = $('#intro');
   function endIntro(){ if (ring3d) ring3d.stop(); if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl); root.classList.remove('intro', 'skip', 'orbs-wait'); }
-  // the dancing lights glide to where the page's own glows sit, then hand over to them
+  // the intro fades out as one piece (lights, ring and black together), revealing the page beneath
   function leaveIntro(fast){
     if (!introEl || introEl.classList.contains('leaving')) return;
     introEl.classList.add('leaving'); if (fast) introEl.classList.add('fast');
     showHero();
-    var orbs = $$('.hero .orb, .page-head .orb').filter(function(o){ return o.offsetWidth > 0; });
-    $$('.al', introEl).forEach(function(al, i){
-      al.style.opacity = getComputedStyle(al).opacity; al.style.animation = 'none'; void al.offsetWidth;
-      var inner = $('i', al), cur = getComputedStyle(inner).transform;
-      inner.style.transform = cur === 'none' ? '' : cur; inner.style.animation = 'none';
-      void inner.offsetWidth;
-      inner.style.transition = 'transform ' + (fast ? '.5s' : '1.1s') + ' cubic-bezier(.76,0,.24,1)'; inner.style.transform = 'none';
-      if (fast){ al.style.transitionDuration = '.5s'; }
-      var o = orbs[i];
-      if (!o){ al.style.opacity = 0; return; }
-      var r = o.getBoundingClientRect(), op = getComputedStyle(root).getPropertyValue('--orb') || '.4';
-      al.style.left = r.left + 'px'; al.style.top = r.top + 'px'; al.style.width = r.width + 'px'; al.style.height = r.height + 'px';
-      al.style.opacity = op.trim();
-    });
-    // hand-over: snap each light onto its glow's exact current box, then swap them in one frame (no crossfade, no flash)
-    introTimers.push(setTimeout(function(){
-      $$('.al', introEl).forEach(function(al, i){
-        var o = orbs[i]; if (!o) return;
-        var r = o.getBoundingClientRect();
-        al.style.transition = 'none'; al.style.left = r.left + 'px'; al.style.top = r.top + 'px'; al.style.width = r.width + 'px'; al.style.height = r.height + 'px';
-      });
-      requestAnimationFrame(function(){
-        root.classList.add('orbs-now'); root.classList.remove('orbs-wait');
-        endIntro();
-        requestAnimationFrame(function(){ requestAnimationFrame(function(){ root.classList.remove('orbs-now'); }); });
-      });
-    }, fast ? 560 : 1200));
+    root.classList.remove('orbs-wait');
+    introTimers.push(setTimeout(endIntro, fast ? 600 : 1100));
   }
   if (hasIntro){
     // Real 3D ring (loaded only for the intro; preloaded from the page head). The flat ring is only a fallback.
