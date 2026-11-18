@@ -87,7 +87,7 @@
     $$('[data-hero]').forEach(function(el){ el.classList.add('in'); });
   }
   var ring3d = null, introEl = $('#intro');
-  function endIntro(){ if (ring3d) ring3d.stop(); if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl); root.classList.remove('intro', 'skip'); }
+  function endIntro(){ if (ring3d) ring3d.stop(); if (introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl); root.classList.remove('intro', 'skip', 'orbs-wait'); }
   // the dancing lights glide to where the page's own glows sit, then hand over to them
   function leaveIntro(fast){
     if (!introEl || introEl.classList.contains('leaving')) return;
@@ -95,6 +95,7 @@
     showHero();
     var orbs = $$('.hero .orb, .page-head .orb').filter(function(o){ return o.offsetWidth > 0; });
     $$('.al', introEl).forEach(function(al, i){
+      al.style.opacity = getComputedStyle(al).opacity; al.style.animation = 'none'; void al.offsetWidth;
       var inner = $('i', al), cur = getComputedStyle(inner).transform;
       inner.style.transform = cur === 'none' ? '' : cur; inner.style.animation = 'none';
       void inner.offsetWidth;
@@ -106,12 +107,19 @@
       al.style.left = r.left + 'px'; al.style.top = r.top + 'px'; al.style.width = r.width + 'px'; al.style.height = r.height + 'px';
       al.style.opacity = op.trim();
     });
-    // crossfade: the real glows fade in as the travelling lights fade out
+    // hand-over: snap each light onto its glow's exact current box, then swap them in one frame (no crossfade, no flash)
     introTimers.push(setTimeout(function(){
-      root.classList.remove('intro');
-      $$('.al', introEl).forEach(function(al){ al.style.transitionDuration = '.7s'; al.style.opacity = 0; });
-    }, fast ? 520 : 1150));
-    introTimers.push(setTimeout(endIntro, fast ? 1300 : 1950));
+      $$('.al', introEl).forEach(function(al, i){
+        var o = orbs[i]; if (!o) return;
+        var r = o.getBoundingClientRect();
+        al.style.transition = 'none'; al.style.left = r.left + 'px'; al.style.top = r.top + 'px'; al.style.width = r.width + 'px'; al.style.height = r.height + 'px';
+      });
+      requestAnimationFrame(function(){
+        root.classList.add('orbs-now'); root.classList.remove('orbs-wait');
+        endIntro();
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ root.classList.remove('orbs-now'); }); });
+      });
+    }, fast ? 560 : 1200));
   }
   if (hasIntro){
     // Real 3D ring (loaded only for the intro; preloaded from the page head). The flat ring is only a fallback.
@@ -428,11 +436,18 @@
     // start the call animation when the card scrolls into view
     if ('IntersectionObserver' in window && !RM){
       // the phone flies in (3s), then the call starts on its screen
-      var started = false;
+      var started = false, phone3d = null;
+      var glReady = import('./phone3d.js?v=1').then(function(m){
+        phone3d = m.mountPhone($('#phone')); stage.classList.add('gl');
+      }).catch(function(){});
+      var go = function(){
+        stage.classList.add('enter');
+        if (phone3d) phone3d.play(3000);
+        setTimeout(function(){ stage.classList.add('landed'); call.classList.add('play'); setTimeout(nudge, 3200); }, 3000);
+      };
       var startPhone = function(){
         if (started) return; started = true; if (cio) cio.disconnect();
-        stage.classList.add('enter');
-        setTimeout(function(){ call.classList.add('play'); setTimeout(nudge, 3200); }, 3000);
+        Promise.race([glReady, new Promise(function(r){ setTimeout(r, 2500); })]).then(go);
       };
       var cio = new IntersectionObserver(function(es){ if (es[0].isIntersecting) startPhone(); }, { threshold: .6 });
       cio.observe(stage);
