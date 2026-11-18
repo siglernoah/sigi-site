@@ -200,8 +200,10 @@ PROMISES = [('You work with one person', 'The person you talk to is the person b
 def promises():
     return '<ul class="promises reveal">' + ''.join(f'<li>{CHECK}<div><b>{b}</b><span>{s}</span></div></li>' for b, s in PROMISES) + '</ul>'
 
-FAQ = [('How much does a website cost?', 'It depends on the size of the site and what it needs to do. After a short conversation you’ll get a fixed quote, so there are no surprises later.'),
-       ('How long does it take?', 'That depends on scope and how quickly content and feedback come together. You’ll get a realistic timeline with your quote.'),
+FAQ = [('How much does a website cost?', 'It depends on what your business needs. A one-page landing page (no animations or transitions) starts at about €300, and a website of 2 to 5 pages runs €500–750. Bigger or custom projects are priced around your needs, and you always get a fixed quote before work begins. See <a href="rates.html">Rates</a>.'),
+       ('How long does it take?', 'A completed project takes 7–10 business days from the go-ahead.'),
+       ('How many revisions are included?', 'Two rounds of revisions are included in the price. Each extra round adds 20% of the original price, and it never compounds: on a €500 site, every extra round is €100.'),
+       ('Why are your prices lower than most?', 'Most freelancers charge €1,000–2,000 per site. With the help of AI, the slow, repetitive parts of building take far less time, so we can deliver premium design at a price that makes sense for startups, small businesses and personal sites.'),
        ('I already have a website. Can you redesign it?', 'Yes. Redesigns keep what’s working, fix what isn’t, and move your existing content across.'),
        ('Do I need to write the text and supply photos?', 'Bring what you have. Signet Works can help shape the wording and advise on images so the site reads well and looks consistent.'),
        ('What happens after launch?', 'You get a walkthrough of the finished site, and ongoing updates and support are available whenever you need them.')]
@@ -248,7 +250,7 @@ def topo_svg():
             '<span class="corner tl">N ↑</span><span class="corner br">Stylised contours</span></figure>')
 
 
-TRADES = ['Restaurants', 'Clinics', 'Contractors', 'Law firms', 'Shops', 'Studios', 'Churches &amp; nonprofits', 'Consultants']
+TRADES = ['Startups', 'Restaurants', 'Clinics', 'Contractors', 'Law firms', 'Shops', 'Studios', 'Churches &amp; nonprofits', 'Consultants', 'Personal sites']
 
 def arrow_link(label, href):
     return f'<a class="arrow-link" href="{href}">{label} {ARROW}</a>'
@@ -317,12 +319,19 @@ def services():
     for i, ((n, h, p, items), lp) in enumerate(zip(SERVICES, long)):
         lis = ''.join(f'<li>{x}</li>' for x in items)
         rows.append(f'<div class="row reveal"><span class="num">0{i+1}</span><div><h3>{h}</h3><p>{p}</p><p style="margin-top:14px">{lp}</p></div><ul>{lis}</ul></div>')
-    return head('Services', 'Design, build, launch and ongoing care for business websites, handled start to finish by Signet Works.', 'services') + nav() + '<main id="main">' + page_head(
+    return head('Services', 'Design, build, launch and ongoing care for business and personal websites: from about €300, done in 7–10 business days, two revision rounds included.', 'services') + nav() + '<main id="main">' + page_head(
         '01', 'Services', 'Everything your site needs, <em>handled.</em>',
-        'From the first sketch to launch day and beyond: design, build, and care for websites that work as hard as you do.') + f'''
+        'From the first sketch to launch day and beyond: premium design for businesses and personal sites, at a price that makes sense.') + f'''
 <section>
   <div class="wrap">
     <div class="rows">{''.join(rows)}</div>
+    <div class="svc-facts reveal">
+      <p><b>From ~€300</b><span>one-page landing</span></p>
+      <p><b>€500–750</b><span>2 to 5 pages</span></p>
+      <p><b>7–10 days</b><span>to a finished site</span></p>
+      <p><b>2 rounds</b><span>of revisions included</span></p>
+      {arrow_link('See rates &amp; terms', 'rates.html')}
+    </div>
   </div>
 </section>
 
@@ -330,7 +339,7 @@ def services():
   <div class="wrap split2">
     <div>
       <p class="kicker reveal" style="margin-bottom:24px"><b>02</b>Good fit for</p>
-      <h2 class="h2" data-split>Businesses of <em>every kind.</em></h2>
+      <h2 class="h2" data-split>Businesses of every kind, <em>and people too.</em></h2>
     </div>
     <div class="fit reveal">{''.join(f'<span>{t}</span>' for t in TRADES)}</div>
   </div>
@@ -427,6 +436,27 @@ def about():
     <div class="prose reveal">
       <p>A signet ring was once used to seal a letter: a small, personal mark that said who it came from and that it could be trusted.</p>
       <p>That is the idea behind Signet Works. Every site carries the same care, whether it is a one-page site for a local shop or a full redesign, and it is built to earn your customers’ trust.</p>
+    </div>
+  </div>
+</section>
+
+<section class="founder-sec">
+  <div class="wrap founder">
+    <!-- Replace with the founder photo: <img src="img/founder.jpg" alt="Your name, founder of Signet Works"> -->
+    <div class="founder-photo reveal" role="img" aria-label="Placeholder for the founder's photo">
+      <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="36" r="18"/><path d="M14 92c3-20 18-32 36-32s33 12 36 32z"/></svg>
+      <span>Founder photo</span>
+    </div>
+    <div class="reveal" style="--d:120ms">
+      <p class="kicker"><b>08</b>The face behind the brand</p>
+      <h2>Hi, I’m <em>[Your name].</em></h2>
+      <p class="role">Founder, Signet Works</p>
+      <div class="prose">
+        <p>[A few lines about you: where you’re from, how you got into building websites, and what you enjoy most about the work.]</p>
+        <p>[Why you started Signet Works, and who you love working with: startups, local businesses, people with an idea they want online.]</p>
+        <p>[Something personal that makes you, you. A hobby, a city you love, or what you do when you’re not designing.]</p>
+      </div>
+      <p class="placeholder-note">Placeholder text: replace with your own story and photo.</p>
     </div>
   </div>
 </section>

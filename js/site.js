@@ -213,8 +213,7 @@
   }
 
   /* ---------- scrubbed quote ---------- */
-  var scrub = $('[data-scrub]'), scrubWords = (scrub && !RM) ? $$('.wi', scrub) : [];
-  var scrubVals = scrubWords.map(function(){ return -1; });
+  var scrubs = RM ? [] : $$('[data-scrub]').map(function(el){ var w = $$('.wi', el); return { el: el, words: w, vals: w.map(function(){ return -1; }), top: 0, h: 0 }; });
 
   /* ---------- feature preview pan distance ---------- */
   $$('.feature').forEach(function(feature){
@@ -437,7 +436,7 @@
     if ('IntersectionObserver' in window && !RM){
       // the phone flies in (3s), then the call starts on its screen
       var started = false, phone3d = null;
-      var glReady = import('./phone3d.js?v=1').then(function(m){
+      var glReady = import('./phone3d.js?v=3').then(function(m){
         phone3d = m.mountPhone($('#phone')); stage.classList.add('gl');
       }).catch(function(){});
       var go = function(){
@@ -522,12 +521,12 @@
   }
 
   /* ---------- layout cache ---------- */
-  var vh = innerHeight, docMax = 0, scrubTop = 0, scrubH = 0, dirty = true;
+  var vh = innerHeight, docMax = 0, dirty = true;
   function cache(){
     var sy = window.scrollY;
     vh = innerHeight;
     docMax = document.documentElement.scrollHeight - vh;
-    if (scrub){ var q = scrub.getBoundingClientRect(); scrubTop = q.top + sy; scrubH = q.height; }
+    scrubs.forEach(function(sc){ var q = sc.el.getBoundingClientRect(); sc.top = q.top + sy; sc.h = q.height; });
     placePill();
     dirty = true;
   }
@@ -554,13 +553,13 @@
         var hd = dy > 0 && y > 320;
         if (hd !== isHidden){ isHidden = hd; nav.classList.toggle('hide', hd); }
       }
-      if (scrubWords.length){
-        var top = scrubTop - y;
-        if (top < vh && top + scrubH > -vh * 0.5){
-          var p = clamp((vh * 0.85 - top) / (scrubH + vh * 0.35), 0, 1), n = scrubWords.length;
+      for (var si = 0; si < scrubs.length; si++){
+        var sc = scrubs[si], top = sc.top - y;
+        if (top < vh && top + sc.h > -vh * 0.5){
+          var p = clamp((vh * 0.85 - top) / (sc.h + vh * 0.35), 0, 1), n = sc.words.length;
           for (var k = 0; k < n; k++){
             var o = Math.round((0.14 + clamp(p * n * 1.15 - k, 0, 1) * 0.86) * 100) / 100;
-            if (o !== scrubVals[k]){ scrubVals[k] = o; scrubWords[k].style.setProperty('--o', o); }
+            if (o !== sc.vals[k]){ sc.vals[k] = o; sc.words[k].style.setProperty('--o', o); }
           }
         }
       }

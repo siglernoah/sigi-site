@@ -49,14 +49,14 @@ function studio() {
 
 function buildPhone() {
   const { W, H, T } = MM;
-  const alu = new THREE.MeshPhysicalMaterial({ color: 0xe8702c, metalness: .82, roughness: .33, clearcoat: .2, clearcoatRoughness: .45 });
-  const aluDark = new THREE.MeshPhysicalMaterial({ color: 0xd9652a, metalness: .85, roughness: .28 });
-  const backGlass = new THREE.MeshPhysicalMaterial({ color: 0xdc6a2e, metalness: .35, roughness: .42, clearcoat: .3, clearcoatRoughness: .5 });
-  const frontGlass = new THREE.MeshPhysicalMaterial({ color: 0x050608, metalness: 0, roughness: .1, clearcoat: 1, clearcoatRoughness: .08, envMapIntensity: .7 });
+  const alu = new THREE.MeshPhysicalMaterial({ color: 0xff7530, metalness: .62, roughness: .5, envMapIntensity: .85 });   // matte anodised orange
+  const aluDark = new THREE.MeshPhysicalMaterial({ color: 0xff8139, metalness: .6, roughness: .46, envMapIntensity: .9 });  // plateau, a touch lighter like the photo
+  const backGlass = new THREE.MeshPhysicalMaterial({ color: 0xff7b36, metalness: .5, roughness: .62, envMapIntensity: .8 });   // frosted glass panel
+  const frontGlass = new THREE.MeshPhysicalMaterial({ color: 0x010102, metalness: 0, roughness: .12, clearcoat: 1, clearcoatRoughness: .1, envMapIntensity: .35 });
   const black = new THREE.MeshStandardMaterial({ color: 0x0d0e11, metalness: .3, roughness: .55 });
   const lensGlass = new THREE.MeshPhysicalMaterial({ color: 0x06070b, metalness: 0, roughness: .32, envMapIntensity: .35 });
-  const barrel = new THREE.MeshPhysicalMaterial({ color: 0xb8521c, metalness: .85, roughness: .3 });
-  const lip = new THREE.MeshPhysicalMaterial({ color: 0xffa36a, metalness: .95, roughness: .16 });
+  const barrel = new THREE.MeshPhysicalMaterial({ color: 0xf76c26, metalness: .6, roughness: .45, envMapIntensity: .8 });
+  const lip = new THREE.MeshPhysicalMaterial({ color: 0xffa56e, metalness: .55, roughness: .32, envMapIntensity: .7 });
   const lensInner = new THREE.MeshStandardMaterial({ color: 0x1f2128, metalness: .4, roughness: .45 });
   const lensCoat = new THREE.MeshStandardMaterial({ color: 0x1a2048, metalness: .2, roughness: .4, envMapIntensity: .4 });
   const flashMat = new THREE.MeshStandardMaterial({ color: 0xf1e3c4, metalness: 0, roughness: .45, emissive: 0x1a140c });
@@ -86,14 +86,13 @@ function buildPhone() {
   for (const [u, v, d] of [[.183, .090, .178], [.415, .145, .192], [.183, .205, .185]]) {
     const R = d * W / 2;
     onPlate(new THREE.Mesh(new THREE.TorusGeometry(R * 1.02, .22, 10, 64), black), u, v, .02);                      // seam where the barrel meets the plateau
-    onPlate(new THREE.Mesh(turned([[R * .97, 0], [R, .1], [R, 1.75]]), barrel), u, v);                                // barrel wall
-    onPlate(new THREE.Mesh(turned([[R, 1.75], [R * .96, 2.05], [R * .88, 2.15], [R * .8, 2.1], [R * .78, 1.6]]), lip), u, v);  // chamfered lip
-    onPlate(new THREE.Mesh(turned([[R * .55, .9], [R * .77, .95], [R * .78, 1.62]]), black), u, v);
-    onPlate(new THREE.Mesh(disk(R * .74, .3), black), u, v, .65);
-    onPlate(new THREE.Mesh(disk(R * .6, .12), lensGlass), u, v, .92);
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(R * .48, .16, 12, 64), lensInner); onPlate(ring, u, v, .98);
-    const coat = new THREE.Mesh(new THREE.TorusGeometry(R * .33, .1, 10, 48), lensCoat); onPlate(coat, u, v, .96);
-    onPlate(new THREE.Mesh(disk(R * .2, .1), black), u, v, .99);
+    onPlate(new THREE.Mesh(turned([[R * .97, 0], [R, .1], [R, 1.8]]), barrel), u, v);                                 // barrel wall
+    onPlate(new THREE.Mesh(turned([[R, 1.8], [R * .985, 1.95], [R * .955, 2.0], [R * .93, 1.97], [R * .925, 1.9]]), lip), u, v);   // thin rounded lip
+    onPlate(new THREE.Mesh(disk(R * .925, 1.94), black), u, v, .97);                       // black lens housing, its top level with the lip
+    onPlate(new THREE.Mesh(disk(R * .8, .1), lensGlass), u, v, 1.95);                      // glass, flush with the rim
+    onPlate(new THREE.Mesh(new THREE.TorusGeometry(R * .6, .12, 12, 64), lensInner), u, v, 1.97);
+    onPlate(new THREE.Mesh(new THREE.TorusGeometry(R * .4, .08, 10, 48), lensCoat), u, v, 1.97);
+    onPlate(new THREE.Mesh(disk(R * .2, .06), black), u, v, 1.99);
   }
   // flash and LiDAR in raised rings, microphone hole
   const fr = .085 * W / 2;
@@ -133,14 +132,14 @@ export function mountPhone(phoneEl) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
+  renderer.toneMapping = THREE.NoToneMapping;
+  renderer.toneMappingExposure = 1.05;
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(studio(), .02).texture;
   const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-.6, .8, 1); scene.add(key);
   const fill = new THREE.DirectionalLight(0xffe7d6, .9); fill.position.set(1, -.3, .6); scene.add(fill);
-  const back = new THREE.DirectionalLight(0xffffff, 1.4); back.position.set(.3, .6, -1); scene.add(back);
+  const back = new THREE.DirectionalLight(0xfff2e8, 1.5); back.position.set(.45, .9, -.7); scene.add(back);   // lights the back from the top, like the photo
 
   const FOV = 18, camera = new THREE.PerspectiveCamera(FOV, 1, 1, 20000);
   const pivot = new THREE.Group(), model = buildPhone(); pivot.add(model); scene.add(pivot);

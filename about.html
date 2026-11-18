@@ -20,7 +20,7 @@ try{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttri
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
 try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=6'].forEach(function(h){var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)})}}catch(e){}})(document);
 </script>
-<link rel="stylesheet" href="css/site.css?v=e28db057">
+<link rel="stylesheet" href="css/site.css?v=368bd7e5">
 </head>
 <body data-page="about">
 <a class="skip" href="#main">Skip to content</a>
@@ -118,6 +118,27 @@ try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');wind
     </div>
   </div>
 </section>
+
+<section class="founder-sec">
+  <div class="wrap founder">
+    <!-- Replace with the founder photo: <img src="img/founder.jpg" alt="Your name, founder of Signet Works"> -->
+    <div class="founder-photo reveal" role="img" aria-label="Placeholder for the founder's photo">
+      <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="36" r="18"/><path d="M14 92c3-20 18-32 36-32s33 12 36 32z"/></svg>
+      <span>Founder photo</span>
+    </div>
+    <div class="reveal" style="--d:120ms">
+      <p class="kicker"><b>08</b>The face behind the brand</p>
+      <h2>Hi, I’m <em>[Your name].</em></h2>
+      <p class="role">Founder, Signet Works</p>
+      <div class="prose">
+        <p>[A few lines about you: where you’re from, how you got into building websites, and what you enjoy most about the work.]</p>
+        <p>[Why you started Signet Works, and who you love working with: startups, local businesses, people with an idea they want online.]</p>
+        <p>[Something personal that makes you, you. A hobby, a city you love, or what you do when you’re not designing.]</p>
+      </div>
+      <p class="placeholder-note">Placeholder text: replace with your own story and photo.</p>
+    </div>
+  </div>
+</section>
 <p class="fineprint wrap"><a href="privacy.html">Privacy policy</a><span aria-hidden="true">·</span><a href="cookies.html">Cookie policy</a></p>
 </main>
 <section class="band-cta">
@@ -139,6 +160,6 @@ try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');wind
   </div>
 </footer>
 <script src="js/lenis.min.js"></script>
-<script src="js/site.js?v=79db6a95"></script>
+<script src="js/site.js?v=971f4b66"></script>
 </body>
 </html>
