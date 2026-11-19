@@ -20,7 +20,7 @@ try{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttri
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
 try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=6'].forEach(function(h){var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)})}}catch(e){}})(document);
 </script>
-<link rel="stylesheet" href="css/site.css?v=62c2eac3">
+<link rel="stylesheet" href="css/site.css?v=4be80e47">
 </head>
 <body data-page="about">
 <a class="skip" href="#main">Skip to content</a>
@@ -80,10 +80,15 @@ try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');wind
       <p class="coffee">In or around Tilburg? I’m happy to meet in person. <a class="arrow-link" href="start.html">Let’s talk <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></p>
     </div>
   </div>
-    <div class="wrap moments">
-      <figure class="reveal"><img src="img/noah-grass.jpg" alt="Noah relaxing on the grass on a summer evening" width="600" height="800" loading="lazy"><figcaption>Off the clock</figcaption></figure>
-      <figure class="reveal" style="--d:110ms"><img src="img/tilburg-lochal.jpg" alt="The LocHal in Tilburg's Spoorzone at night" width="600" height="800" loading="lazy"><figcaption>Home base: Tilburg</figcaption></figure>
-      <figure class="reveal" style="--d:220ms"><img src="img/noah-flying.jpg" alt="Noah in the cockpit of a small plane, wearing a headset" width="600" height="800" loading="lazy"><figcaption>In the air</figcaption></figure>
+    <div class="wrap">
+      <figure class="still reveal">
+        <img src="img/noah-back.jpg" alt="Noah, seen from behind, walking past a dark wall into a bright hall" width="1600" height="1413" loading="lazy">
+        <figcaption>
+          <p class="still-kicker">Signet Works · Tilburg</p>
+          <p class="still-title">One person. <em>Your whole website.</em></p>
+          <p class="still-sub">From the first conversation to launch day, you work with me, start to finish.</p>
+        </figcaption>
+      </figure>
     </div>
 </section>
 

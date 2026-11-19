@@ -411,10 +411,15 @@ def about():
       <p class="coffee">In or around Tilburg? I’m happy to meet in person. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
     </div>
   </div>
-    <div class="wrap moments">
-      <figure class="reveal"><img src="img/noah-grass.jpg" alt="Noah relaxing on the grass on a summer evening" width="600" height="800" loading="lazy"><figcaption>Off the clock</figcaption></figure>
-      <figure class="reveal" style="--d:110ms"><img src="img/tilburg-lochal.jpg" alt="The LocHal in Tilburg's Spoorzone at night" width="600" height="800" loading="lazy"><figcaption>Home base: Tilburg</figcaption></figure>
-      <figure class="reveal" style="--d:220ms"><img src="img/noah-flying.jpg" alt="Noah in the cockpit of a small plane, wearing a headset" width="600" height="800" loading="lazy"><figcaption>In the air</figcaption></figure>
+    <div class="wrap">
+      <figure class="still reveal">
+        <img src="img/noah-back.jpg" alt="Noah, seen from behind, walking past a dark wall into a bright hall" width="1600" height="1413" loading="lazy">
+        <figcaption>
+          <p class="still-kicker">Signet Works · Tilburg</p>
+          <p class="still-title">One person. <em>Your whole website.</em></p>
+          <p class="still-sub">From the first conversation to launch day, you work with me, start to finish.</p>
+        </figcaption>
+      </figure>
     </div>
 </section>
 
