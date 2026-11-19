@@ -495,6 +495,20 @@
     });
   }
 
+
+  /* ---------- origin map: draw NL, flash Tilburg, label, zoom into the city ---------- */
+  $$('.nlmap').forEach(function(map){
+    if (RM){ map.classList.add('label'); return; }
+    var go = function(){
+      map.classList.add('play');
+      setTimeout(function(){ map.classList.add('label'); }, 3800);
+      setTimeout(function(){ map.classList.add('zoom'); }, 5000);
+      setTimeout(function(){ map.classList.add('city'); }, 6200);
+    };
+    if (!('IntersectionObserver' in window)){ go(); return; }
+    var mio = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ mio.disconnect(); go(); } }, { threshold: .55 });
+    mio.observe(map);
+  });
   /* ---------- layout cache ---------- */
   var vh = innerHeight, docMax = 0, dirty = true;
   function cache(){

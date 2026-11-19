@@ -403,6 +403,36 @@ blockquote.quote{font:500 clamp(2rem,3.8vw,3.2rem)/1.12 var(--serif);letter-spac
 @media (max-width:900px){.origin-grid{grid-template-columns:1fr;gap:36px}}
 @media (max-width:560px){.topo figcaption{left:calc(330 / 840 * 100% + 14px);top:calc(270 / 560 * 100% - 16px);padding:7px 10px;font-size:11px;border-radius:9px}.topo figcaption b{font-size:13px}.topo .coord{font-size:10px}.topo .corner{font-size:9.5px}}
 
+
+/* ---------- origin: Netherlands map that zooms into Tilburg ---------- */
+.nlmap{position:relative;margin:0;aspect-ratio:1160/855;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--bg-2)}
+.nlmap svg{position:absolute;inset:0;width:100%;height:100%}
+.nl-g{transform-box:view-box;transform-origin:291.5px 529.3px;transition:transform 1.5s cubic-bezier(.65,0,.25,1),opacity .9s ease}
+.nl-line{fill:none;stroke:var(--fg);stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.8;stroke-dasharray:1;stroke-dashoffset:1}
+.nlmap.play .nl-line{animation:nl-draw 1.8s cubic-bezier(.45,0,.25,1) forwards}
+@keyframes nl-draw{to{stroke-dashoffset:0}}
+.nlmap.zoom .nl-g{transform:translate(28.5px,-151.8px) scale(7);opacity:0;transition:transform 1.5s cubic-bezier(.65,0,.25,1),opacity .7s ease .75s}
+.nlmap .tb{fill:var(--fg);opacity:.55;clip-path:circle(0% at 50% 50%);transition:clip-path 1.8s cubic-bezier(.3,.6,.3,1)}
+.nlmap.city .tb{clip-path:circle(75% at 50% 50%)}
+.pin{position:absolute;left:var(--dx);top:var(--dy);width:0;height:0;transition:left 1.5s cubic-bezier(.65,0,.25,1),top 1.5s cubic-bezier(.65,0,.25,1)}
+.nlmap.zoom .pin{left:50%;top:50%}
+.pin-dot{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--accent);transform:scale(0);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
+.nlmap.play .pin-dot{animation:pin-pop .5s cubic-bezier(.3,1.6,.5,1) 1.9s forwards}
+@keyframes pin-pop{to{transform:scale(1)}}
+.pin-ring{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);opacity:0}
+.nlmap.play .pin-ring{animation:pin-flash .75s ease-out 2.25s 2}
+.nlmap.play .pin-ring.r2{animation-delay:2.4s}
+@keyframes pin-flash{0%{transform:scale(1);opacity:.95}100%{transform:scale(4.2);opacity:0}}
+.nlmap.city .pin-ring{animation:pin-flash 2.6s ease-out infinite}
+.nlmap.city .pin-ring.r2{animation-delay:1.3s}
+.pin-label{position:absolute;left:16px;top:-14px;display:flex;flex-direction:column;gap:2px;white-space:nowrap;opacity:0;transform:translateX(-6px);transition:opacity .6s ease,transform .6s var(--ease);
+  padding:6px 11px;border-radius:10px;background:color-mix(in srgb,var(--bg) 85%,transparent);border:1px solid var(--line)}
+.pin-label b{font:600 15px var(--brand);letter-spacing:-.02em}
+.pin-label small{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.nlmap.label .pin-label{opacity:1;transform:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){.nl-line{stroke-dashoffset:0}.pin-dot{transform:scale(1)}.pin-label{opacity:1;transform:none}}
+
 /* ---------- faq ---------- */
 .faq{max-width:840px}
 details{border-bottom:1px solid var(--line)}
