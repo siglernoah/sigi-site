@@ -161,8 +161,8 @@ FEATURE = f'''<a class="card feature reveal" href="https://medixisgroup.com" tar
           <span class="hint"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 2v8M2.5 6.5L6 10l3.5-3.5"/></svg>Hover to scroll</span>
         </div>
         <div class="meta">
-          <div><h3>Medixis</h3><p>Medical equipment sourcing for private clinics and hospitals</p><span class="visit">medixisgroup.com {EXT}</span></div>
-          <div class="tags"><span class="tag hot">Latest project</span><span class="tag">Live</span></div>
+          <div><h3>Medixis</h3><p>My first client was my own business: Medixis, a medical equipment sourcing company I co-founded.</p><span class="visit">medixisgroup.com {EXT}</span></div>
+          <div class="tags"><span class="tag hot">My own company</span><span class="tag">Live</span></div>
         </div>
       </a>'''
 
@@ -186,7 +186,7 @@ def concepts():
     return '\n      '.join(out)
 
 STEPS = [('Talk', 'A short call about your business, your customers, and what the site needs to do for you.'),
-         ('Design', 'You see the design before anything is built, and we refine it until it feels right.'),
+         ('Design', 'You see the design before anything is built, and we refine it together until it feels right.'),
          ('Build', 'The approved design becomes a real, fast website, tested on phones, tablets and desktops.'),
          ('Launch', 'The site goes live on your domain, and you get a walkthrough of how everything works.')]
 def steps():
@@ -203,9 +203,9 @@ def promises():
 FAQ = [('How much does a website cost?', 'It depends on what your business needs. A one-page landing page (no animations or transitions) starts at about €300, and a website of 2 to 5 pages runs €500–750. Bigger or custom projects are priced around your needs, and you always get a fixed quote before work begins. See <a href="rates.html">Rates</a>.'),
        ('How long does it take?', 'A completed project takes 7–10 business days from the go-ahead.'),
        ('How many revisions are included?', 'Two rounds of revisions are included in the price. Each extra round adds 20% of the original price, and it never compounds: on a €500 site, every extra round is €100.'),
-       ('Why are your prices lower than most?', 'Most freelancers charge €1,000–2,000 per site. With the help of AI, the slow, repetitive parts of building take far less time, so we can deliver premium design at a price that makes sense for startups, small businesses and personal sites.'),
+       ('Why are your prices lower than most?', 'Most freelancers charge €1,000–2,000 per site. With the help of AI, the slow, repetitive parts of building take far less time, so I can deliver premium design at a price that makes sense for startups, small businesses and personal sites.'),
        ('I already have a website. Can you redesign it?', 'Yes. Redesigns keep what’s working, fix what isn’t, and move your existing content across.'),
-       ('Do I need to write the text and supply photos?', 'Bring what you have. Signet Works can help shape the wording and advise on images so the site reads well and looks consistent.'),
+       ('Do I need to write the text and supply photos?', 'Bring what you have. I can help shape the wording and advise on images so the site reads well and looks consistent.'),
        ('What happens after launch?', 'You get a walkthrough of the finished site, and ongoing updates and support are available whenever you need them.')]
 def faq():
     return '<div class="faq reveal">' + ''.join(f'<details><summary>{q}<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>{a}</p></div></details>' for q, a in FAQ) + '</div>'
@@ -268,13 +268,13 @@ def arrow_link(label, href):
 
 # ---------- pages ----------
 def home():
-    return head('Home', 'Signet Works designs and builds fast, professional websites for businesses that need one. Design, build and launch, handled start to finish.', 'home') + nav() + f'''<main id="main">
+    return head('Home', 'I’m Noah, and I build fast, professional websites for businesses in Tilburg and beyond. One person, fair prices, from about €300.', 'home') + nav() + f'''<main id="main">
 <div class="hero" id="top">
   <div class="orb a" aria-hidden="true"></div><div class="orb b" aria-hidden="true"></div>
   <div class="wrap">
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
     <div class="hero-row">
-      <p class="fade d1">Signet Works designs and builds professional websites for businesses that need one — clear, fast, and made to turn visitors into customers.</p>
+      <div class="hero-me fade d1"><img src="img/noah-sm.jpg" alt="Noah, founder of Signet Works" width="120" height="120"><div><p>I’m Noah. I build websites for businesses here in Tilburg: clear, fast, and made to turn visitors into customers.</p><p class="nl-line-txt" lang="nl">Ondernemer in Tilburg? Ik kom graag langs voor een kop koffie.</p></div></div>
       <div class="cta fade d2">{btn('How does it work?', 'rates.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
     </div>
   </div>
@@ -370,7 +370,7 @@ def services():
 def work():
     return head('Work', 'Selected website projects by Signet Works, and the four-step process behind every site.', 'work') + nav() + '<main id="main">' + page_head(
         '02', 'Work &amp; process', 'Built for real businesses, <em>not for awards.</em>',
-        'Recent client work, four concept sites you can click through, and the simple process every project follows.') + f'''
+        'My first real project, four concept sites you can click through, and the simple process every project follows.') + f'''
 <section>
   <div class="wrap">
     <div class="grid">
@@ -393,22 +393,39 @@ def work():
 ''' + band('Your business <em>could be next.</em>') + footer()
 
 def about():
-    return head('About', 'Signet Works builds professional websites for businesses — one person, plain language, a clear quote up front.', 'about') + nav() + '<main id="main">' + page_head(
+    return head('About', 'Signet Works is Noah: one person in Tilburg building premium websites at fair prices. Studying Entrepreneurship, co-founder of Medixis.', 'about') + nav() + '<main id="main">' + page_head(
         '04', 'About', 'What Signet Works is all about',
-        'A small studio from Tilburg, building premium websites that businesses and people can actually afford.', cls='plain') + f'''
+        'Signet Works is one person: me. Here’s who I am, and why I do this.', cls='plain') + f'''
+<section class="founder-sec">
+  <div class="wrap founder">
+    <figure class="founder-photo has-img reveal"><img src="img/noah.jpg" alt="Noah, founder of Signet Works" width="880" height="1100"></figure>
+    <div class="reveal" style="--d:120ms">
+      <p class="kicker"><b>05</b>The person behind it</p>
+      <h2>Hi, I’m <em>Noah.</em></h2>
+      <p class="role">Founder, Signet Works · Tilburg</p>
+      <div class="prose">
+        <p>I study Entrepreneurship here in Tilburg, and I’ve lived in Washington D.C., Ottawa, Berlin and Denmark along the way.</p>
+        <p>My first client was my own business: Medixis, a company I co-founded. Building its website showed me how much a good site matters to a young business, and how much most people get charged for one.</p>
+        <p>Signet Works is my answer: premium websites at fair prices, built by the person you actually talk to. I believe in honest work, fair prices, and doing what I say I’ll do.</p>
+      </div>
+      <p class="coffee">In or around Tilburg? I’m happy to meet for a coffee or stop by your shop. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
+    </div>
+  </div>
+</section>
+
 <section class="philosophy">
   <div class="wrap">
-    <p class="kicker reveal"><b>05</b>The philosophy behind it all</p>
+    <p class="kicker reveal"><b>06</b>The philosophy behind it all</p>
     <p class="manifesto" data-scrub>Professional websites shouldn’t be crazy expensive, or out of reach, in a digital age.</p>
     <div class="phil-grid">
       <div class="prose reveal">
-        <p>Signet Works was founded on a simple idea: a professional website is no longer a luxury, so it shouldn’t be priced like one. Least of all for startups and small businesses, who often need a good website the most and can afford an expensive one the least.</p>
-        <p>With the help of AI, the slow and repetitive parts of building a website take a fraction of the time. That time goes back into what matters: the design, the details, and getting your business across clearly. The result is high-quality websites with premium design, at a price that makes sense, for businesses and for personal use.</p>
+        <p>I started Signet Works on a simple idea: a professional website is no longer a luxury, so it shouldn’t be priced like one. Least of all for startups and small businesses, who often need a good website the most and can afford an expensive one the least.</p>
+        <p>AI takes care of the slow, repetitive parts of building a site, so my time goes into what matters: the design, the details, and getting your business across clearly. That’s how I can offer premium design at a price that makes sense, for businesses and for personal sites.</p>
       </div>
       <ul class="pillars reveal" style="--d:120ms">
-        <li><b>Accessible</b><span>Clear, fair prices that work for startups, small businesses and individuals.</span></li>
-        <li><b>Premium</b><span>Design and detail that hold their own next to sites that cost many times more.</span></li>
-        <li><b>AI-assisted, personally made</b><span>AI speeds up the build. The design decisions, and the care, stay personal.</span></li>
+        <li><b>One person</b><span>You talk to me, and I build your site. No account managers, no hand-offs.</span></li>
+        <li><b>Fair prices</b><span>From about €300, with a fixed quote before any work begins.</span></li>
+        <li><b>Built for real businesses</b><span>Not for awards. A site your customers understand, and that brings them to you.</span></li>
       </ul>
     </div>
   </div>
@@ -424,14 +441,14 @@ def about():
 <section class="origin">
   <div class="wrap">
     <div class="head">
-      <p class="kicker reveal"><b>06</b>Origin</p>
+      <p class="kicker reveal"><b>07</b>Origin</p>
       <h2 data-split>Headquartered in Tilburg, <em>operating around the globe.</em></h2>
     </div>
     <div class="origin-grid">
       {nl_map()}
       <div class="prose reveal" style="--d:150ms">
-        <p>Signet Works started in Tilburg, in the south of the Netherlands, and that is still home base.</p>
-        <p>From there, the work travels: websites are planned, designed and launched remotely, for businesses wherever they are. It starts from one point on the map and keeps reaching further out.</p>
+        <p>Tilburg is home base. Local businesses can meet me in person, and I work with clients further away remotely.</p>
+        <p>It starts from one point on the map and keeps reaching further out.</p>
       </div>
     </div>
   </div>
@@ -440,33 +457,12 @@ def about():
 <section class="alt">
   <div class="wrap split2">
     <div>
-      <p class="kicker reveal" style="margin-bottom:24px"><b>07</b>The name</p>
+      <p class="kicker reveal" style="margin-bottom:24px"><b>08</b>The name</p>
       <h2 class="h2" data-split>Why a <em>signet?</em></h2>
     </div>
     <div class="prose reveal">
       <p>A signet ring was once used to seal a letter: a small, personal mark that said who it came from and that it could be trusted.</p>
-      <p>That is the idea behind Signet Works. Every site carries the same care, whether it is a one-page site for a local shop or a full redesign, and it is built to earn your customers’ trust.</p>
-    </div>
-  </div>
-</section>
-
-<section class="founder-sec">
-  <div class="wrap founder">
-    <!-- Replace with the founder photo: <img src="img/founder.jpg" alt="Your name, founder of Signet Works"> -->
-    <div class="founder-photo reveal" role="img" aria-label="Placeholder for the founder's photo">
-      <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="36" r="18"/><path d="M14 92c3-20 18-32 36-32s33 12 36 32z"/></svg>
-      <span>Founder photo</span>
-    </div>
-    <div class="reveal" style="--d:120ms">
-      <p class="kicker"><b>08</b>The face behind the brand</p>
-      <h2>Hi, I’m <em>[Your name].</em></h2>
-      <p class="role">Founder, Signet Works</p>
-      <div class="prose">
-        <p>[A few lines about you: where you’re from, how you got into building websites, and what you enjoy most about the work.]</p>
-        <p>[Why you started Signet Works, and who you love working with: startups, local businesses, people with an idea they want online.]</p>
-        <p>[Something personal that makes you, you. A hobby, a city you love, or what you do when you’re not designing.]</p>
-      </div>
-      <p class="placeholder-note">Placeholder text: replace with your own story and photo.</p>
+      <p>That’s the idea behind the name. Every site I build carries my mark, whether it’s a one-page site for a local shop or a full redesign, and I want it to earn your customers’ trust.</p>
     </div>
   </div>
 </section>
@@ -571,7 +567,7 @@ def start():
         </fieldset>
 
         <fieldset class="q-step" data-step="4">
-          <legend class="q-title" tabindex="-1">Where can we reach you?</legend>
+          <legend class="q-title" tabindex="-1">Where can I reach you?</legend>
           <p class="q-hint">Email only. You’ll get a personal reply, never a newsletter.</p>
           <div class="q-fields">
             <label class="field"><input name="name" autocomplete="name" placeholder=" " required><span>Your name</span></label>
@@ -623,7 +619,7 @@ def rates():
 <section>
   <div class="wrap">
     <div class="tiers">{cards}</div>
-    <p class="tier-note reveal">Prices are a starting point, not a fixed menu. Tell us what you need and you’ll get a quote that fits.</p>
+    <p class="tier-note reveal">Prices are a starting point, not a fixed menu. Tell me what you need and you’ll get a quote that fits.</p>
   </div>
 </section>
 
@@ -633,7 +629,7 @@ def rates():
     <div class="cmp us reveal" style="--d:140ms"><p class="cmp-big">from €300</p><p class="cmp-lbl">Signet Works</p></div>
     <div class="cmp-text reveal" style="--d:260ms">
       <h2 class="h2">A website is part of <em>the business.</em></h2>
-      <p>We believe a website isn’t an add-on. It’s part of the business itself, an extension of it. And in this day and age, a premium website shouldn’t cost a fortune.</p>
+      <p>I believe a website isn’t an add-on. It’s part of the business itself, an extension of it. And in this day and age, a premium website shouldn’t cost a fortune.</p>
     </div>
   </div>
 </section>
@@ -641,7 +637,7 @@ def rates():
 <section>
   <div class="wrap">
     <div class="head">
-      <p class="kicker reveal"><b>—</b>How we do business</p>
+      <p class="kicker reveal"><b>—</b>How I do business</p>
       <h2 data-split>Simple terms, <em>in writing.</em></h2>
     </div>
     <div class="terms">{tl}</div>
@@ -664,34 +660,34 @@ UPDATED = '17 November 2026'
 def privacy():
     body = """
 <h2>The short version</h2>
-<p>This website has no accounts, no analytics and no tracking. We only receive personal information if you choose to email us, and we use it only to reply to you and work on your project.</p>
-<h2>Who we are</h2>
-<p>Signet Works is a web design studio based in Tilburg, the Netherlands. For anything about your data, email <a href="mailto:hello@sigi.com">hello@sigi.com</a>.</p>
-<h2>What we collect, and why</h2>
-<p><b>When you contact us.</b> The project questionnaire and the “Message” button don’t send anything through this website. They open your own email app with a message ready to go. Nothing reaches us unless you press send. If you do, we receive what you wrote: usually your name, email address, business name and project details. We use this only to reply, prepare a quote and carry out the work you ask for.</p>
-<p><b>Legal basis.</b> We process this information to take steps at your request before entering into an agreement, and to carry out that agreement (Article 6(1)(b) GDPR).</p>
-<p><b>When you browse.</b> We don’t collect anything about your visit ourselves. The only things stored are two small preferences on your own device, explained in our <a href="cookies.html">cookie policy</a>.</p>
+<p>This website has no accounts, no analytics and no tracking. I only receive personal information if you choose to email me, and I use it only to reply to you and work on your project.</p>
+<h2>Who I am</h2>
+<p>Signet Works is a one-person web design business run by me, Noah, in Tilburg, the Netherlands. For anything about your data, email <a href="mailto:hello@sigi.com">hello@sigi.com</a>.</p>
+<h2>What I collect, and why</h2>
+<p><b>When you contact me.</b> The project questionnaire and the “Message” button don’t send anything through this website. They open your own email app with a message ready to go. Nothing reaches me unless you press send. If you do, I receive what you wrote: usually your name, email address, business name and project details. I use this only to reply, prepare a quote and carry out the work you ask for.</p>
+<p><b>Legal basis.</b> I process this information to take steps at your request before entering into an agreement, and to carry out that agreement (Article 6(1)(b) GDPR).</p>
+<p><b>When you browse.</b> I don’t collect anything about your visit myself. The only things stored are two small preferences on your own device, explained in my <a href="cookies.html">cookie policy</a>.</p>
 <h2>Services that help run this site</h2>
 <p><b>Hosting.</b> This website is hosted on GitHub Pages. Like any web host, GitHub processes technical data such as your IP address to deliver the pages and keep the service secure.</p>
 <p><b>Fonts.</b> Some fonts are loaded from Google Fonts. To deliver them, Google receives your IP address and basic browser information.</p>
-<p><b>Email.</b> Messages you send us are handled by our email provider.</p>
-<h2>How long we keep it</h2>
-<p>We keep emails and project details for as long as needed to answer you and complete your project, and afterwards only as long as required for our records and legal obligations. You can ask us to delete them at any time.</p>
+<p><b>Email.</b> Messages you send me are handled by my email provider.</p>
+<h2>How long I keep it</h2>
+<p>I keep emails and project details for as long as needed to answer you and complete your project, and afterwards only as long as required for my records and legal obligations. You can ask me to delete them at any time.</p>
 <h2>Your rights</h2>
-<p>Under the GDPR you can ask to see, correct or delete the personal data we hold about you, object to its use, or ask for a copy. Email us and we’ll respond within one month. You also have the right to complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
-<h2>We don’t sell your data</h2>
-<p>We never sell, rent or share your information for advertising.</p>
+<p>Under the GDPR you can ask to see, correct or delete the personal data I hold about you, object to its use, or ask for a copy. Email me and I’ll respond within one month. You also have the right to complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
+<h2>I don’t sell your data</h2>
+<p>I never sell, rent or share your information for advertising.</p>
 <h2>Changes</h2>
-<p>If this policy changes, we’ll update this page and the date at the top.</p>
+<p>If this policy changes, I’ll update this page and the date at the top.</p>
 """
     return legal_page('privacy', 'Privacy policy', 'How Signet Works handles personal data: no tracking, no analytics, and contact details used only to reply.', UPDATED, body)
 
 def cookies():
     body = """
-<h2>We don’t use cookies</h2>
+<h2>I don’t use cookies</h2>
 <p>This website doesn’t place any cookies on your device. There are no analytics, advertising or tracking cookies, and no third-party cookies from social media or embedded content. That’s also why you don’t see a cookie banner.</p>
-<h2>What we do store on your device</h2>
-<p>Two small settings are saved in your browser’s own storage so the site behaves the way you expect. They never leave your device and we can’t see them.</p>
+<h2>What I do store on your device</h2>
+<p>Two small settings are saved in your browser’s own storage so the site behaves the way you expect. They never leave your device and I can’t see them.</p>
 <table>
   <thead><tr><th>Name</th><th>Where</th><th>Purpose</th><th>How long</th></tr></thead>
   <tbody>
@@ -700,11 +696,11 @@ def cookies():
   </tbody>
 </table>
 <h2>Third parties</h2>
-<p>Our host (GitHub Pages) and our font provider (Google Fonts) don’t set cookies on this website. They do receive your IP address when delivering pages and fonts, as explained in our <a href="privacy.html">privacy policy</a>.</p>
+<p>My host (GitHub Pages) and my font provider (Google Fonts) don’t set cookies on this website. They do receive your IP address when delivering pages and fonts, as explained in my <a href="privacy.html">privacy policy</a>.</p>
 <h2>Removing stored settings</h2>
 <p>You can clear these settings at any time through your browser’s settings, usually under “site data”. The site will simply go back to its default look.</p>
 <h2>Changes</h2>
-<p>If we ever start using cookies, we’ll update this page first and ask for your consent where the law requires it.</p>
+<p>If I ever start using cookies, I’ll update this page first and ask for your consent where the law requires it.</p>
 """
     return legal_page('cookies', 'Cookie policy', 'Signet Works doesn’t use cookies. Here is what is stored on your device, and why.', UPDATED, body)
 

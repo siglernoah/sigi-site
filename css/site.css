@@ -732,6 +732,15 @@ form .btn{justify-self:start}
 .svc-facts b{font:700 1.35rem/1.1 var(--brand);letter-spacing:-.03em}
 .svc-facts span{font-size:13.5px;color:var(--muted)}
 .svc-facts .arrow-link{margin-left:auto}
+.founder-photo.has-img{border:0;background:var(--surface);box-shadow:var(--shadow)}
+.founder-photo.has-img img{object-position:50% 20%}
+.coffee{margin-top:26px;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg-2);font-size:15.5px}
+.coffee .arrow-link{margin-left:6px}
+.hero-me{display:flex;align-items:center;gap:16px;max-width:52ch}
+.hero-me img{width:60px;height:60px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--line)}
+.hero-me p{font-size:19px;color:var(--fg-2)}
+.hero-me .nl-line-txt{margin-top:6px;font-size:14px;color:var(--muted);font-style:italic}
+@media (max-width:560px){.hero-me{align-items:flex-start}.hero-me img{width:48px;height:48px}.hero-me p{font-size:17px}}
 /* ---------- rates ---------- */
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .tier{display:flex;flex-direction:column;gap:14px;padding:32px 28px;border:1px solid var(--line);border-radius:24px;background:var(--surface);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
