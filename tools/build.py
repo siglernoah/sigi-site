@@ -272,14 +272,13 @@ def home():
 <div class="hero" id="top">
   <div class="orb a" aria-hidden="true"></div><div class="orb b" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="fade d0"><span class="pill"><i></i>Booking new projects</span></div>
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
     <div class="hero-row">
       <p class="fade d1">Signet Works designs and builds professional websites for businesses that need one — clear, fast, and made to turn visitors into customers.</p>
       <div class="cta fade d2">{btn('Start a project', 'start.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
     </div>
   </div>
-  <a class="badge fade d2" href="start.html" aria-label="Start a project" data-magnetic>
+  <a class="badge fade d2" href="start.html" aria-label="Start a project">
     <svg class="ring" viewBox="0 0 132 132" aria-hidden="true"><defs><path id="circ" d="M66 66m-54 0a54 54 0 1 1 108 0a54 54 0 1 1-108 0"/></defs><text><textPath href="#circ">Start a project · Start a project · </textPath></text></svg>
     <span class="core"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></span>
   </a>

@@ -231,7 +231,7 @@ h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-styl
 .pill i{position:relative;width:8px;height:8px;border-radius:50%;background:#1FA560}
 .pill i::after{content:"";position:absolute;inset:0;border-radius:50%;background:#1FA560;animation:ping 2s var(--ease) infinite}
 @keyframes ping{0%{transform:scale(1);opacity:.6}80%,100%{transform:scale(3);opacity:0}}
-.hero h1{font-size:clamp(3.1rem,9vw,8.2rem);margin:30px 0 40px;max-width:12.5ch;letter-spacing:-.035em;line-height:.92}
+.hero h1{font-size:clamp(3.1rem,9vw,8.2rem);margin:0 0 40px;max-width:12.5ch;letter-spacing:-.035em;line-height:.92}
 .hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
 .hero p,.page-head .lede{max-width:44ch;font-size:19px;color:var(--fg-2)}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
@@ -243,7 +243,7 @@ h1 em,h2 em,blockquote.quote em,.statement em{font-family:var(--brand);font-styl
 .badge svg.ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 16s linear infinite;font:600 10.5px var(--sans);letter-spacing:.24em;text-transform:uppercase;fill:currentColor}
 .badge .core{width:64px;height:64px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;transition:background .4s,color .4s,transform .6s var(--ease)}
 .badge .core svg{width:20px;height:20px;transition:transform .6s var(--ease)}
-.badge:hover .core{background:var(--accent);color:var(--on-accent);transform:scale(1.08)}
+.badge:hover .core{background:var(--accent);color:var(--on-accent)}
 .badge:hover .core svg{transform:rotate(-45deg)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
