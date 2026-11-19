@@ -274,7 +274,7 @@ def home():
   <div class="wrap">
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
     <div class="hero-row">
-      <div class="hero-me fade d1"><img src="img/noah-sm.jpg" alt="Noah, founder of Signet Works" width="120" height="120"><div><p>I’m Noah. I build websites for businesses here in Tilburg: clear, fast, and made to turn visitors into customers.</p><p class="nl-line-txt" lang="nl">Ondernemer in Tilburg? Ik kom graag langs voor een kop koffie.</p></div></div>
+      <div class="hero-me fade d1"><img src="img/noah-sm.jpg" alt="Noah, founder of Signet Works" width="120" height="120"><div><p>I’m Noah. I build websites for businesses here in Tilburg: clear, fast, and made to turn visitors into customers.</p></div></div>
       <div class="cta fade d2">{btn('How does it work?', 'rates.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
     </div>
   </div>
@@ -393,7 +393,7 @@ def work():
 ''' + band('Your business <em>could be next.</em>') + footer()
 
 def about():
-    return head('About', 'Signet Works is Noah: one person in Tilburg building premium websites at fair prices. Studying Entrepreneurship, co-founder of Medixis.', 'about') + nav() + '<main id="main">' + page_head(
+    return head('About', 'Signet Works is Noah: one person in Tilburg building premium websites at fair prices. Entrepreneurship student and co-founder of Medixis.', 'about') + nav() + '<main id="main">' + page_head(
         '04', 'About', 'What Signet Works is all about',
         'Signet Works is one person: me. Here’s who I am, and why I do this.', cls='plain') + f'''
 <section class="founder-sec">
@@ -404,13 +404,18 @@ def about():
       <h2>Hi, I’m <em>Noah.</em></h2>
       <p class="role">Founder, Signet Works · Tilburg</p>
       <div class="prose">
-        <p>I study Entrepreneurship here in Tilburg, and I’ve lived in Washington D.C., Ottawa, Berlin and Denmark along the way.</p>
+        <p>I study Entrepreneurship here in Tilburg, and I’ve lived across North America and Northern, Western and Eastern Europe along the way.</p>
         <p>My first client was my own business: Medixis, a company I co-founded. Building its website showed me how much a good site matters to a young business, and how much most people get charged for one.</p>
         <p>Signet Works is my answer: premium websites at fair prices, built by the person you actually talk to. I believe in honest work, fair prices, and doing what I say I’ll do.</p>
       </div>
-      <p class="coffee">In or around Tilburg? I’m happy to meet for a coffee or stop by your shop. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
+      <p class="coffee">In or around Tilburg? I’m happy to meet in person. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
     </div>
   </div>
+    <div class="wrap moments">
+      <figure class="reveal"><img src="img/noah-grass.jpg" alt="Noah relaxing on the grass on a summer evening" width="600" height="800" loading="lazy"><figcaption>Off the clock</figcaption></figure>
+      <figure class="reveal" style="--d:110ms"><img src="img/tilburg-lochal.jpg" alt="The LocHal in Tilburg's Spoorzone at night" width="600" height="800" loading="lazy"><figcaption>Home base: Tilburg</figcaption></figure>
+      <figure class="reveal" style="--d:220ms"><img src="img/noah-flying.jpg" alt="Noah in the cockpit of a small plane, wearing a headset" width="600" height="800" loading="lazy"><figcaption>In the air</figcaption></figure>
+    </div>
 </section>
 
 <section class="philosophy">
