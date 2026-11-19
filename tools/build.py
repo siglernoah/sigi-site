@@ -39,7 +39,7 @@ def head(title, desc, page):
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#071331">
+<meta name="theme-color" content="#141821">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@ def head(title, desc, page):
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=7'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=8'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
