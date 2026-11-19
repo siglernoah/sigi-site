@@ -740,20 +740,39 @@ form .btn{justify-self:start}
 .hero-me img{width:60px;height:60px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--line)}
 .hero-me p{font-size:19px;color:var(--fg-2)}
 @media (max-width:560px){.hero-me{align-items:flex-start}.hero-me img{width:48px;height:48px}.hero-me p{font-size:17px}}
-.still{position:relative;margin:72px 0 0;border-radius:24px;overflow:hidden;aspect-ratio:16/9;background:#0b0b0b;box-shadow:var(--shadow)}
-.still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 30%;transform:scale(1.04);transition:transform 1.8s var(--ease)}
-.still.in img{transform:none}
-.still::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000000d9 0%,#000000a6 30%,#00000000 58%),linear-gradient(0deg,#00000066,#0000 40%)}
-.still figcaption{position:absolute;left:clamp(22px,5vw,64px);top:50%;transform:translateY(-50%);z-index:1;max-width:min(30ch,44%);color:#F5F5F3}
+/* ---------- about: story sections ---------- */
+.story-hello{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;border-bottom:1px solid var(--line);padding:0}
+.sh-photo{margin:0;position:relative;overflow:hidden;min-height:620px}
+.sh-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 45%;transform:scale(1.06);transition:transform 2.4s var(--ease)}
+.sh-photo.in img{transform:none}
+.js .sh-photo.reveal{transform:none}
+.sh-text{display:flex;flex-direction:column;justify-content:center;padding:120px clamp(28px,6vw,96px) 90px}
+.sh-text h2{font-size:clamp(3rem,6vw,5.6rem);letter-spacing:-.035em;margin:24px 0 10px}
+.sh-text h2 em{color:var(--accent)}
+.sh-text .role{font:600 14px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sh-text .prose{margin-top:30px;max-width:46ch}
+.sh-text .coffee{max-width:52ch}
+.story-still{position:relative;min-height:92vh;padding:0;display:flex;align-items:center;overflow:hidden;background:#0b0b0b;color:#F5F5F3}
+.story-still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 30%}
+.story-still::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000000e0 0%,#000000a6 32%,#00000000 60%),linear-gradient(0deg,#00000073,#0000 40%)}
+.ss-text{position:relative;z-index:1;width:100%}
+.ss-text>*{max-width:min(30ch,44vw)}
+.ss-text>.still-kicker{max-width:none}
 .still-kicker{font:600 12.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#ffffffa6;display:flex;align-items:center;gap:12px}
-.still-kicker::after{content:"";width:36px;height:1px;background:currentColor}
-.still-title{margin-top:16px;font:500 clamp(2rem,4.2vw,3.6rem)/1.02 var(--serif);letter-spacing:-.03em}
+.still-kicker::after{content:"";width:36px;height:1px;background:currentColor;flex:none}
+.still-title{margin-top:18px;font:500 clamp(2.4rem,5vw,4.6rem)/1.02 var(--serif);letter-spacing:-.03em}
 .still-title em{font-family:var(--brand);font-style:normal;font-weight:700;font-size:.9em;letter-spacing:-.05em;color:var(--accent)}
-.still-sub{margin-top:16px;font-size:16px;color:#ffffffbf;line-height:1.55}
-@media (max-width:700px){.still{aspect-ratio:auto;display:flex;flex-direction:column}
-  .still img{position:relative;aspect-ratio:4/5;height:auto;object-position:60% 35%}
-  .still::after{display:none}
-  .still figcaption{position:relative;left:auto;top:auto;transform:none;max-width:none;padding:24px 22px 26px;background:#0b0b0b}}
+.still-sub{margin-top:18px;font-size:17px;color:#ffffffbf;line-height:1.55}
+@media (max-width:900px){
+  .story-hello{grid-template-columns:1fr;min-height:0}
+  .sh-photo{min-height:0;aspect-ratio:4/5}
+  .sh-text{padding:48px 24px 64px}
+  .story-still{min-height:0;flex-direction:column;align-items:stretch}
+  .story-still img{position:relative;aspect-ratio:4/5;height:auto;object-position:60% 35%}
+  .story-still::after{display:none}
+  .ss-text{padding:28px 22px 40px}
+  .ss-text>*{max-width:none}
+}
 /* ---------- rates ---------- */
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .tier{display:flex;flex-direction:column;gap:14px;padding:32px 28px;border:1px solid var(--line);border-radius:24px;background:var(--surface);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
