@@ -396,33 +396,36 @@ def about():
     return head('About', 'Signet Works is Noah: one person in Tilburg building premium websites at fair prices. Entrepreneurship student and co-founder of Medixis.', 'about') + nav() + '<main id="main">' + page_head(
         '04', 'About', 'What Signet Works is all about',
         'Signet Works is one person: me. Here’s who I am, and why I do this.', cls='plain') + f'''
-<section class="story-hello" aria-labelledby="hello">
-  <figure class="sh-photo reveal"><img src="img/noah-grass.jpg" alt="Noah sitting on the grass on a summer evening" width="554" height="724"></figure>
-  <div class="sh-text">
-    <p class="kicker reveal"><b>01</b>The person behind it</p>
-    <h2 id="hello" class="reveal" style="--d:80ms">Hi, I’m <em>Noah.</em></h2>
-    <p class="role reveal" style="--d:140ms">Founder, Signet Works · Tilburg</p>
-    <div class="prose">
-      <p class="reveal" style="--d:200ms">I study Entrepreneurship here in Tilburg, and I’ve lived across North America and Northern, Western and Eastern Europe along the way.</p>
-      <p class="reveal" style="--d:260ms">My first client was my own business: Medixis, a company I co-founded. Building its website showed me how much a good site matters to a young business, and how much most people get charged for one.</p>
-      <p class="reveal" style="--d:320ms">Signet Works is my answer: premium websites at fair prices, built by the person you actually talk to. I believe in honest work, fair prices, and doing what I say I’ll do.</p>
+<section class="founder-sec">
+  <div class="wrap founder">
+    <figure class="founder-photo has-img reveal"><img src="img/noah.jpg" alt="Noah, founder of Signet Works" width="880" height="1100"></figure>
+    <div class="reveal" style="--d:120ms">
+      <p class="kicker"><b>05</b>The person behind it</p>
+      <h2>Hi, I’m <em>Noah.</em></h2>
+      <p class="role">Founder, Signet Works · Tilburg</p>
+      <div class="prose">
+        <p>I study Entrepreneurship here in Tilburg, and I’ve lived across North America and Northern, Western and Eastern Europe along the way.</p>
+        <p>My first client was my own business: Medixis, a company I co-founded. Building its website showed me how much a good site matters to a young business, and how much most people get charged for one.</p>
+        <p>Signet Works is my answer: premium websites at fair prices, built by the person you actually talk to. I believe in honest work, fair prices, and doing what I say I’ll do.</p>
+      </div>
+      <p class="coffee">In or around Tilburg? I’m happy to meet in person. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
     </div>
-    <p class="coffee reveal" style="--d:380ms">In or around Tilburg? I’m happy to meet in person. <a class="arrow-link" href="start.html">Let’s talk {ARROW}</a></p>
   </div>
-</section>
-
-<section class="story-still">
-  <img src="img/noah-back.jpg" alt="Noah, seen from behind, walking past a dark wall into a bright hall" width="1600" height="1413" loading="lazy">
-  <div class="wrap ss-text">
-    <p class="still-kicker reveal">02 · Signet Works · Tilburg</p>
-    <p class="still-title reveal" style="--d:100ms">One person. <em>Your whole website.</em></p>
-    <p class="still-sub reveal" style="--d:200ms">From the first conversation to launch day, you work with me, start to finish.</p>
-  </div>
+    <div class="wrap">
+      <figure class="still reveal">
+        <img src="img/noah-back.jpg" alt="Noah, seen from behind, walking past a dark wall into a bright hall" width="1600" height="1413" loading="lazy">
+        <figcaption>
+          <p class="still-kicker">Signet Works · Tilburg</p>
+          <p class="still-title">One person. <em>Your whole website.</em></p>
+          <p class="still-sub">From the first conversation to launch day, you work with me, start to finish.</p>
+        </figcaption>
+      </figure>
+    </div>
 </section>
 
 <section class="philosophy">
   <div class="wrap">
-    <p class="kicker reveal"><b>03</b>The philosophy behind it all</p>
+    <p class="kicker reveal"><b>06</b>The philosophy behind it all</p>
     <p class="manifesto" data-scrub>Professional websites shouldn’t be crazy expensive, or out of reach, in a digital age.</p>
     <div class="phil-grid">
       <div class="prose reveal">
@@ -440,7 +443,7 @@ def about():
 
 <section>
   <div class="wrap about">
-    <div><p class="kicker reveal" style="margin-bottom:28px"><b>04</b>The promise</p><blockquote class="quote" data-scrub>{QUOTE}</blockquote></div>
+    <blockquote class="quote" data-scrub>{QUOTE}</blockquote>
     {promises()}
   </div>
 </section>
@@ -448,7 +451,7 @@ def about():
 <section class="origin">
   <div class="wrap">
     <div class="head">
-      <p class="kicker reveal"><b>05</b>Origin</p>
+      <p class="kicker reveal"><b>07</b>Origin</p>
       <h2 data-split>Headquartered in Tilburg, <em>operating around the globe.</em></h2>
     </div>
     <div class="origin-grid">
@@ -461,6 +464,18 @@ def about():
   </div>
 </section>
 
+<section class="alt">
+  <div class="wrap split2">
+    <div>
+      <p class="kicker reveal" style="margin-bottom:24px"><b>08</b>The name</p>
+      <h2 class="h2" data-split>Why a <em>signet?</em></h2>
+    </div>
+    <div class="prose reveal">
+      <p>A signet ring was once used to seal a letter: a small, personal mark that said who it came from and that it could be trusted.</p>
+      <p>That’s the idea behind the name. Every site I build carries my mark, whether it’s a one-page site for a local shop or a full redesign, and I want it to earn your customers’ trust.</p>
+    </div>
+  </div>
+</section>
 <p class="fineprint wrap"><a href="privacy.html">Privacy policy</a><span aria-hidden="true">·</span><a href="cookies.html">Cookie policy</a></p>
 </main>
 ''' + band() + footer()
