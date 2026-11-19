@@ -275,7 +275,7 @@ def home():
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
     <div class="hero-row">
       <p class="fade d1">Signet Works designs and builds professional websites for businesses that need one — clear, fast, and made to turn visitors into customers.</p>
-      <div class="cta fade d2">{btn('Start a project', 'start.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
+      <div class="cta fade d2">{btn('How does it work?', 'rates.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
     </div>
   </div>
   <a class="badge fade d2" href="start.html" aria-label="Start a project">
