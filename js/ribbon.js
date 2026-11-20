@@ -1,5 +1,5 @@
-/* Signet Works — Work page hero: a ribbon of live work that spirals around the viewer, then lands in a grid.
-   Adapted from the "Video Ribbon" prompt. three.js is the local copy the site already ships. */
+/* Signet Works — Work page hero: a ribbon of live work that spirals around the viewer and lands in a grid,
+   then the page header drops in above it. Plays by itself each time the Work page opens. */
 import * as THREE from './vendor/three.module.min.js';
 
 const R2 = 'videos/';
@@ -10,6 +10,7 @@ const WORK = [
   ['Plumb & Level — Concept', 'plumb-level.mp4', 'concepts/handyman.html'],
   ['Nebulo — Concept', 'nebulo.mp4', 'concepts/startup.html'],
 ];
+const DURATION = 9000, HEAD_AT = .9, HEAD_MS = 1400;
 const $ = id => document.getElementById(id);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const mix = (a, b, t) => a + (b - a) * t;
@@ -118,7 +119,7 @@ if (document.fonts) Promise.all([document.fonts.load('500 92px Newsreader'), doc
 const all = cards.concat([cta]);
 
 /* ---------- layout ---------- */
-let target = 0, p = 0, frozen = false, booted = false;
+let p = 0, hp = 0;
 const GZ = 8;
 let W = 1, H = 1, asp = 1, cols = 3, rows = 2, tanH = .3153;
 function resize() {
@@ -127,20 +128,19 @@ function resize() {
   camera.aspect = asp; camera.fov = asp < 16 / 9 ? Math.atan(.561 / asp) * 360 / Math.PI : FOV; camera.updateProjectionMatrix();
   tanH = Math.tan(camera.fov * Math.PI / 360);
   cols = asp < .9 ? 2 : 3; rows = asp < .9 ? 3 : 2;
-  if (RM && booted) render();
 }
 addEventListener('resize', resize); buildPath(); resize();
 function grid(i) {
-  const vh = 2 * GZ * tanH, vw = vh * asp, gw = vw * (cols === 3 ? .74 : .88), gap = gw * .017;
+  const vh = 2 * GZ * tanH, vw = vh * asp;
+  // once the header drops in, the grid shrinks and moves down to make room for it
+  const gw = vw * (cols === 3 ? .74 : .88) * mix(1, cols === 3 ? .7 : .8, hp), gap = gw * .017;
+  const oy = -vh * mix(0, cols === 3 ? .17 : .14, hp);
   const cw = (gw - gap * (cols - 1)) / cols, ch = cw / (CARD_W / CARD_H), gh = ch * rows + gap * 1.6 * (rows - 1);
   const c = i % cols, r = Math.floor(i / cols);
-  return {x:-gw / 2 + cw / 2 + c * (cw + gap), y:gh / 2 - ch / 2 - r * (ch + gap * 1.6), w:cw, h:ch, vw, vh, c, r};
+  return {x:-gw / 2 + cw / 2 + c * (cw + gap), y:oy + gh / 2 - ch / 2 - r * (ch + gap * 1.6), w:cw, h:ch, vw, vh, c, r};
 }
 
-/* ---------- scroll ---------- */
-const track = $('track');
-const readScroll = () => { target = clamp(scrollY / (track.offsetHeight - innerHeight)); };
-addEventListener('scroll', readScroll, {passive:true}); readScroll();
+const track = $('track'), stage = $('stage');
 
 /* ---------- pose ---------- */
 const op = new THREE.Vector3(), ot = new THREE.Vector3(), up = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), vp = new THREE.Vector3();
@@ -175,20 +175,14 @@ function render() {
   // headline runs right across the page in opposite directions
   const rise = 1 - out(span(pp, 0, .12));
   const run = mix(-50, 76, span(pp, 0, .58));
-  if (RM) {
-    // reduced motion: the grid, with the headline resting above and below it
-    $('l1').style.transform = 'translate3d(0,-34vh,0)'; $('l2').style.transform = 'translate3d(0,30vh,0)';
-  } else {
-    $('l1').style.transform = `translate3d(${run}vw,${rise * 34}vh,0)`;
-    $('l2').style.transform = `translate3d(${-run}vw,${rise * 34}vh,0)`;
-  }
+  $('l1').style.transform = `translate3d(${run}vw,${rise * 34}vh,0)`;
+  $('l2').style.transform = `translate3d(${-run}vw,${rise * 34}vh,0)`;
   const capA = 1 - span(pp, .52, .57);
   $('cap').style.opacity = capA; $('cap').style.transform = `translate(-50%,calc(-50% + ${rise * 34}vh))`;
   const intro = 1 - span(pp, 0, .05);
   for (const id of ['hint', 'pager', 'cross', 'glow']) $(id).style.opacity = intro;
   $('hint').style.pointerEvents = $('pager').style.pointerEvents = intro > .5 ? 'auto' : 'none';
   $('rule').style.transform = `scaleX(${ease(span(pp, .72, .86))})`;
-  $('rule').style.top = '50%';
   // ribbon, then the grid
   const pr = span(pp, RIB_A, RIB_B), head = mix(0, PATH_L + cards.length * STEP, pr);
   for (const c of all) {
@@ -207,10 +201,10 @@ function render() {
 }
 
 /* ---------- hover + click ---------- */
-const nameEl = $('name'), stage = $('stage');
+const nameEl = $('name');
 function hitAt(e) {
   if (p <= .86) return null;
-  const nx = (e.clientX / W - .5), ny = (.5 - e.clientY / H);
+  const b = stage.getBoundingClientRect(), nx = ((e.clientX - b.left) / W - .5), ny = (.5 - (e.clientY - b.top) / H);
   let hit = null;
   for (const c of all) { const g = c.rect; if (!g) continue; const x = nx * g.vw, y = ny * g.vh; if (Math.abs(x - g.x) < g.w / 2 && Math.abs(y - g.y) < g.h / 2) hit = c; }
   return hit;
@@ -219,7 +213,7 @@ stage.addEventListener('pointermove', e => {
   const hit = e.target.closest('a,button') ? null : hitAt(e);
   nameEl.style.opacity = hit ? 1 : 0;
   stage.style.cursor = hit ? 'pointer' : '';
-  if (hit) { nameEl.textContent = hit.title; nameEl.style.transform = `translate(${e.clientX + 14}px,${e.clientY + 16}px)`; }
+  if (hit) { nameEl.textContent = hit.title; const b = stage.getBoundingClientRect(); nameEl.style.transform = `translate(${e.clientX - b.left + 14}px,${e.clientY - b.top + 16}px)`; }
 });
 stage.addEventListener('pointerleave', () => { nameEl.style.opacity = 0; stage.style.cursor = ''; });
 stage.addEventListener('click', e => {
@@ -232,28 +226,70 @@ stage.addEventListener('click', e => {
 const menuPill = $('menuPill');
 if (menuPill) menuPill.addEventListener('click', e => { const b = document.querySelector('.menu-btn'); if (b){ e.preventDefault(); b.click(); } });
 
-/* ---------- loop ---------- */
-booted = true;
-if (RM) {
-  track.style.height = '100vh'; target = p = 1; frozen = true;
-  document.fonts && document.fonts.ready.then(render); render();
-  for (const c of cards) c.v.play().catch(() => {});
+/* ---------- the header that drops in once the grid lands ---------- */
+const headEl = $('rbHead');
+(function split(el){
+  let n = 0;
+  (function walk(node){
+    for (const t of Array.from(node.childNodes)) {
+      if (t.nodeType === 1) { walk(t); continue; }
+      if (t.nodeType !== 3) continue;
+      const frag = document.createDocumentFragment();
+      for (const w of t.textContent.split(/(\s+)/)) {
+        if (!w) continue;
+        if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); continue; }
+        const o = document.createElement('span'), i = document.createElement('span');
+        o.className = 'w'; i.className = 'wi'; i.style.setProperty('--i', n++); i.textContent = w;
+        o.appendChild(i); frag.appendChild(o);
+      }
+      t.parentNode.replaceChild(frag, t);
+    }
+  })(el);
+})(headEl.querySelector('.rb-h'));
+
+/* ---------- timeline ---------- */
+let t0 = 0, playing = false, headStart = 0;
+function land(now) {
+  headStart = now; stage.classList.add('done'); headEl.classList.add('in'); root.classList.remove('ribbon-on');
 }
-let inView = true;
-function loop() {
+function play() {
+  t0 = performance.now(); playing = true; headStart = 0; hp = 0; p = 0;
+  stage.classList.remove('done'); headEl.classList.remove('in'); root.classList.add('ribbon-on');
+}
+function skip() { playing = false; p = 1; land(performance.now() - HEAD_MS); }
+$('skipAnim').addEventListener('click', skip);
+addEventListener('keydown', e => { if (e.key === 'Escape' && playing) skip(); });
+// the Work tab plays it again when you're already here
+document.querySelectorAll('a[href="work.html"]').forEach(a => a.addEventListener('click', e => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+  e.preventDefault();
+  if (root.classList.contains('menu-open')) { const b = document.querySelector('.menu-btn'); b && b.click(); }
+  scrollTo(0, 0); if (!RM) play();
+}));
+
+/* ---------- loop ---------- */
+function loop(now) {
+  if (playing) {
+    p = clamp((now - t0) / DURATION);
+    if (p >= HEAD_AT && !headStart) land(now);
+    if (p >= 1) playing = false;
+  }
+  if (headStart) hp = out(clamp((now - headStart) / HEAD_MS));
   const r = track.getBoundingClientRect();
-  inView = r.bottom > 0 && r.top < innerHeight;
-  root.classList.toggle('ribbon-on', r.bottom > 72);
-  if (inView) {
-    if (!frozen){ p += (target - p) * .09; if (Math.abs(target - p) < .00005) p = target; }
+  if (r.bottom > 0 && r.top < innerHeight) {
     for (const c of cards) {
       if (c.mesh.visible && c.v.paused && !c.failed) c.v.play().catch(() => {});
       else if (!c.mesh.visible && !c.v.paused) c.v.pause();
     }
     render();
-  } else if (!inView) {
-    for (const c of cards) if (!c.v.paused) c.v.pause();
-  }
+  } else for (const c of cards) if (!c.v.paused) c.v.pause();
   requestAnimationFrame(loop);
 }
-loop();
+// wait for the first-visit intro (if it's running) before starting
+(function start() {
+  if (RM) return skip();
+  if (root.classList.contains('intro')) return setTimeout(start, 120);
+  play();
+})();
+root.classList.toggle('ribbon-on', !RM);
+requestAnimationFrame(loop);

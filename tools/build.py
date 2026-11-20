@@ -49,7 +49,7 @@ def head(title, desc, page):
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=11'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=12'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
@@ -388,6 +388,14 @@ def work():
       <div class="mid">DESIGN<s>/</s>BUILD<s>/</s>LAUNCH<s>/</s>CARE</div>
       <a class="r" href="#process">SEE THE PROCESS</a>
     </footer>
+    <div class="rb-head" id="rbHead">
+      <div class="wrap">
+        <p class="kicker"><b>02</b>Work &amp; process</p>
+        <h2 class="rb-h">Built for real businesses, <em>not for awards.</em></h2>
+        <p class="lede">My first real project, four concept sites you can click through, and the simple process every project follows.</p>
+      </div>
+    </div>
+    <button class="rb-skip" id="skipAnim" type="button">SKIP</button>
     <div id="name"></div>
   </div>
 </div>
