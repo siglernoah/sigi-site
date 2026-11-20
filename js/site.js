@@ -18,7 +18,7 @@
   function applyTheme(t){
     root.setAttribute('data-theme', t);
     try { localStorage.setItem('sw-theme', t); } catch(e){}
-    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#F4F1EA' : '#0A0A0A');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#FFFFFF' : '#1A1917');
     $$('.theme').forEach(function(b){
       b.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
       b.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
@@ -99,7 +99,7 @@
   if (hasIntro){
     // Real 3D ring (loaded only for the intro; preloaded from the page head). The flat ring is only a fallback.
     var fallback = setTimeout(function(){ if (introEl && !introEl.classList.contains('has3d')) introEl.classList.add('no3d'); }, 1600);
-    import('./ring3d.js?v=6').then(function(m){
+    import('./ring3d.js?v=9').then(function(m){
       if (!root.classList.contains('intro') || introEl.classList.contains('no3d')) return;
       ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
       clearTimeout(fallback); introEl.classList.add('has3d');
@@ -411,7 +411,7 @@
     if ('IntersectionObserver' in window && !RM){
       // the phone flies in (3s), then the call starts on its screen
       var started = false, phone3d = null;
-      var glReady = import('./phone3d.js?v=3').then(function(m){
+      var glReady = import('./phone3d.js?v=6').then(function(m){
         phone3d = m.mountPhone($('#phone')); stage.classList.add('gl');
       }).catch(function(){});
       var go = function(){

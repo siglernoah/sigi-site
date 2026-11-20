@@ -49,14 +49,14 @@ function studio() {
 
 function buildPhone() {
   const { W, H, T } = MM;
-  const alu = new THREE.MeshPhysicalMaterial({ color: 0xff7530, metalness: .62, roughness: .5, envMapIntensity: .85 });   // matte anodised orange
-  const aluDark = new THREE.MeshPhysicalMaterial({ color: 0xff8139, metalness: .6, roughness: .46, envMapIntensity: .9 });  // plateau, a touch lighter like the photo
-  const backGlass = new THREE.MeshPhysicalMaterial({ color: 0xff7b36, metalness: .5, roughness: .62, envMapIntensity: .8 });   // frosted glass panel
+  const alu = new THREE.MeshPhysicalMaterial({ color: 0x8a857d, metalness: .62, roughness: .5, envMapIntensity: .85 });   // matte anodised orange
+  const aluDark = new THREE.MeshPhysicalMaterial({ color: 0x948f86, metalness: .6, roughness: .46, envMapIntensity: .9 });  // plateau, a touch lighter like the photo
+  const backGlass = new THREE.MeshPhysicalMaterial({ color: 0x8e897f, metalness: .5, roughness: .62, envMapIntensity: .8 });   // frosted glass panel
   const frontGlass = new THREE.MeshPhysicalMaterial({ color: 0x010102, metalness: 0, roughness: .12, clearcoat: 1, clearcoatRoughness: .1, envMapIntensity: .35 });
   const black = new THREE.MeshStandardMaterial({ color: 0x0d0e11, metalness: .3, roughness: .55 });
   const lensGlass = new THREE.MeshPhysicalMaterial({ color: 0x06070b, metalness: 0, roughness: .32, envMapIntensity: .35 });
-  const barrel = new THREE.MeshPhysicalMaterial({ color: 0xf76c26, metalness: .6, roughness: .45, envMapIntensity: .8 });
-  const lip = new THREE.MeshPhysicalMaterial({ color: 0xffa56e, metalness: .55, roughness: .32, envMapIntensity: .7 });
+  const barrel = new THREE.MeshPhysicalMaterial({ color: 0x7d786f, metalness: .6, roughness: .45, envMapIntensity: .8 });
+  const lip = new THREE.MeshPhysicalMaterial({ color: 0xc7c1b6, metalness: .55, roughness: .32, envMapIntensity: .7 });
   const lensInner = new THREE.MeshStandardMaterial({ color: 0x1f2128, metalness: .4, roughness: .45 });
   const lensCoat = new THREE.MeshStandardMaterial({ color: 0x1a2048, metalness: .2, roughness: .4, envMapIntensity: .4 });
   const flashMat = new THREE.MeshStandardMaterial({ color: 0xf1e3c4, metalness: 0, roughness: .45, emissive: 0x1a140c });
