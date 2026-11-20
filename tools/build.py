@@ -166,7 +166,7 @@ FEATURE = f'''<a class="card feature reveal" href="https://medixisgroup.com" tar
       </a>'''
 
 CONCEPTS = [
-  ('coffee', 'Kettle &amp; Crema', 'Coffee shop · menu, beans &amp; a hand-poured hero', '#24160F', '#F4EBDD', '#C98A4B', 'Slow coffee, <em>poured fresh.</em>', 'See the menu'),
+  ('coffee', 'Kettle &amp; Crema', 'Coffee bar · product renders, live opening-hours clock &amp; order ahead', '#0D0C0A', '#E8DFCF', '#93A85C', 'Coffee for <em>the slow mornings.</em>', 'See the menu'),
   ('cleaning', 'Clearwell Cleaning', 'Cleaning company · instant quotes &amp; before/after', '#E8F7F4', '#0D3B40', '#19B5A5', 'A spotless home, <em>zero effort.</em>', 'Get a quote'),
   ('handyman', 'Plumb &amp; Level', 'Handyman services · jobs &amp; booking', '#FFC72C', '#1C1C1C', '#1C1C1C', 'No job <em>too small.</em>', 'Book a visit'),
   ('startup', 'Nebulo', 'Tech startup · product, pricing &amp; waitlist', '#170A3A', '#F6F5FB', '#FF77C8', 'Your team’s work, <em>above the clouds.</em>', 'Join the waitlist'),
