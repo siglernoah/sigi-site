@@ -40,8 +40,8 @@ def head(title, desc, page):
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#000000">
-<link rel="icon" type="image/png" href="img/favicon.png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="img/favicon.png?v={_v('img/favicon.png')}">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v={_v('img/apple-touch-icon.png')}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&amp;family=Inter:wght@400..800&amp;family=Outfit:wght@500..700&amp;display=swap" rel="stylesheet">
