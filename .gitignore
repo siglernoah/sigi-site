@@ -1,0 +1,4 @@
+# 3D tooling (local installs)
+tools/3d/.venv/
+tools/3d/node_modules/
+*.blend1

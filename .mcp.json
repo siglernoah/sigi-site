@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "bash",
+      "args": ["tools/3d/blender-mcp.sh"],
+      "env": {
+        "BLENDER_HOST": "127.0.0.1",
+        "BLENDER_PORT": "9876",
+        "DISABLE_TELEMETRY": "true",
+        "BLENDER_MCP_DISABLE_TELEMETRY": "true"
+      }
+    }
+  }
+}

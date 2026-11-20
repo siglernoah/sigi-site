@@ -1,0 +1,6 @@
+# Blender MCP server (ahujasid, renamed upstream) + image helpers used by cc-blender-skill
+mcp-for-blender==2.3.1
+opencv-python>=4.8
+numpy>=1.24
+scipy>=1.10
+Pillow>=10
