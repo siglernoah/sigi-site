@@ -18,7 +18,7 @@
   function applyTheme(t){
     root.setAttribute('data-theme', t);
     try { localStorage.setItem('sw-theme', t); } catch(e){}
-    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#FFFFFF' : '#1A1917');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#FFFFFF' : '#000000');
     $$('.theme').forEach(function(b){
       b.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
       b.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
@@ -99,7 +99,7 @@
   if (hasIntro){
     // Real 3D ring (loaded only for the intro; preloaded from the page head). The flat ring is only a fallback.
     var fallback = setTimeout(function(){ if (introEl && !introEl.classList.contains('has3d')) introEl.classList.add('no3d'); }, 1600);
-    import('./ring3d.js?v=9').then(function(m){
+    import('./ring3d.js?v=10').then(function(m){
       if (!root.classList.contains('intro') || introEl.classList.contains('no3d')) return;
       ring3d = m.mountRing($('#intro .spin'), { t0: window.__swT0 || performance.now(), spin: 3 });
       clearTimeout(fallback); introEl.classList.add('has3d');

@@ -83,7 +83,7 @@ export function buildRing() {
   const R = 1;
   const metal = new THREE.MeshStandardMaterial({ color: 0xc4c7cc, metalness: 1, roughness: 0.24, envMapIntensity: 0.95 });   // satin silver
   const satin = new THREE.MeshStandardMaterial({ color: 0xb9bcc2, metalness: 1, roughness: 0.38, envMapIntensity: 0.9 });   // brushed silver panel
-  const enamel = new THREE.MeshStandardMaterial({ color: 0x2450e6, metalness: 0.25, roughness: 0.3, emissive: 0x050c2a });
+  const enamel = new THREE.MeshStandardMaterial({ color: 0x1e3fae, metalness: 0.25, roughness: 0.3, emissive: 0x050c2a });
 
   const ring = new THREE.Group();
   ring.add(new THREE.Mesh(bandGeometry(R), metal));

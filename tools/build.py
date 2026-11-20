@@ -39,7 +39,7 @@ def head(title, desc, page):
 <meta property="og:title" content="{full}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#1A1917">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@ def head(title, desc, page):
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=9'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=10'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
@@ -126,7 +126,6 @@ def footer():
 
 def page_head(kicker_no, kicker, title, lede, orb=True, cls=''):
     return f'''<header class="page-head {cls}">
-  {'<div class="orb a" aria-hidden="true"></div>' if orb else ''}
   <div class="wrap">
     <p class="kicker fade d0"><b>{kicker_no}</b>{kicker}</p>
     <h1 data-split data-hero>{title}</h1>
@@ -270,7 +269,6 @@ def arrow_link(label, href):
 def home():
     return head('Home', 'I’m Noah, and I build fast, professional websites for businesses in Tilburg and beyond. One person, fair prices, from about €300.', 'home') + nav() + f'''<main id="main">
 <div class="hero" id="top">
-  <div class="orb a" aria-hidden="true"></div><div class="orb b" aria-hidden="true"></div>
   <div class="wrap">
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
     <div class="hero-row">
