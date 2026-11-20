@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Work — Signet Works</title>
-<meta name="description" content="Selected website projects by Signet Works, and the four-step process behind every site.">
+<meta name="description" content="My first real project and four concept sites, sweeping through space as a ribbon of live work, then landing in a grid.">
 <meta property="og:title" content="Work — Signet Works">
-<meta property="og:description" content="Selected website projects by Signet Works, and the four-step process behind every site.">
+<meta property="og:description" content="My first real project and four concept sites, sweeping through space as a ribbon of live work, then landing in a grid.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" href="img/favicon.png">
@@ -18,9 +18,10 @@
 (function(d){var r=d.documentElement,c=r.classList;c.add('js');
 try{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}catch(e){}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=10'].forEach(function(h){var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)})}}catch(e){}})(document);
+try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=11'].forEach(function(h){var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)})}}catch(e){}})(document);
 </script>
-<link rel="stylesheet" href="css/site.css?v=73c271b3">
+<link rel="stylesheet" href="css/site.css?v=efff103e">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 </head>
 <body data-page="work">
 <a class="skip" href="#main">Skip to content</a>
@@ -56,13 +57,31 @@ try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');wind
   </nav>
   <div class="menu-foot"><a href="mailto:hello@sigi.com">hello@sigi.com</a><span>© <span class="year">2026</span> Signet Works</span></div>
 </div>
-<main id="main"><header class="page-head ">
-  <div class="wrap">
-    <p class="kicker fade d0"><b>02</b>Work &amp; process</p>
-    <h1 data-split data-hero>Built for real businesses, <em>not for awards.</em></h1>
-    <p class="lede fade d1">My first real project, four concept sites you can click through, and the simple process every project follows.</p>
+<main id="main"><div id="track">
+  <div class="stage" id="stage">
+    <h1 aria-label="Built for business">
+      <div class="hl" id="l1" aria-hidden="true"><span>BUILT FOR</span></div>
+      <div class="hl" id="l2" aria-hidden="true"><span>BUSINESS</span></div>
+    </h1>
+    <div id="cap">Built for real businesses, not for awards.</div>
+    <div id="glow"></div>
+    <div id="cross"><i>+</i></div>
+    <div id="rule"></div>
+    <canvas id="gl" aria-label="My website projects, shown as a moving ribbon of screen recordings that settles into a grid"></canvas>
+    <a id="hint" href="start.html">BOOKING NEW PROJECTS &nbsp;→</a>
+    <header class="rb-top">
+      <a class="rb-logo" href="index.html" aria-label="Signet Works home"><span>Signet</span><svg class="mark" viewBox="0 0 1091 713" aria-hidden="true" focusable="false"><use href="#sw-ring"/></svg><span>Works</span></a>
+      <nav id="pager" aria-label="Previous and next page"><a href="services.html" aria-label="Previous page: Services">←</a><a href="rates.html" aria-label="Next page: Rates">→</a></nav>
+      <nav class="rb-acts" aria-label="Actions"><a href="start.html"><i></i>START A PROJECT</a><a href="#menu" id="menuPill">MENU<b></b></a></nav>
+    </header>
+    <footer class="rb-bot">
+      <p>My first real project, four concept sites you can click through, and the simple process every project follows.</p>
+      <div class="mid">DESIGN<s>/</s>BUILD<s>/</s>LAUNCH<s>/</s>CARE</div>
+      <a class="r" href="#process">SEE THE PROCESS</a>
+    </footer>
+    <div id="name"></div>
   </div>
-</header>
+</div>
 
 <section>
   <div class="wrap">
@@ -143,6 +162,7 @@ try{if(!rm&&!sessionStorage.getItem('sw-intro')){c.add('intro','orbs-wait');wind
   </div>
 </footer>
 <script src="js/lenis.min.js"></script>
-<script src="js/site.js?v=f1f678cd"></script>
+<script src="js/site.js?v=1912708e"></script>
+<script type="module" src="js/ribbon.js?v=d45ff09c"></script>
 </body>
 </html>

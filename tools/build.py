@@ -49,7 +49,7 @@ def head(title, desc, page):
 (function(d){{var r=d.documentElement,c=r.classList;c.add('js');
 try{{var t=localStorage.getItem('sw-theme');if(t==='light'||t==='dark')r.setAttribute('data-theme',t)}}catch(e){{}}
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)c.add('rm');
-try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=10'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
+try{{if(!rm&&!sessionStorage.getItem('sw-intro')){{c.add('intro','orbs-wait');window.__swT0=performance.now();['js/vendor/three.module.min.js','js/ring3d.js?v=11'].forEach(function(h){{var l=d.createElement('link');l.rel='modulepreload';l.href=h;d.head.appendChild(l)}})}}}}catch(e){{}}}})(document);
 </script>
 <link rel="stylesheet" href="css/site.css?v={_v('css/site.css')}">
 </head>
@@ -366,9 +366,33 @@ def services():
 ''' + band() + footer()
 
 def work():
-    return head('Work', 'Selected website projects by Signet Works, and the four-step process behind every site.', 'work') + nav() + '<main id="main">' + page_head(
-        '02', 'Work &amp; process', 'Built for real businesses, <em>not for awards.</em>',
-        'My first real project, four concept sites you can click through, and the simple process every project follows.') + f'''
+    hero = f'''<div id="track">
+  <div class="stage" id="stage">
+    <h1 aria-label="Built for business">
+      <div class="hl" id="l1" aria-hidden="true"><span>BUILT FOR</span></div>
+      <div class="hl" id="l2" aria-hidden="true"><span>BUSINESS</span></div>
+    </h1>
+    <div id="cap">Built for real businesses, not for awards.</div>
+    <div id="glow"></div>
+    <div id="cross"><i>+</i></div>
+    <div id="rule"></div>
+    <canvas id="gl" aria-label="My website projects, shown as a moving ribbon of screen recordings that settles into a grid"></canvas>
+    <a id="hint" href="start.html">BOOKING NEW PROJECTS &nbsp;→</a>
+    <header class="rb-top">
+      <a class="rb-logo" href="index.html" aria-label="Signet Works home"><span>Signet</span>{MARK}<span>Works</span></a>
+      <nav id="pager" aria-label="Previous and next page"><a href="services.html" aria-label="Previous page: Services">←</a><a href="rates.html" aria-label="Next page: Rates">→</a></nav>
+      <nav class="rb-acts" aria-label="Actions"><a href="start.html"><i></i>START A PROJECT</a><a href="#menu" id="menuPill">MENU<b></b></a></nav>
+    </header>
+    <footer class="rb-bot">
+      <p>My first real project, four concept sites you can click through, and the simple process every project follows.</p>
+      <div class="mid">DESIGN<s>/</s>BUILD<s>/</s>LAUNCH<s>/</s>CARE</div>
+      <a class="r" href="#process">SEE THE PROCESS</a>
+    </footer>
+    <div id="name"></div>
+  </div>
+</div>
+'''
+    page = head('Work', 'My first real project and four concept sites, sweeping through space as a ribbon of live work, then landing in a grid.', 'work') + nav() + '<main id="main">' + hero + f'''
 <section>
   <div class="wrap">
     <div class="grid">
@@ -389,6 +413,10 @@ def work():
 </section>
 </main>
 ''' + band('Your business <em>could be next.</em>') + footer()
+    page = page.replace('</head>', '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">\n</head>', 1)
+    rv = _v('js/ribbon.js')
+    page = page.replace('</body>', f'<script type="module" src="js/ribbon.js?v={rv}"></script>\n</body>', 1)
+    return page
 
 def about():
     return head('About', 'Signet Works is Noah: one person in Tilburg building premium websites at fair prices. Entrepreneurship student and co-founder of Medixis.', 'about') + nav() + '<main id="main">' + page_head(
