@@ -81,8 +81,16 @@
   var hasIntro = root.classList.contains('intro');
   try { sessionStorage.setItem('sw-intro', '1'); } catch(e){}
   var heroShown = false, introTimers = [];
+  // on the home page the headline waits for the laptop to rise out of the clouds (js/laptop3d.js calls swShowHero)
+  var lapHold = !!$('#lap') && !RM;
+  window.swShowHero = function(){ lapHold = false; showHero(); };
+  if (lapHold){
+    // fallback if the 3D laptop can't run; once it's running it releases the headline itself
+    setTimeout(function(){ if (!window.__lapRunning) window.swShowHero(); }, hasIntro ? 11000 : 7000);
+    setTimeout(window.swShowHero, 15000);
+  }
   function showHero(){
-    if (heroShown) return; heroShown = true;
+    if (lapHold || heroShown) return; heroShown = true;
     $$('.hero, .page-head').forEach(function(h){ h.classList.add('go'); });
     $$('[data-hero]').forEach(function(el){ el.classList.add('in'); });
   }

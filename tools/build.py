@@ -269,8 +269,10 @@ def arrow_link(label, href):
 def home():
     return head('Home', 'I’m Noah, and I build fast, professional websites for businesses in Tilburg and beyond. One person, fair prices, from about €300.', 'home') + nav() + f'''<main id="main">
 <div class="hero" id="top">
+  <canvas id="lap" aria-label="A laptop showing the Medixis website, floating above the clouds"></canvas>
   <div class="wrap">
     <h1 data-split data-hero>Websites that make your business look <em>as good as it is.</em></h1>
+    <div class="lapbox" aria-hidden="true"></div>
     <div class="hero-row">
       <div class="hero-me fade d1"><img src="img/noah-sm.jpg" alt="Noah, founder of Signet Works" width="120" height="120"><div><p>I’m Noah. I build websites for businesses here in Tilburg: clear, fast, and made to turn visitors into customers.</p></div></div>
       <div class="cta fade d2">{btn('How does it work?', 'rates.html')}{btn('See the work', 'work.html', 'ghost', arrow=False)}</div>
@@ -317,7 +319,7 @@ def home():
   </div>
 </section>
 </main>
-''' + band() + footer()
+''' + band() + footer().replace('</body>', '<script type="module" src="js/laptop3d.js?v=' + _v('js/laptop3d.js') + '" onerror="window.swShowHero&&swShowHero()"></script>\n</body>', 1)
 
 def services():
     rows = []
