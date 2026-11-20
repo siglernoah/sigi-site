@@ -30,7 +30,8 @@ blender --background --factory-startup --python my_model.py -- out/
 **Optimise a GLB for the web:**
 
 ```bash
-cd tools/3d && npx gltf-transform optimize in.glb ../../models/out.glb --compress meshopt --texture-compress webp
+cd tools/3d && npx gltf-transform optimize in.glb ../../models/out.glb --compress meshopt \
+  --flatten false --palette false --join false --instance false --simplify false --prune-attributes false
 ```
 
 **Load it in the site** (three r160, already vendored):
@@ -41,6 +42,18 @@ import {MeshoptDecoder} from './vendor/meshopt_decoder.module.js';
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 const gltf = await loader.loadAsync('models/laptop.glb');
 ```
+
+Keep `--prune-attributes false`: otherwise gltf-transform deletes UVs that no texture uses yet
+(e.g. the laptop's `Screen`, whose texture is added by the site), and the screen renders blank.
+`flatten`/`palette`/`join` would break the names and pivots the site looks up.
+
+## Current assets
+
+| Asset | Source script | Output |
+|---|---|---|
+| Laptop (space black, no logos) | `laptop/laptop_v003.py` → `.claude/skills/blender-web-3d/assets/blender/export_glb.py` → optimize | `models/laptop-v003.glb` (146 KB) |
+| Check render | `laptop/render_check.py --screen img/medixis-full.jpg` | PNG for review |
+| Cloud sprites (Cycles volumetrics) | `clouds/clouds_v003.py --count 6 --res 768 --samples 96` | `img/clouds/cloud-1..6.webp` (~14 KB each) |
 
 ## Known limits
 

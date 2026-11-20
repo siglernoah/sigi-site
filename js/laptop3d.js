@@ -3,6 +3,11 @@
 import * as THREE from './vendor/three.module.min.js';
 import {RoomEnvironment} from './vendor/RoomEnvironment.js';
 import {RoundedBoxGeometry} from './vendor/RoundedBoxGeometry.js';
+import {GLTFLoader} from './vendor/GLTFLoader.js';
+import {MeshoptDecoder} from './vendor/meshopt_decoder.module.js';
+
+const LAPTOP_GLB = 'models/laptop-v003.glb';               // built in Blender: tools/3d/laptop/laptop_v003.py
+const CLOUD_SPRITES = [1, 2, 3, 4, 5, 6].map(i => `img/clouds/cloud-${i}.webp`);   // Cycles volumetrics: tools/3d/clouds/clouds_v003.py
 
 const root = document.documentElement, hero = document.querySelector('.hero'), box = document.querySelector('.lapbox'), canvas = document.getElementById('lap');
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -56,7 +61,7 @@ bezel.position.set(0, SH / 2, .029); lidG.add(bezel);
 // the screen shows a real project, scrolling slowly
 const shot = new THREE.TextureLoader().load('img/medixis-full.jpg?v=1');
 shot.colorSpace = THREE.SRGBColorSpace; shot.anisotropy = 8; shot.wrapT = THREE.ClampToEdgeWrapping;
-const SW = LW - .2, SHH = SH - .22, VIEW = (SHH / SW) * 1440 / 3600;   // visible share of the full-page screenshot
+const SW = LW - .2, SHH = SH - .22; let VIEW = (SHH / SW) * 1440 / 3600;   // visible share of the full-page screenshot
 shot.repeat.set(1, VIEW); shot.offset.y = 1 - VIEW;
 const screen = new THREE.Mesh(new THREE.PlaneGeometry(SW, SHH), new THREE.MeshBasicMaterial({map:shot, toneMapped:false}));
 screen.position.set(0, SH / 2 - .02, .031); lidG.add(screen);
@@ -68,6 +73,22 @@ sheen.position.set(0, SH / 2 - .02, .033); lidG.add(sheen);
 lidG.rotation.x = -.26;           // opened a little past upright
 laptop.position.y = -.5;
 const rig = new THREE.Group(); rig.add(laptop); scene.add(rig);
+let shotFlip = false;             // GLB UVs run top-down (glTF), the fallback's run bottom-up
+
+// the Blender model replaces the stand-in above once it has loaded; Screen's material becomes the scrolling shot
+const gltfLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+gltfLoader.loadAsync(LAPTOP_GLB).then(g => {
+  const model = g.scene, scr = model.getObjectByName('Screen');
+  if (!scr) throw new Error('GLB has no Screen');
+  shot.flipY = false; shot.needsUpdate = true; shotFlip = true;
+  VIEW = (1.885 / 2.89) * 1440 / 3600;                    // display is 2.89 x 1.885 units in laptop_v003.py
+  shot.repeat.set(1, VIEW);
+  scr.material = new THREE.MeshBasicMaterial({map:shot, toneMapped:false});
+  // studio reflections tuned so the space-black finish stays dark (the Cycles look), glass stays glossy
+  const env = {Bezel_Glass:1.1, Aluminium_SpaceBlack:.38, Trackpad_Glass:.45, Keycap:.25, KeyWell:.2, Hinge:.5};
+  model.traverse(o => { if (o.isMesh && o !== scr && o.material) o.material.envMapIntensity = env[o.material.name] ?? .4; });
+  model.position.y = -.5; rig.remove(laptop); rig.add(model);
+}).catch(e => console.warn('laptop GLB not used:', e.message));
 
 /* ---------- clouds ---------- */
 function puff(seed) {
@@ -92,10 +113,16 @@ for (let i = 0; i < 46; i++) {
   const z = -4 + rnd() * 14, mat = new THREE.SpriteMaterial({map:puffs[i % 4], transparent:true, depthWrite:false, opacity:0});
   const sp = new THREE.Sprite(mat), sc = 5 + rnd() * 7 - z * .15;
   sp.scale.set(sc * 1.5, sc, 1);
-  const c = {sp, x0:(rnd() - .5) * 26, y0:(rnd() - .5) * 13, z, sc, spin:(rnd() - .5) * .3, drift:(rnd() - .5) * .4, speed:.8 + rnd() * .6};
+  const c = {sp, x0:(rnd() - .5) * 26, y0:(rnd() - .5) * 13, z, sc, spin:(rnd() - .5) * .16, drift:(rnd() - .5) * .4, speed:.8 + rnd() * .6, depth:clamp((z + 4) / 14), aspect:1.5};
   sp.position.set(c.x0, c.y0, z); scene.add(sp); clouds.push(c);
 }
 // one soft veil behind the puffs so no gaps show while the page is covered
+// swap the canvas puffs for the Cycles-rendered volumetric clouds as they arrive
+const texLoader = new THREE.TextureLoader();
+CLOUD_SPRITES.forEach((url, j) => texLoader.load(url, tx => {
+  tx.colorSpace = THREE.SRGBColorSpace;
+  clouds.forEach((c, i) => { if (i % CLOUD_SPRITES.length === j) { c.sp.material.map = tx; c.sp.material.needsUpdate = true; c.aspect = tx.image.width / tx.image.height; } });
+}));
 const veil = new THREE.Mesh(new THREE.PlaneGeometry(80, 50), new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:1, depthWrite:false, toneMapped:false}));
 veil.position.z = -5; scene.add(veil);
 function tint() {
@@ -116,7 +143,7 @@ function layout() {
   camera.aspect = W / H; camera.updateProjectionMatrix();
   const visH = 2 * CAM_Z * Math.tan(FOV * Math.PI / 360), visW = visH * camera.aspect, px = visH / H;
   target.set((br.left - hr.left + br.width * (W > 860 ? .6 : .52) - W / 2) * px, -(br.top - hr.top + br.height / 2 - H / 2) * px, 0);
-  scale = Math.min(br.width * px / (LW * 1.12), br.height * px / 2.6);
+  scale = Math.min(br.width * px / (LW * 1.12), br.height * px / 3.0);
 }
 addEventListener('resize', layout); layout();
 new ResizeObserver(layout).observe(hero); new ResizeObserver(layout).observe(box);
@@ -135,13 +162,17 @@ function frame(now) {
   // the clouds wait for the ring intro to start fading, then roll away
   if (!started) { const intro = document.getElementById('intro'); if (!root.classList.contains('intro') || (intro && intro.classList.contains('leaving'))) start(); }
   // time only moves in small steps, so a slow first frame (shader warm-up) can't skip the clouds
-  const dt = last ? Math.min(now - last, 34) : 0; last = now;
+  // (only the first frames are capped hard; after that a slow device still finishes in ~3-4 s)
+  const dt = last ? Math.min(now - last, warm < 12 ? 34 : 110) : 0; last = now;
   if (started && warm > 2 && !RM) t += dt;
   warm++;
   const k = inOut(span(t, 0, DUR));                       // clouds: 0 = covering, 1 = gone
   for (const c of clouds) {
     const dir = Math.sign(c.x0) || 1, p = clamp(k * c.speed);
-    c.sp.position.set(c.x0 + dir * p * 9 + c.drift * t / 1000, c.y0 - p * 16, c.z);
+    // rising through the bank: near clouds rush past faster and swell, far ones barely move
+    const par = .55 + c.depth * .9, grow = 1 + p * c.depth * .6;
+    c.sp.position.set(c.x0 + dir * p * 9 * par + c.drift * t / 1000, c.y0 - p * 16 * par, c.z);
+    c.sp.scale.set(c.sc * 1.5 * grow * (c.aspect / 1.5), c.sc * grow, 1);
     c.sp.material.rotation = c.spin * p;
     c.sp.material.opacity = (1 - span(k, .55, 1)) * (started ? 1 : 1);
   }
@@ -155,7 +186,7 @@ function frame(now) {
   rig.rotation.set(.3 + (1 - r) * .5 + sy * .12 + Math.sin(idle * .9) * .015, -.5 + (1 - r) * .7 + sx * .3, .05 - (1 - r) * .12);
   // the screen scrolls through the project, slowly, top to bottom and back
   const sc = (Math.sin(idle * .12 - Math.PI / 2) + 1) / 2;
-  shot.offset.y = (1 - VIEW) * (1 - sc);
+  shot.offset.y = shotFlip ? (1 - VIEW) * sc : (1 - VIEW) * (1 - sc);
   if (!released && t > TEXT_AT) { released = true; release(); }
   if (visible || !released) renderer.render(scene, camera);
   requestAnimationFrame(frame);
