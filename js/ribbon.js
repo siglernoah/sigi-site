@@ -19,6 +19,10 @@ const out = t => 1 - (1 - t) ** 3;
 const span = (p, a, b) => clamp((p - a) / (b - a));
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
+const light = () => root.getAttribute('data-theme') === 'light';
+const pal = () => light()
+  ? {base:0xEDEBE7, rim:0x1C1B19, card:'#F2F0EC', ink:'#1C1B19', soft:'rgba(28,27,25,.62)'}
+  : {base:0x131313, rim:0xFFFFFF, card:'#0A0A0B', ink:'#F5F5F7', soft:'rgba(245,245,247,.72)'};
 
 /* ---------- renderer ---------- */
 const canvas = $('gl');
@@ -54,21 +58,21 @@ const at = (s, op, ot) => {
 /* ---------- cards ---------- */
 const CARD_W = 2.1, CARD_H = 1.32, GAP = .03, STEP = CARD_W + GAP, NX = 28, NY = 3;
 const vs = `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
-const fs = `uniform sampler2D map;uniform vec2 cover;uniform float aspect,ready,radius;varying vec2 vUv;
+const fs = `uniform sampler2D map;uniform vec2 cover;uniform float aspect,ready,radius;uniform vec3 base,rim;varying vec2 vUv;
 void main(){
   vec2 q=(abs(vUv-.5)-.5)*vec2(aspect,1.)+radius;
   float d=length(max(q,0.))+min(max(q.x,q.y),0.)-radius;
   float px=fwidth(d),a=1.-smoothstep(-px,px,d);
   if(a<.01)discard;
   vec2 uv=vUv;if(!gl_FrontFacing)uv.x=1.-uv.x;
-  vec3 c=mix(vec3(.075),texture2D(map,(uv-.5)*cover+.5).rgb,ready);
+  vec3 c=mix(base,texture2D(map,(uv-.5)*cover+.5).rgb,ready);
   float edge=smoothstep(-.012-px,-.012,d);
-  gl_FragColor=vec4(mix(c,vec3(1.),edge*.1),a);
+  gl_FragColor=vec4(mix(c,rim,edge*.12),a);
 }`;
 function makeMesh(tex) {
   const geo = new THREE.PlaneGeometry(1, 1, NX, NY);
   const mat = new THREE.ShaderMaterial({vertexShader:vs, fragmentShader:fs, transparent:true, side:THREE.DoubleSide,
-    uniforms:{map:{value:tex}, cover:{value:new THREE.Vector2(1, 1)}, aspect:{value:CARD_W / CARD_H}, ready:{value:0}, radius:{value:.018}}});
+    uniforms:{map:{value:tex}, cover:{value:new THREE.Vector2(1, 1)}, aspect:{value:CARD_W / CARD_H}, ready:{value:0}, radius:{value:.018}, base:{value:new THREE.Color()}, rim:{value:new THREE.Color()}}});
   const mesh = new THREE.Mesh(geo, mat); mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);
   return {geo, mat, mesh};
 }
@@ -80,8 +84,8 @@ function canvasTex(draw) {
 }
 // if a video is missing, keep the dark placeholder and write the project name small in the centre
 const nameCard = title => canvasTex((g, w, h) => {
-  g.fillStyle = 'rgb(19,19,19)'; g.fillRect(0, 0, w, h);
-  g.fillStyle = 'rgba(245,245,247,.72)'; g.font = '500 30px Inter, system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const k = pal(); g.fillStyle = k.card; g.fillRect(0, 0, w, h);
+  g.fillStyle = k.soft; g.font = '500 30px Inter, system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
   g.fillText(title.split(' — ')[0], w / 2, h / 2);
 });
 const cards = WORK.map(([title, src, url], i) => {
@@ -107,9 +111,9 @@ const ctaTex = canvasTex((g, w, h) => { g.fillStyle = '#0a0a0b'; g.fillRect(0, 0
 const cta = Object.assign(makeMesh(ctaTex), {i:5, title:'Start a project', url:'start.html', rect:null});
 cta.mat.uniforms.ready.value = 1;
 function drawCta() {
-  const cv = ctaTex.image, g = cv.getContext('2d'), w = cv.width, h = cv.height;
-  g.fillStyle = '#0a0a0b'; g.fillRect(0, 0, w, h);
-  g.fillStyle = '#F5F5F7'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  const cv = ctaTex.image, g = cv.getContext('2d'), w = cv.width, h = cv.height, k = pal();
+  g.fillStyle = k.card; g.fillRect(0, 0, w, h);
+  g.fillStyle = k.ink; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
   g.font = '500 92px Newsreader, Georgia, serif'; g.fillText('Your business', w / 2, h / 2 - 8);
   g.font = 'italic 500 92px Newsreader, Georgia, serif'; g.fillText('could be next.', w / 2, h / 2 + 92);
   ctaTex.needsUpdate = true;
@@ -117,6 +121,14 @@ function drawCta() {
 drawCta();
 if (document.fonts) Promise.all([document.fonts.load('500 92px Newsreader'), document.fonts.load('italic 500 92px Newsreader')]).then(drawCta, drawCta);
 const all = cards.concat([cta]);
+function applyTheme() {
+  const k = pal();
+  for (const c of all) { c.mat.uniforms.base.value.setHex(k.base); c.mat.uniforms.rim.value.setHex(k.rim); }
+  for (const c of cards) if (c.failed) c.mat.uniforms.map.value = nameCard(c.title);
+  drawCta();
+}
+applyTheme();
+new MutationObserver(applyTheme).observe(root, {attributes:true, attributeFilter:['data-theme']});
 
 /* ---------- layout ---------- */
 let p = 0, hp = 0;

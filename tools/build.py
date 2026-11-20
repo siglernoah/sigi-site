@@ -369,8 +369,8 @@ def work():
     hero = f'''<div id="track">
   <div class="stage" id="stage">
     <h1 aria-label="Built for business">
-      <div class="hl" id="l1" aria-hidden="true"><span>BUILT FOR</span></div>
-      <div class="hl" id="l2" aria-hidden="true"><span>BUSINESS</span></div>
+      <div class="hl" id="l1" aria-hidden="true"><span>Built for</span></div>
+      <div class="hl" id="l2" aria-hidden="true"><span><em>business.</em></span></div>
     </h1>
     <div id="cap">Built for real businesses, not for awards.</div>
     <div id="glow"></div>
@@ -421,7 +421,6 @@ def work():
 </section>
 </main>
 ''' + band('Your business <em>could be next.</em>') + footer()
-    page = page.replace('</head>', '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">\n</head>', 1)
     rv = _v('js/ribbon.js')
     page = page.replace('</body>', f'<script type="module" src="js/ribbon.js?v={rv}"></script>\n</body>', 1)
     return page
